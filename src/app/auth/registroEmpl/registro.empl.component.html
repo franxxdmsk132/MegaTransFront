@@ -1,0 +1,53 @@
+<app-menu>
+  <div class="text-center" *ngIf="isLogged; else loggedOut">
+    <h2>Ya has iniciado sesión</h2>
+  </div>
+
+  <ng-template #loggedOut>
+    <div class="container d-flex justify-content-center">
+      <mat-card class="mat-elevation-z4">
+
+
+        <mat-card-content>
+          <form #f="ngForm" (ngSubmit)="onRegister()" novalidate enctype="multipart/form-data">
+            <mat-form-field class="full-width">
+              <mat-label>Nombre</mat-label>
+              <input matInput type="text" name="nombre" id="nombre" [(ngModel)]="nombre" required>
+            </mat-form-field>
+
+            <mat-form-field class="full-width">
+              <mat-label>Apellido</mat-label>
+              <input matInput type="text" name="apellido" id="apellido" [(ngModel)]="apellido" required>
+            </mat-form-field>
+
+            <mat-form-field class="full-width">
+              <mat-label>Identificación</mat-label>
+              <input matInput type="text" name="identificacion" id="identificacion" [(ngModel)]="identificacion" required>
+            </mat-form-field>
+
+            <mat-form-field class="full-width">
+              <mat-label>Teléfono</mat-label>
+              <input matInput type="text" name="telefono" id="telefono" [(ngModel)]="telefono" required>
+            </mat-form-field>
+
+            <mat-form-field class="full-width">
+              <mat-label>Nombre de Usuario</mat-label>
+              <input matInput type="text" name="nombreUsuario" id="nombreUsuario" [(ngModel)]="nombreUsuario" required>
+            </mat-form-field>
+
+            <mat-form-field class="full-width">
+              <mat-label>Contraseña</mat-label>
+              <input matInput type="password" name="password" id="password" [(ngModel)]="password" required>
+            </mat-form-field>
+
+            <div class="button-container">
+              <button mat-raised-button color="primary" class="full-width" [disabled]="!f.valid">
+                <mat-icon>person_add</mat-icon> Crear Cuenta
+              </button>
+            </div>
+          </form>
+        </mat-card-content>
+      </mat-card>
+    </div>
+  </ng-template>
+</app-menu>

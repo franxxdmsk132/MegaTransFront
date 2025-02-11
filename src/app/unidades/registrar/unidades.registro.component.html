@@ -1,0 +1,52 @@
+<app-menu>
+  <mat-card>
+    <mat-card-title>Registrar Unidad</mat-card-title>
+    <form [formGroup]="unidadForm" (ngSubmit)="onCreate()">
+
+      <mat-form-field appearance="outline">
+        <mat-label>Tipo de Unidad</mat-label>
+        <input matInput formControlName="tipo" required>
+        <mat-error *ngIf="unidadForm.get('tipo')?.invalid">Campo obligatorio</mat-error>
+      </mat-form-field>
+
+      <mat-form-field appearance="outline">
+        <mat-label>Tipo de Cajón</mat-label>
+        <input matInput formControlName="tipo_cajon" required>
+        <mat-error *ngIf="unidadForm.get('tipo_cajon')?.invalid">Campo obligatorio</mat-error>
+      </mat-form-field>
+
+      <mat-form-field appearance="outline">
+        <mat-label>Altura</mat-label>
+        <input matInput type="number" formControlName="altura" required>
+        <mat-error *ngIf="unidadForm.get('altura')?.invalid">Ingrese un valor</mat-error>
+      </mat-form-field>
+
+      <mat-form-field appearance="outline">
+        <mat-label>Ancho</mat-label>
+        <input matInput type="number" formControlName="ancho" required>
+        <mat-error *ngIf="unidadForm.get('ancho')?.invalid">Ingrese un valor</mat-error>
+      </mat-form-field>
+
+      <mat-form-field appearance="outline">
+        <mat-label>Largo</mat-label>
+        <input matInput type="number" formControlName="largo" required>
+        <mat-error *ngIf="unidadForm.get('largo')?.invalid">Ingrese un valor</mat-error>
+      </mat-form-field>
+
+      <div class="file-input">
+        <input type="file" (change)="onFileSelected($event)" accept="imageUrl" name="imagenUrl">
+        <img *ngIf="imagenPreview" [src]="imagenPreview" class="preview">
+      </div>
+
+      <button mat-raised-button color="primary" type="submit" [disabled]="unidadForm.invalid">
+        Registrar
+      </button>
+      <button mat-raised-button color="primary" routerLink="/unidades">
+        Volver
+      </button>
+
+    </form>
+  </mat-card>
+
+
+</app-menu>

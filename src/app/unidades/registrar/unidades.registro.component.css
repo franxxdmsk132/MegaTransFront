@@ -1,0 +1,16 @@
+mat-card {
+  max-width: 500px;
+  margin: auto;
+  padding: 20px;
+}
+
+.file-input {
+  margin-top: 15px;
+}
+
+.preview {
+  width: 100px;
+  height: auto;
+  margin-top: 10px;
+  border-radius: 5px;
+}

@@ -1,0 +1,48 @@
+<mat-toolbar color="primary">
+  <button mat-icon-button (click)="sidenav.toggle()">
+    <mat-icon>menu</mat-icon>
+  </button>
+  <span>MegaTrans</span>
+</mat-toolbar>
+
+<mat-sidenav-container class="sidenav-container">
+  <mat-sidenav #sidenav mode="over" [opened]="false">
+    <mat-nav-list>
+      <a mat-list-item *ngIf="isLogged" routerLink="/perfil" (click)="sidenav.close()">
+        <mat-icon>person</mat-icon> Perfil
+      </a>
+      <a mat-list-item routerLink="/" (click)="sidenav.close()">
+        <mat-icon>home</mat-icon> Inicio
+      </a>
+      <a mat-list-item *ngIf="isAdmin" routerLink="/crearDetalleTransporte" (click)="sidenav.close()">
+        <mat-icon>group</mat-icon> Transporte
+      </a>
+      <a mat-list-item *ngIf="isAdmin" routerLink="/empleado/lista" (click)="sidenav.close()">
+        <mat-icon>group</mat-icon> Encomiendas
+      </a>
+      <a mat-list-item *ngIf="isAdmin" routerLink="/empleado/lista" (click)="sidenav.close()">
+        <mat-icon>group</mat-icon> Solicitudes
+      </a>
+      <a mat-list-item *ngIf="isLogged" routerLink="/unidades" (click)="sidenav.close()">
+        <mat-icon>list</mat-icon> Unidades
+      </a>
+      <a mat-list-item *ngIf="isAdmin" routerLink="/registroEmpleado" (click)="sidenav.close()">
+        <mat-icon>group</mat-icon> Empleados
+      </a>
+      <a mat-list-item *ngIf="isAdmin" routerLink="/empleado/lista" (click)="sidenav.close()">
+        <mat-icon>group</mat-icon> Soporte
+      </a>
+      <a mat-list-item *ngIf="isAdmin" routerLink="/empleado/lista" (click)="sidenav.close()">
+        <mat-icon>group</mat-icon> Acerca de nosotros
+      </a>
+
+      <a mat-list-item *ngIf="isLogged" (click)="onLogOut(); sidenav.close()">
+        <mat-icon>exit_to_app</mat-icon> Cerrar Sesión
+      </a>
+    </mat-nav-list>
+  </mat-sidenav>
+
+  <mat-sidenav-content>
+    <ng-content></ng-content>
+  </mat-sidenav-content>
+</mat-sidenav-container>

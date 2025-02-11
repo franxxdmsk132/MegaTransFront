@@ -1,0 +1,42 @@
+<app-menu>
+  <mat-card>
+    <h2>Editar Unidad</h2>
+
+    <form [formGroup]="unidadForm" (ngSubmit)="onUpdate()">
+      <mat-form-field>
+        <mat-label>Tipo</mat-label>
+        <input matInput formControlName="tipo" required>
+      </mat-form-field>
+
+      <mat-form-field>
+        <mat-label>Tipo de Cajón</mat-label>
+        <input matInput formControlName="tipo_cajon" required>
+      </mat-form-field>
+
+      <mat-form-field>
+        <mat-label>Altura</mat-label>
+        <input matInput type="number" formControlName="altura" required>
+      </mat-form-field>
+
+      <mat-form-field>
+        <mat-label>Ancho</mat-label>
+        <input matInput type="number" formControlName="ancho" required>
+      </mat-form-field>
+
+      <mat-form-field>
+        <mat-label>Largo</mat-label>
+        <input matInput type="number" formControlName="largo" required>
+      </mat-form-field>
+
+      <div *ngIf="imagenPreview">
+        <img [src]="imagenPreview" alt="Vista previa de la imagen" width="150">
+      </div>
+
+      <input type="file" (change)="onFileSelected($event)">
+
+      <button mat-raised-button color="primary" type="submit">Actualizar</button>
+    </form>
+  </mat-card>
+
+
+</app-menu>

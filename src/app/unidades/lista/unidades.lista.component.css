@@ -1,0 +1,20 @@
+.text-center {
+  text-align: center;
+}
+
+.unidad-img {
+  width: 80px;
+  height: 60px;
+  object-fit: cover;
+  border-radius: 4px;
+}
+
+.w-100 {
+  width: 100%;
+}
+.add-btn {
+  position: fixed;
+  bottom: 20px; /* Distancia desde el borde inferior */
+  right: 20px;  /* Distancia desde el borde derecho */
+  z-index: 1000; /* Asegura que el botón esté encima del contenido */
+}

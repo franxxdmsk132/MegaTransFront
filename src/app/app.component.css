@@ -1,0 +1,12 @@
+html, body {
+  height: 100%;
+  margin: 0; /* Elimina márgenes predeterminados */
+}
+* {
+  box-sizing: border-box; /* Esto asegura que el padding y border no sumen al ancho total del elemento */
+  overflow-x: hidden; /* Desactiva el scroll horizontal */
+}
+
+body {
+  overflow-x: hidden; /* Opcional, para evitar el scroll horizontal en el body */
+}

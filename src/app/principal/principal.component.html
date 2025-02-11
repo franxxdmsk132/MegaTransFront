@@ -1,0 +1,44 @@
+<!-- Menu con Angular Material -->
+<app-menu>
+
+  <!-- Contenido principal -->
+  <div class="container text-center">
+    <mat-card class="welcome-card">
+      <mat-card-header>
+        <mat-card-title>Bienvenido</mat-card-title>
+      </mat-card-header>
+      <mat-card-content>
+        <div *ngIf="isLogged; else loggedOut">
+          <h2>¡Hola, {{nombreCompleto}}!</h2>
+          <p>Bienvenido a MegaTrans. Aquí puedes gestionar tu transporte.</p>
+
+          <!-- Cuadrado con botones distribuidos -->
+          <div class="button-grid">
+            <button mat-raised-button color="primary" routerLink="/crearDetalleTransporte" class="button-item">
+              Transporte / Mudanza
+            </button>
+            <button mat-raised-button color="primary" routerLink="/encomiendas" class="button-item">
+              Encomiendas
+            </button>
+            <button mat-raised-button color="primary" routerLink="/facturacion" class="button-item">
+              Facturación
+            </button>
+            <button mat-raised-button color="primary" routerLink="/busqueda" class="button-item">
+              Búsqueda
+            </button>
+          </div>
+        </div>
+
+        <ng-template #loggedOut>
+          <h2>No has iniciado sesión</h2>
+          <p>Por favor, ingresa para comenzar a utilizar la aplicación.</p>
+          <button mat-raised-button color="primary" routerLink="/login" class="mt-3">
+            Ingresar o Registrarse
+          </button>
+        </ng-template>
+      </mat-card-content>
+    </mat-card>
+    <br>
+  </div>
+
+</app-menu>

@@ -1,0 +1,45 @@
+<app-menu>
+  <!-- Contenido principal -->
+  <div class="text-center" *ngIf="isLogged; else loggedOut">
+    <h2>Ya has iniciado sesión</h2>
+  </div>
+
+  <ng-template #loggedOut>
+    <div class="container d-flex justify-content-center">
+      <!-- Usamos mat-card para el diseño de la tarjeta -->
+      <mat-card class="login-card">
+        <button mat-flat-button routerLink="/login">Iniciar Sesion
+        </button>
+        <br>
+        <button mat-flat-button routerLink="/registro">Registrarse
+        </button>
+<br>
+
+        <mat-card-content>
+          <form #f="ngForm" (ngSubmit)="onLogin()" novalidate>
+            <!-- Formulario con mat-form-field y mat-input -->
+            <mat-form-field class="full-width">
+              <mat-label>Nombre de Usuario</mat-label>
+              <input matInput type="text" name="nombreUsuario" id="nombreUsuario" [(ngModel)]="nombreUsuario" required>
+              <mat-error *ngIf="f.submitted && !nombreUsuario">El nombre de usuario es obligatorio</mat-error>
+            </mat-form-field>
+
+            <mat-form-field class="full-width">
+              <mat-label>Contraseña</mat-label>
+              <input matInput type="password" name="password" id="password" [(ngModel)]="password" required>
+              <mat-error *ngIf="f.submitted && !password">La contraseña es obligatoria</mat-error>
+            </mat-form-field>
+
+            <!-- Botón con mat-raised-button -->
+            <div class="form-group">
+              <button mat-raised-button color="primary" class="full-width" [disabled]="!f.valid">
+                <i class="fas fa-sign-in-alt"></i> Iniciar Sesión
+              </button>
+            </div>
+          </form>
+        </mat-card-content>
+      </mat-card>
+    </div>
+  </ng-template>
+
+</app-menu>

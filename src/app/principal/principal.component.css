@@ -1,0 +1,45 @@
+/* Asegúrate de que el contenedor ocupe toda la pantalla */
+.sidenav-container {
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+/* El contenido principal debe tomar todo el espacio restante */
+mat-sidenav-content {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start; /* Alinea el contenido hacia la parte superior */
+  padding: 16px; /* Si necesitas un pequeño margen */
+}
+
+/* Estilo opcional para el menú lateral */
+mat-sidenav {
+  width: 250px; /* Ajusta el tamaño del menú lateral */
+}
+
+mat-toolbar {
+  z-index: 1000;
+}
+
+button.mat-raised-button {
+  margin-top: 20px;
+}
+/* Contenedor de los botones con grid */
+.button-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr); /* Dos columnas de igual tamaño */
+  grid-gap: 16px; /* Espaciado entre los botones */
+  margin-top: 20px;
+  justify-items: center; /* Centra los botones dentro de sus celdas */
+  align-items: center;  /* Centra los botones verticalmente */
+}
+
+/* Estilo de los botones */
+.button-item {
+  width: 100%; /* Hace que el botón ocupe el 100% de su celda */
+  max-width: 200px; /* Limita el tamaño máximo del botón */
+  text-align: center;
+  margin-bottom: 10px;
+}

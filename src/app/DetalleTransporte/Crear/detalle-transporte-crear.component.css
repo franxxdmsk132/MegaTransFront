@@ -1,0 +1,67 @@
+/* Estilos para centrar el formulario */
+.form-container {
+  display: flex;
+  justify-content: center;
+  align-items: flex-start; /* Cambiado de 'center' a 'flex-start' para alineación más natural */
+  min-height: 100vh; /* Asegura que el contenedor ocupe toda la altura disponible */
+  padding: 20px;
+  box-sizing: border-box;
+  overflow-y: auto; /* Agregar scroll si el contenido es más grande que la pantalla */
+}
+
+form {
+  width: 100%;
+  max-width: 600px; /* Ancho máximo para pantallas grandes */
+  padding: 20px;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  background-color: #fff;
+  overflow: hidden; /* Evitar que el contenido se desborde */
+}
+
+mat-form-field {
+  width: 100%;
+  margin-bottom: 16px;
+}
+
+button {
+  width: 100%;
+  margin-top: 20px;
+  font-size: 16px;
+  padding: 10px;
+}
+
+/* Responsividad: El formulario se ajusta en pantallas más pequeñas */
+@media (max-width: 768px) {
+  .form-container {
+    padding: 10px;
+  }
+
+  form {
+    padding: 10px;
+  }
+
+  button {
+    width: 100%;
+    font-size: 14px;
+  }
+
+  /* Ajustar el contenedor si la altura es más grande que la pantalla */
+  .form-container {
+    padding-bottom: 80px; /* Espacio para que el botón sea visible */
+  }
+}
+.form-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  min-height: 100vh;
+}
+* {
+  box-sizing: border-box; /* Esto asegura que el padding y border no sumen al ancho total del elemento */
+  overflow-x: hidden; /* Desactiva el scroll horizontal */
+}
+
+body {
+  overflow-x: hidden; /* Opcional, para evitar el scroll horizontal en el body */
+}

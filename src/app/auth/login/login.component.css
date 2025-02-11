@@ -1,0 +1,9 @@
+.login-card {
+  width: 100%;
+  max-width: 500px;  /* Tamaño máximo de la tarjeta */
+  margin-top: 50px;
+}
+
+.full-width {
+  width: 100%;
+}
