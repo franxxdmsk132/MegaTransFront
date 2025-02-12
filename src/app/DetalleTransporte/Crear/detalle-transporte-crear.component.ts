@@ -9,7 +9,7 @@ import {MatButton} from '@angular/material/button';
 import {MenuComponent} from '../../menu/menu.component';
 
 @Component({
-  selector: 'app-detalle-transporte-crear',
+  selector: 'app-Detalle-transporte-crear',
   templateUrl: './detalle-transporte-crear.component.html',
   styleUrls: ['./detalle-transporte-crear.component.css'],
   imports: [
@@ -72,7 +72,7 @@ export class CrearDetalleTransporteComponent implements OnInit {
           this.router.navigate(['']);
         },
         error: (err) => {
-          console.error('Error al crear el detalle de transporte', err);
+          console.error('Error al crear el Detalle de transporte', err);
         }
       });
     }

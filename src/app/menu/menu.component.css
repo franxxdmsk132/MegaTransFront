@@ -1,3 +1,10 @@
+.sticky-menu {
+  position: sticky;
+  top: 0;
+  z-index: 1000; /* Esto asegura que se mantenga encima de otros elementos */
+  width: 100%; /* Asegúrate de que ocupe todo el ancho de la pantalla */
+}
+
 .sidenav-container {
   height: 100vh; /* Ocupa toda la altura de la pantalla */
 }
@@ -7,12 +14,15 @@ mat-toolbar {
   justify-content: space-between;
   padding: 0 16px;
 }
+
 mat-sidenav {
   width: 250px; /* Ancho del menú */
 }
+
 mat-sidenav-content {
   overflow-x: hidden; /* Evita el desplazamiento horizontal */
 }
+
 mat-nav-list a {
   text-decoration: none;
   color: inherit;
@@ -24,7 +34,6 @@ mat-nav-list a {
 mat-nav-list a mat-icon {
   color: #1976d2;
 }
-
 
 body {
   overflow-x: hidden; /* Opcional, para evitar el scroll horizontal en el body */

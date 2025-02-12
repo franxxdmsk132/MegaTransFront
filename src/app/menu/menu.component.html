@@ -1,4 +1,4 @@
-<mat-toolbar color="primary">
+<mat-toolbar color="primary" class="sticky-menu">
   <button mat-icon-button (click)="sidenav.toggle()">
     <mat-icon>menu</mat-icon>
   </button>
@@ -20,7 +20,7 @@
       <a mat-list-item *ngIf="isAdmin" routerLink="/empleado/lista" (click)="sidenav.close()">
         <mat-icon>group</mat-icon> Encomiendas
       </a>
-      <a mat-list-item *ngIf="isAdmin" routerLink="/empleado/lista" (click)="sidenav.close()">
+      <a mat-list-item *ngIf="isAdmin" routerLink="/listarDetalleTransporte" (click)="sidenav.close()">
         <mat-icon>group</mat-icon> Solicitudes
       </a>
       <a mat-list-item *ngIf="isLogged" routerLink="/unidades" (click)="sidenav.close()">

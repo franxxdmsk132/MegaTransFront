@@ -21,7 +21,10 @@ import {ListaUnidadComponent} from './unidades/lista/unidades.lista.component';
 import {RegistroEmplComponent} from './auth/registroEmpl/registro.empl.component';
 import {UnidadesRegistroComponent} from './unidades/registrar/unidades.registro.component';
 import {UnidadesActualizarComponent} from './unidades/actualizar/unidades.actualizar.component';
-import {DetalleTransporteCrearComponent} from './DetalleTransporte/Crear/detalle-transporte-crear.component';
+import {DetalleTransporteListarComponent} from './DetalleTransporte/Lista/detalle-transporte-listar';
+import {MatSort, MatSortModule} from '@angular/material/sort';
+import {CrearDetalleTransporteComponent} from './DetalleTransporte/Crear/detalle-transporte-crear.component';
+import {BuscarCodigoComponent} from './principal/buscar-codigo/buscar-codigo.component';
 
 @NgModule({
   declarations: [  ],
@@ -48,7 +51,10 @@ import {DetalleTransporteCrearComponent} from './DetalleTransporte/Crear/detalle
     UnidadesRegistroComponent,
     UnidadesActualizarComponent,
     ReactiveFormsModule,
-    DetalleTransporteCrearComponent
+    DetalleTransporteListarComponent,
+    CrearDetalleTransporteComponent,
+    MatSortModule,
+    BuscarCodigoComponent
   ],
   providers: [],
 })

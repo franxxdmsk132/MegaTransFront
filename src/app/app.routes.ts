@@ -8,6 +8,7 @@ import {RegistroEmplComponent} from './auth/registroEmpl/registro.empl.component
 import {UnidadesRegistroComponent} from './unidades/registrar/unidades.registro.component';
 import {UnidadesActualizarComponent} from './unidades/actualizar/unidades.actualizar.component';
 import {CrearDetalleTransporteComponent} from './DetalleTransporte/Crear/detalle-transporte-crear.component';
+import {DetalleTransporteListarComponent} from './DetalleTransporte/Lista/detalle-transporte-listar';
 
 export const routes: Routes = [
   {path: '', component: PrincipalComponent},
@@ -15,6 +16,7 @@ export const routes: Routes = [
   { path: 'unidadesRegistar', component: UnidadesRegistroComponent },
   { path: 'unidadesActualizar/:id', component: UnidadesActualizarComponent },
   { path: 'crearDetalleTransporte', component: CrearDetalleTransporteComponent },
+  { path: 'listarDetalleTransporte', component: DetalleTransporteListarComponent },
 
   {path: 'login', component: LoginComponent},
   {path: 'registro', component: RegistroComponent},

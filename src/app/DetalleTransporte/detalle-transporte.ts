@@ -1,3 +1,6 @@
+import {Unidades} from '../unidades/unidades';
+import {JwtDTO} from '../models/jwt-dto';
+
 export interface Direccion {
   id?:number;
   barrio: string;
@@ -22,6 +25,6 @@ export interface DetalleTransporte {
   pago: string;
   dirOrigen: Direccion;
   dirDestino: Direccion;
-  unidadId: number;
-  usuarioId: number;
+  unidad: Unidades;
+  cliente: JwtDTO;
 }

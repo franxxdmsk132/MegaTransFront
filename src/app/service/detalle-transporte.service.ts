@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { Observable, throwError } from 'rxjs';
+import {HttpClient, HttpErrorResponse, HttpHeaders} from '@angular/common/http';
+import {catchError, Observable, throwError} from 'rxjs';
 import { DetalleTransporte } from '../DetalleTransporte/detalle-transporte';
 import { TokenService } from './token.service';
 
@@ -20,7 +20,7 @@ export class DetalleTransporteService {
     });
   }
 
-  // Crear un nuevo detalle de transporte
+  // Crear un nuevo Detalle de transporte
   crearDetalleTransporte(detalle: any): Observable<any> {
     const headers = this.getAuthHeaders();
     console.log('Headers:', headers);
@@ -33,27 +33,35 @@ export class DetalleTransporteService {
     return this.http.get<DetalleTransporte[]>(this.apiUrl, { headers });
   }
 
-  // Obtener detalle de transporte por ID
+  // Obtener Detalle de transporte por ID
   obtenerDetallePorId(id: number): Observable<DetalleTransporte> {
     const headers = this.getAuthHeaders();
     return this.http.get<DetalleTransporte>(`${this.apiUrl}${id}`, { headers });
   }
 
-  // Actualizar estado del detalle de transporte
+  // Actualizar estado del Detalle de transporte
   actualizarEstado(id: number, estado: string): Observable<any> {
     const headers = this.getAuthHeaders();
     return this.http.put(`${this.apiUrl}${id}`, { estado }, { headers });
   }
 
-  // Buscar detalle de transporte por número de orden
+  // Buscar Detalle de transporte por número de orden
   buscarPorNumOrden(numOrden: string): Observable<any> {
     const headers = this.getAuthHeaders();
-    return this.http.get(`${this.apiUrl}/buscar?numOrden=${numOrden}`, { headers });
+    return this.http.get(`${this.apiUrl}/buscar?numOrden=${numOrden}`, { headers }).pipe(
+    catchError(this.handleError));
   }
 
-  // Eliminar un detalle de transporte
+  // Eliminar un Detalle de transporte
   eliminarDetalleTransporte(id: number): Observable<void> {
     const headers = this.getAuthHeaders();
-    return this.http.delete<void>(`${this.apiUrl}${id}`, { headers });
+    return this.http.delete<void>(`${this.apiUrl}/${id}`, { headers });
+  }
+  private handleError(error: HttpErrorResponse) {
+    let errorMessage = 'Ha ocurrido un error al realizar la búsqueda.';
+    if (error.status === 404) {
+      errorMessage = 'No se encontró el número de orden.';
+    }
+    return throwError(errorMessage);
   }
 }
