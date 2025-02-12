@@ -1,0 +1,58 @@
+.detalle-card {
+  margin: 10px 0;
+  padding: 15px;
+  border-radius: 8px;
+  box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 16px;
+}
+
+.orden-fecha {
+  text-align: right;
+}
+
+.transporte-label {
+  font-weight: bold;
+  color: #3f51b5;
+}
+
+.info-row {
+  display: flex;
+  justify-content: space-between;
+  padding: 5px 0;
+}
+
+.label {
+  font-weight: bold;
+}
+
+.tipo-transporte,
+.tipo-unidad,
+.estado {
+  font-weight: bold;
+  color: #ff4081;
+}
+
+.acciones {
+  display: flex;
+  justify-content: center;
+  margin-top: 10px;
+}
+
+.no-data {
+  text-align: center;
+  font-size: 16px;
+  color: gray;
+  margin-top: 20px;
+}
+.sticky-menu {
+  position: sticky;
+  top: 0;
+  z-index: 1000; /* Esto asegura que se mantenga encima de otros elementos */
+  width: 100%; /* Asegúrate de que ocupe todo el ancho de la pantalla */
+}

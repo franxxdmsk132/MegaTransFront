@@ -1,0 +1,29 @@
+<h1 mat-dialog-title>Buscar Transporte por Número de Orden</h1>
+<div mat-dialog-content>
+  <mat-form-field>
+    <mat-label>Número de Orden</mat-label>
+    <input matInput [(ngModel)]="numOrden" placeholder="Ingrese número de orden">
+    <mat-error *ngIf="errorMessage">{{ errorMessage }}</mat-error>
+  </mat-form-field>
+
+  <!-- Mostrar detalles del transporte si están disponibles -->
+  <div *ngIf="transporteDetalle">
+    <h3>Detalles del Transporte</h3>
+    <p><strong>Número de Orden:</strong> {{ transporteDetalle.numOrden }}</p>
+    <p><strong>Cliente:</strong> {{ transporteDetalle.usuario.nombre }}</p>
+    <p><strong>Estado:</strong> {{ transporteDetalle.estado }}</p>
+    <p><strong>Fecha:</strong> {{ transporteDetalle.fecha }}</p>
+    <p><strong>Descripción del Producto:</strong> {{ transporteDetalle.descripcionProducto }}</p>
+    <!-- Agrega más detalles según lo necesites -->
+  </div>
+
+  <!-- Si no se encuentra el transporte, mostrar el mensaje de error -->
+  <div *ngIf="!transporteDetalle && errorMessage">
+    <p class="error-message">{{ errorMessage }}</p>
+  </div>
+</div>
+
+<div mat-dialog-actions>
+  <button mat-button (click)="closeDialog()">Cancelar</button>
+  <button mat-button color="primary" (click)="buscar()">Buscar</button>
+</div>
