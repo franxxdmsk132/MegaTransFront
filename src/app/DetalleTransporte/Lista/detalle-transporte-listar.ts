@@ -14,13 +14,22 @@ import {DetalleTransporteService} from '../../service/detalle-transporte.service
 import {NgForOf, NgIf} from '@angular/common';
 import {MatIcon} from '@angular/material/icon';
 import {MatButton, MatIconButton} from '@angular/material/button';
-import {MatCard, MatCardActions, MatCardContent, MatCardHeader} from '@angular/material/card';
+import {
+  MatCard,
+  MatCardActions,
+  MatCardContent,
+  MatCardHeader,
+  MatCardSubtitle,
+  MatCardTitle
+} from '@angular/material/card';
 import {MatToolbar} from '@angular/material/toolbar';
 import {MatProgressSpinner} from '@angular/material/progress-spinner';
 import {MenuComponent} from '../../menu/menu.component';
 import {AuthService} from '../../service/auth.service';
 import {JwtDTO} from '../../models/jwt-dto';
 import {MatSort, MatSortModule} from '@angular/material/sort';
+import {Router} from '@angular/router';
+import {TokenService} from '../../service/token.service';
 
 @Component({
   selector: 'app-Detalle-transporte-listar',
@@ -52,7 +61,9 @@ import {MatSort, MatSortModule} from '@angular/material/sort';
     MatCard,
     NgForOf,
     MatSort,
-    MatSortModule
+    MatSortModule,
+    MatCardTitle,
+    MatCardSubtitle
   ],
   styleUrls: ['./detalle-transporte-listar.css']
 })
@@ -64,16 +75,18 @@ export class DetalleTransporteListarComponent implements OnInit {
   ];
   @ViewChild(MatPaginator) paginator!: MatPaginator;
   @ViewChild(MatSort) sort!: MatSort;
+  currentUserName: JwtDTO = new JwtDTO();
 
   constructor(
     private detalleTransporteService: DetalleTransporteService,
-    private authService: AuthService) {
+    private tokenService: TokenService,
+    private router: Router) {
   }
 
   ngOnInit(): void {
     this.obtenerDetallesTransporte();
-
   }
+
   ngAfterViewInit(): void {
     this.dataSource.sort = this.sort;
   }
@@ -91,8 +104,6 @@ export class DetalleTransporteListarComponent implements OnInit {
     });
   }
 
-
-
   eliminarDetalle(id: number): void {
     if (confirm('¿Estás seguro de eliminar este Detalle de transporte?')) {
       this.detalleTransporteService.eliminarDetalleTransporte(id).subscribe({
@@ -108,7 +119,11 @@ export class DetalleTransporteListarComponent implements OnInit {
 
   visualizarDetalle(detalle: DetalleTransporte): void {
     console.log("Visualizando Detalle:", detalle);
-    // Aquí podrías redirigir a una página de detalles o abrir un modal
+    this.router.navigate(['detalleTransporte/', detalle.id])
   }
+
+
+
+
 
 }

@@ -1,0 +1,92 @@
+<app-menu class="sticky-menu">
+  <div class="container">
+    <mat-card *ngIf="!isLoading">
+      <mat-card-header>
+        <mat-card-title>Detalle del Transporte</mat-card-title>
+      </mat-card-header>
+
+      <mat-card-content>
+        <!-- Información general del transporte -->
+        <div class="detalle-transporte">
+          <div>
+            <mat-card-subtitle><strong>Orden de Transporte:</strong></mat-card-subtitle>
+            <p>{{ detalleTransporte.numOrden }}</p>
+          </div>
+          <div>
+            <mat-card-subtitle><strong>Fecha:</strong></mat-card-subtitle>
+            <p>{{ detalleTransporte.fecha | date: 'dd/MM/yyyy' }}</p>
+          </div>
+          <div>
+            <mat-card-subtitle><strong>Estado:</strong></mat-card-subtitle>
+            <p>{{ detalleTransporte.estado }}</p>
+          </div>
+          <div>
+            <mat-card-subtitle><strong>Descripción del Producto:</strong></mat-card-subtitle>
+            <p>{{ detalleTransporte.descripcionProducto }}</p>
+          </div>
+          <div>
+            <mat-card-subtitle><strong>Cantidad Estibaje:</strong></mat-card-subtitle>
+            <p>{{ detalleTransporte.cantidadEstibaje }} unidades</p>
+          </div>
+          <div>
+            <mat-card-subtitle><strong>Tipo de Servicio:</strong></mat-card-subtitle>
+            <p>{{ detalleTransporte.tipoServicio }}</p>
+          </div>
+          <div>
+            <mat-card-subtitle><strong>Estibaje:</strong></mat-card-subtitle>
+            <p>{{ detalleTransporte.estibaje }}</p>
+          </div>
+          <div>
+            <mat-card-subtitle><strong>Pago:</strong></mat-card-subtitle>
+            <p>{{ detalleTransporte.pago }}</p>
+          </div>
+        </div>
+
+        <!-- Información de las direcciones -->
+        <mat-divider></mat-divider>
+        <div>
+          <mat-card-subtitle><strong>Dirección de Origen:</strong></mat-card-subtitle>
+          <p>{{ detalleTransporte.dirOrigen.barrio }}, {{ detalleTransporte.dirOrigen.callePrincipal }} y {{ detalleTransporte.dirOrigen.calleSecundaria }}, {{ detalleTransporte.dirOrigen.ciudad }}</p>
+          <p><strong>Referencia:</strong> {{ detalleTransporte.dirOrigen.referencia }}</p>
+          <p><strong>Teléfono:</strong> {{ detalleTransporte.dirOrigen.telefono }}</p>
+        </div>
+
+        <div>
+          <mat-card-subtitle><strong>Dirección de Destino:</strong></mat-card-subtitle>
+          <p>{{ detalleTransporte.dirDestino.barrio }}, {{ detalleTransporte.dirDestino.callePrincipal }} y {{ detalleTransporte.dirDestino.calleSecundaria }}, {{ detalleTransporte.dirDestino.ciudad }}</p>
+          <p><strong>Referencia:</strong> {{ detalleTransporte.dirDestino.referencia }}</p>
+          <p><strong>Teléfono:</strong> {{ detalleTransporte.dirDestino.telefono }}</p>
+        </div>
+
+        <!-- Información de la unidad -->
+        <mat-divider></mat-divider>
+        <div>
+          <mat-card-subtitle><strong>Unidad de Transporte:</strong></mat-card-subtitle>
+          <p>{{ detalleTransporte.unidad?.tipo }} - {{ detalleTransporte.unidad?.tipo_cajon }}</p>
+<!--          <p><strong>Placa:</strong> {{ detalleTransporte.unidad?.imgUrl }}</p>-->
+        </div>
+
+        <!-- Información del cliente -->
+        <mat-divider></mat-divider>
+        <div>
+          <mat-card-subtitle><strong>Cliente:</strong></mat-card-subtitle>
+          <p>{{ detalleTransporte.usuario?.nombre }} {{ detalleTransporte.usuario?.apellido }}</p>
+          <p><strong>Teléfono:</strong> {{ detalleTransporte.usuario?.telefono }}</p>
+          <p><strong>Correo:</strong> {{ detalleTransporte.usuario?.nombreUsuario }}</p>
+
+        </div>
+      </mat-card-content>
+
+      <mat-card-actions>
+        <button mat-flat-button (click)="volver()">Volver</button>
+      </mat-card-actions>
+    </mat-card>
+
+    <!-- Indicador de carga -->
+    <mat-card *ngIf="isLoading" class="loading-card">
+      <mat-card-content class="loading-content">
+        <p>Cargando...</p>
+      </mat-card-content>
+    </mat-card>
+  </div>
+</app-menu>

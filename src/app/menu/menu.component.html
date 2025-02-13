@@ -12,28 +12,31 @@
         <mat-icon>person</mat-icon> Perfil
       </a>
       <a mat-list-item routerLink="/" (click)="sidenav.close()">
-        <mat-icon>home</mat-icon> Inicio
+        <mat-icon>dashboard</mat-icon> Inicio
       </a>
-      <a mat-list-item *ngIf="isAdmin" routerLink="/crearDetalleTransporte" (click)="sidenav.close()">
-        <mat-icon>group</mat-icon> Transporte
+      <a mat-list-item *ngIf="isLogged" routerLink="/crearDetalleTransporte" (click)="sidenav.close()">
+        <mat-icon>local_shipping</mat-icon> Transporte
       </a>
-      <a mat-list-item *ngIf="isAdmin" routerLink="/empleado/lista" (click)="sidenav.close()">
-        <mat-icon>group</mat-icon> Encomiendas
+      <a mat-list-item *ngIf="isLogged" routerLink="/empleado/lista" (click)="sidenav.close()">
+        <mat-icon>local_shipping</mat-icon> Encomiendas
       </a>
-      <a mat-list-item *ngIf="isAdmin" routerLink="/listarDetalleTransporte" (click)="sidenav.close()">
-        <mat-icon>group</mat-icon> Solicitudes
+<!--      <a mat-list-item *ngIf="isLogged" routerLink="/listarDetalleTransporte" (click)="sidenav.close()">-->
+<!--        <mat-icon>assignment</mat-icon> Mis Solicitudes-->
+<!--      </a>-->
+      <a mat-list-item *ngIf="isLogged" routerLink="/listarDetalleTransporte" (click)="sidenav.close()">
+        <mat-icon>assignment</mat-icon> Solicitudes
       </a>
-      <a mat-list-item *ngIf="isLogged" routerLink="/unidades" (click)="sidenav.close()">
-        <mat-icon>list</mat-icon> Unidades
+      <a mat-list-item *ngIf="isAdmin" routerLink="/unidades" (click)="sidenav.close()">
+        <mat-icon>directions_bus</mat-icon> Unidades
       </a>
       <a mat-list-item *ngIf="isAdmin" routerLink="/registroEmpleado" (click)="sidenav.close()">
-        <mat-icon>group</mat-icon> Empleados
+        <mat-icon>person_outline</mat-icon> Empleados
       </a>
-      <a mat-list-item *ngIf="isAdmin" routerLink="/empleado/lista" (click)="sidenav.close()">
-        <mat-icon>group</mat-icon> Soporte
+      <a mat-list-item *ngIf="isLogged" routerLink="/empleado/lista" (click)="sidenav.close()">
+        <mat-icon>chat</mat-icon> Soporte
       </a>
-      <a mat-list-item *ngIf="isAdmin" routerLink="/empleado/lista" (click)="sidenav.close()">
-        <mat-icon>group</mat-icon> Acerca de nosotros
+      <a mat-list-item *ngIf="isLogged" routerLink="/acercaDe" (click)="sidenav.close()">
+        <mat-icon>info</mat-icon> Acerca de nosotros
       </a>
 
       <a mat-list-item *ngIf="isLogged" (click)="onLogOut(); sidenav.close()">

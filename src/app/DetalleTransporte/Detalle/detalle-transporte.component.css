@@ -1,0 +1,25 @@
+.detalle-transporte {
+  padding: 15px;
+}
+
+.mat-card-subtitle {
+  font-weight: bold;
+  margin-top: 10px;
+}
+
+.loading-card {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 200px;
+}
+
+.loading-content {
+  font-size: 18px;
+  color: #757575;
+}
+
+button {
+  background-color: #2196F3;
+  color: white;
+}

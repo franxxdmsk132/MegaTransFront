@@ -25,6 +25,10 @@ import {DetalleTransporteListarComponent} from './DetalleTransporte/Lista/detall
 import {MatSort, MatSortModule} from '@angular/material/sort';
 import {CrearDetalleTransporteComponent} from './DetalleTransporte/Crear/detalle-transporte-crear.component';
 import {BuscarCodigoComponent} from './principal/buscar-codigo/buscar-codigo.component';
+import {DetalleTransporteComponent} from './DetalleTransporte/Detalle/detalle-transporte.component';
+import {MatGridListModule} from '@angular/material/grid-list';
+import {AcercaComponent} from './acerca/acerca.component';
+import {PerfilComponent} from './perfil/perfil.component';
 
 @NgModule({
   declarations: [  ],
@@ -54,7 +58,12 @@ import {BuscarCodigoComponent} from './principal/buscar-codigo/buscar-codigo.com
     DetalleTransporteListarComponent,
     CrearDetalleTransporteComponent,
     MatSortModule,
-    BuscarCodigoComponent
+    BuscarCodigoComponent,
+    DetalleTransporteComponent,
+    MatGridListModule,
+    MatButtonModule,
+    AcercaComponent,
+    PerfilComponent
   ],
   providers: [],
 })

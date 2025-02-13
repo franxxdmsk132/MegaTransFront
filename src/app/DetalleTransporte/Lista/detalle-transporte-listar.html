@@ -1,96 +1,25 @@
+
+
 <app-menu class="sticky-menu">
-  <mat-card>
-  <mat-card-header>
-    <mat-toolbar color="primary">
-      <span>Listado de Detalles de Transporte</span>
-    </mat-toolbar>
-  </mat-card-header>
+  <div class="card-container">
+    <mat-card *ngFor="let element of dataSource.data" class="detalle-card">
+      <mat-card-header>
+        <mat-card-title>{{ element.cliente?.nombre }} {{ element.cliente?.apellido }}</mat-card-title>
+        <mat-card-subtitle>Número de Orden: {{ element.numOrden }}</mat-card-subtitle>
+      </mat-card-header>
 
-  <mat-card-content>
-    <mat-table [dataSource]="dataSource" matSort>
+      <mat-card-content>
+        <p><strong>Fecha:</strong> {{ element.fecha }}</p>
+        <p><strong>Tipo de Servicio:</strong> {{ element.tipoServicio }}</p>
+        <p><strong>Tipo de Unidad:</strong> {{ element.unidad ? element.unidad.tipo : 'N/A' }}</p>
+        <p><strong>Origen:</strong> {{ element.dirOrigen.callePrincipal }}, {{ element.dirOrigen.calleSecundaria }}</p>
+        <p><strong>Destino:</strong> {{ element.dirDestino.callePrincipal }}, {{ element.dirDestino.calleSecundaria }}</p>
+        <p><strong>Estado:</strong> {{ element.estado }}</p>
+      </mat-card-content>
 
-      <!-- Columnas de la tabla -->
-      <ng-container matColumnDef="cantidadEstibaje">
-        <mat-header-cell *matHeaderCellDef mat-sort-header>Cantidad Estibaje</mat-header-cell>
-        <mat-cell *matCellDef="let element">{{ element.cantidadEstibaje }}</mat-cell>
-      </ng-container>
-
-      <ng-container matColumnDef="descripcionProducto">
-        <mat-header-cell *matHeaderCellDef mat-sort-header>Descripción Producto</mat-header-cell>
-        <mat-cell *matCellDef="let element">{{ element.descripcionProducto }}</mat-cell>
-      </ng-container>
-
-      <ng-container matColumnDef="estado">
-        <mat-header-cell *matHeaderCellDef mat-sort-header>Estado</mat-header-cell>
-        <mat-cell *matCellDef="let element">{{ element.estado }}</mat-cell>
-      </ng-container>
-
-      <ng-container matColumnDef="tipoServicio">
-        <mat-header-cell *matHeaderCellDef mat-sort-header>Tipo de Servicio</mat-header-cell>
-        <mat-cell *matCellDef="let element">{{ element.tipoServicio }}</mat-cell>
-      </ng-container>
-
-      <ng-container matColumnDef="estibaje">
-        <mat-header-cell *matHeaderCellDef mat-sort-header>Estibaje</mat-header-cell>
-        <mat-cell *matCellDef="let element">{{ element.estibaje }}</mat-cell>
-      </ng-container>
-
-      <ng-container matColumnDef="fecha">
-        <mat-header-cell *matHeaderCellDef mat-sort-header>Fecha</mat-header-cell>
-        <mat-cell *matCellDef="let element">{{ element.fecha }}</mat-cell>
-      </ng-container>
-
-      <ng-container matColumnDef="numOrden">
-        <mat-header-cell *matHeaderCellDef mat-sort-header>Número de Orden</mat-header-cell>
-        <mat-cell *matCellDef="let element">{{ element.numOrden }}</mat-cell>
-      </ng-container>
-
-      <ng-container matColumnDef="pago">
-        <mat-header-cell *matHeaderCellDef mat-sort-header>Pago</mat-header-cell>
-        <mat-cell *matCellDef="let element">{{ element.pago }}</mat-cell>
-      </ng-container>
-
-      <ng-container matColumnDef="dirOrigen">
-        <mat-header-cell *matHeaderCellDef mat-sort-header>Dirección Origen</mat-header-cell>
-        <mat-cell *matCellDef="let element">{{ element.dirOrigen.barrio }}, {{ element.dirOrigen.callePrincipal }}</mat-cell>
-      </ng-container>
-
-      <ng-container matColumnDef="dirDestino">
-        <mat-header-cell *matHeaderCellDef mat-sort-header>Dirección Destino</mat-header-cell>
-        <mat-cell *matCellDef="let element">{{ element.dirDestino.barrio }}, {{ element.dirDestino.callePrincipal }}</mat-cell>
-      </ng-container>
-
-      <ng-container matColumnDef="unidad">
-        <mat-header-cell *matHeaderCellDef mat-sort-header>Unidad</mat-header-cell>
-        <mat-cell *matCellDef="let element">{{ element.unidad ? element.unidad.tipo : 'N/A' }}</mat-cell>
-      </ng-container>
-
-      <ng-container matColumnDef="cliente">
-        <mat-header-cell *matHeaderCellDef mat-sort-header>Cliente</mat-header-cell>
-        <mat-cell *matCellDef="let element">{{ element.usuario?.nombre }} {{ element.usuario?.apellido }}</mat-cell>
-      </ng-container>
-
-
-
-      <ng-container matColumnDef="acciones">
-        <mat-header-cell *matHeaderCellDef>Acciones</mat-header-cell>
-        <mat-cell *matCellDef="let element">
-          <button mat-icon-button (click)="visualizarDetalle(element)">
-            <mat-icon>visibility</mat-icon>
-          </button>
-          <button mat-icon-button color="warn" (click)="eliminarDetalle(element.id)">
-            <mat-icon>delete</mat-icon>
-          </button>
-        </mat-cell>
-      </ng-container>
-
-      <!-- Fila de la tabla -->
-      <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
-      <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
-    </mat-table>
-
-    <!-- Paginación -->
-    <mat-paginator [pageSizeOptions]="[5, 10, 25]" showFirstLastButtons></mat-paginator>
-  </mat-card-content>
-</mat-card>
+      <mat-card-actions>
+        <button mat-flat-button color="primary" (click)="visualizarDetalle(element)">Ver más</button>
+      </mat-card-actions>
+    </mat-card>
+  </div>
 </app-menu>

@@ -56,3 +56,14 @@
   z-index: 1000; /* Esto asegura que se mantenga encima de otros elementos */
   width: 100%; /* Asegúrate de que ocupe todo el ancho de la pantalla */
 }
+.card-container {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 16px;
+  justify-content: center;
+}
+
+.detalle-card {
+  width: 95%;
+  padding: 10px;
+}

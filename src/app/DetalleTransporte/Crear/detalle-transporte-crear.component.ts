@@ -7,6 +7,8 @@ import {MatFormField, MatLabel} from '@angular/material/form-field';
 import {MatInput} from '@angular/material/input';
 import {MatButton} from '@angular/material/button';
 import {MenuComponent} from '../../menu/menu.component';
+import {MatRadioButton, MatRadioGroup} from '@angular/material/radio';
+import {MatCheckbox} from '@angular/material/checkbox';
 
 @Component({
   selector: 'app-Detalle-transporte-crear',
@@ -18,12 +20,16 @@ import {MenuComponent} from '../../menu/menu.component';
     MatInput,
     MatButton,
     MatLabel,
-    MenuComponent
+    MenuComponent,
+    MatRadioGroup,
+    MatRadioButton,
+    MatCheckbox
   ],
   standalone: true
 })
 export class CrearDetalleTransporteComponent implements OnInit {
   detalleForm: FormGroup;
+  estibajeChecked: boolean = false;
 
   constructor(
     private fb: FormBuilder,
@@ -31,11 +37,10 @@ export class CrearDetalleTransporteComponent implements OnInit {
     private router: Router
   ) {
     this.detalleForm = this.fb.group({
-      cantidadEstibaje: ['', Validators.required],
+      cantidadEstibaje: [0, Validators.required],
       descripcionProducto: ['', Validators.required],
       tipoServicio: ['', Validators.required],
-      estibaje: ['', Validators.required],
-      estado: ['', Validators.required],
+      estibaje: [false],
       pago: ['', Validators.required],
       direccionOrigen: this.fb.group({
         barrio: ['', Validators.required],
@@ -61,7 +66,27 @@ export class CrearDetalleTransporteComponent implements OnInit {
     });
   }
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    // Inicializar el estado del estibaje y actualizar la habilitación del campo cantidadEstibaje
+    this.estibajeChecked = this.detalleForm.get('estibaje')?.value;
+    this.updateCantidadEstibajeState();
+  }
+
+  onEstibajeChange(): void {
+    this.estibajeChecked = this.detalleForm.get('estibaje')?.value;
+    this.updateCantidadEstibajeState();
+  }
+
+  // Método que habilita/deshabilita el campo cantidadEstibaje
+  updateCantidadEstibajeState(): void {
+    const cantidadEstibajeControl = this.detalleForm.get('cantidadEstibaje');
+    if (this.estibajeChecked) {
+      cantidadEstibajeControl?.enable();
+    } else {
+      cantidadEstibajeControl?.disable();
+      cantidadEstibajeControl?.setValue(0); // Ponemos a 0 si no está marcado
+    }
+  }
 
   onSubmit(): void {
     if (this.detalleForm.valid) {

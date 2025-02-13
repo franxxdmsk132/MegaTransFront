@@ -1,6 +1,6 @@
-<h1 mat-dialog-title>Buscar Transporte por Número de Orden</h1>
+<h1 mat-dialog-title>Buscar por Número de Orden</h1>
 <div mat-dialog-content>
-  <mat-form-field>
+  <mat-form-field appearance="fill" style="width: 100%;">
     <mat-label>Número de Orden</mat-label>
     <input matInput [(ngModel)]="numOrden" placeholder="Ingrese número de orden">
     <mat-error *ngIf="errorMessage">{{ errorMessage }}</mat-error>
@@ -23,7 +23,8 @@
   </div>
 </div>
 
-<div mat-dialog-actions>
-  <button mat-button (click)="closeDialog()">Cancelar</button>
-  <button mat-button color="primary" (click)="buscar()">Buscar</button>
+<div mat-dialog-actions class="button-container">
+  <button mat-flat-button color="white" (click)="closeDialog()">Cancelar</button>
+  <button mat-flat-button color="primary" (click)="buscar()">Buscar</button>
 </div>
+

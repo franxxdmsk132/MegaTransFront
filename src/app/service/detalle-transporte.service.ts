@@ -30,13 +30,13 @@ export class DetalleTransporteService {
   // Obtener todos los detalles de transporte
   obtenerDetallesTransporte(): Observable<DetalleTransporte[]> {
     const headers = this.getAuthHeaders();
-    return this.http.get<DetalleTransporte[]>(this.apiUrl, { headers });
+    return this.http.get<DetalleTransporte[]>(`${this.apiUrl}/filtrados`, { headers });
   }
 
   // Obtener Detalle de transporte por ID
   obtenerDetallePorId(id: number): Observable<DetalleTransporte> {
     const headers = this.getAuthHeaders();
-    return this.http.get<DetalleTransporte>(`${this.apiUrl}${id}`, { headers });
+    return this.http.get<DetalleTransporte>(`${this.apiUrl}/${id}`, { headers });
   }
 
   // Actualizar estado del Detalle de transporte

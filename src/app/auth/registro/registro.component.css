@@ -1,0 +1,18 @@
+.login-card {
+  width: 100%;
+  max-width: 500px;  /* Tamaño máximo de la tarjeta */
+  margin-top: 50px;
+  justify-content: center;
+  display: flex;
+  align-items: center;
+}
+
+.full-width {
+  width: 100%;
+}
+.custom-button {
+  width: 95%;         /* Ancho específico */
+  height: 42px;         /* Altura específica */
+  font-size: 16px;      /* Tamaño de fuente */
+  padding: 10px 20px;   /* Relleno del botón */
+}

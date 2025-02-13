@@ -9,16 +9,21 @@ import {UnidadesRegistroComponent} from './unidades/registrar/unidades.registro.
 import {UnidadesActualizarComponent} from './unidades/actualizar/unidades.actualizar.component';
 import {CrearDetalleTransporteComponent} from './DetalleTransporte/Crear/detalle-transporte-crear.component';
 import {DetalleTransporteListarComponent} from './DetalleTransporte/Lista/detalle-transporte-listar';
+import {DetalleTransporteComponent} from './DetalleTransporte/Detalle/detalle-transporte.component';
+import {AcercaComponent} from './acerca/acerca.component';
+import {PerfilComponent} from './perfil/perfil.component';
 
 export const routes: Routes = [
   {path: '', component: PrincipalComponent},
   {path: 'unidades', component: ListaUnidadComponent},
-  { path: 'unidadesRegistar', component: UnidadesRegistroComponent },
-  { path: 'unidadesActualizar/:id', component: UnidadesActualizarComponent },
-  { path: 'crearDetalleTransporte', component: CrearDetalleTransporteComponent },
-  { path: 'listarDetalleTransporte', component: DetalleTransporteListarComponent },
-
+  {path: 'unidadesRegistar', component: UnidadesRegistroComponent},
+  {path: 'unidadesActualizar/:id', component: UnidadesActualizarComponent},
+  {path: 'crearDetalleTransporte', component: CrearDetalleTransporteComponent},
+  {path: 'listarDetalleTransporte', component: DetalleTransporteListarComponent},
+  {path: 'detalleTransporte/:id', component: DetalleTransporteComponent},
   {path: 'login', component: LoginComponent},
+  {path: 'acercaDe', component: AcercaComponent},
+  {path: 'perfil', component: PerfilComponent},
   {path: 'registro', component: RegistroComponent},
   {path: 'registroEmpleado', component: RegistroEmplComponent},
   // {path: '**', redirectTo: '', pathMatch: 'full'}

@@ -3,3 +3,9 @@
   font-weight: bold;
   margin-top: 10px;
 }
+.button-container {
+  display: flex;
+  justify-content: center;
+  gap: 16px; /* Espacio entre los botones */
+  width: 100%;
+}

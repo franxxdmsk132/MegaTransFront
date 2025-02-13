@@ -8,12 +8,12 @@
     <div class="container d-flex justify-content-center">
       <!-- Usamos mat-card para el diseño de la tarjeta -->
       <mat-card class="login-card">
-        <button mat-flat-button routerLink="/login">Iniciar Sesion
+        <button mat-flat-button routerLink="/login" class="custom-button" >Iniciar Sesion
         </button>
         <br>
-        <button mat-flat-button routerLink="/registro">Registrarse
+        <button mat-flat-button routerLink="/registro" class="custom-button" >Registrarse
         </button>
-<br>
+        <br>
 
         <mat-card-content>
           <form #f="ngForm" (ngSubmit)="onLogin()" novalidate>

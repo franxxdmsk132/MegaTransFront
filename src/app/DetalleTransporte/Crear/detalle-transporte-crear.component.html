@@ -1,30 +1,39 @@
 <app-menu>
-  <div class="form-container">
+  <div style="display: flex; align-items: center;">
     <form [formGroup]="detalleForm" (ngSubmit)="onSubmit()">
       <mat-form-field appearance="fill" class="full-width">
         <mat-label>ID de la Unidad:</mat-label>
         <input matInput id="unidadId" formControlName="unidadId" type="number">
       </mat-form-field>
 
-      <mat-form-field appearance="fill" class="full-width">
-        <mat-label>Tipo de Servicio:</mat-label>
-        <input matInput id="tipoServicio" formControlName="tipoServicio" type="text">
-      </mat-form-field>
+      <mat-label>Tipo de Servicio:</mat-label>
+      <br>
+      <br>
+      <mat-radio-group formControlName="tipoServicio" aria-label="Selecciona un tipo de servicio">
+        <mat-radio-button value="MUDANZA">Mudanza</mat-radio-button>
+        <mat-radio-button value="MERCADERIA">Mercadería</mat-radio-button>
+        <mat-radio-button value="DISTRIBUCION">Distribución</mat-radio-button>
+      </mat-radio-group>
+      <br>
+      <br>
 
-      <mat-form-field appearance="fill" class="full-width">
-        <mat-label>Estibaje:</mat-label>
-        <input matInput id="estibaje" formControlName="estibaje" type="text">
-      </mat-form-field>
+      <mat-label>Desea de Estibaje ?</mat-label>
+      <br>
 
-      <mat-form-field appearance="fill" class="full-width">
-        <mat-label>Estado:</mat-label>
-        <input matInput id="estado" formControlName="estado" type="text">
-      </mat-form-field>
+      <div style="display: flex; align-items: center; gap: 16px; margin-top: 8px;">
+        <!-- El checkbox con un margen a la derecha -->
+        <mat-checkbox formControlName="estibaje" (change)="onEstibajeChange()">Estibaje</mat-checkbox>
+        <br>
+        <br>
+        <br>
+        <!-- El input con un tamaño adecuado y margen a la izquierda -->
+        <mat-form-field appearance="fill" style="width: 150px;">
+          <mat-label>Cantidad de Estibaje:</mat-label>
+          <input matInput id="cantidadEstibaje" formControlName="cantidadEstibaje" type="number"
+                 [disabled]="!estibajeChecked">
+        </mat-form-field>
+      </div>
 
-      <mat-form-field appearance="fill" class="full-width">
-        <mat-label>Cantidad de Estibaje:</mat-label>
-        <input matInput id="cantidadEstibaje" formControlName="cantidadEstibaje" type="number">
-      </mat-form-field>
 
       <div formGroupName="direccionOrigen">
         <h3>Dirección de Origen</h3>
@@ -116,13 +125,18 @@
         <mat-label>Descripción del Producto:</mat-label>
         <input matInput id="descripcionProducto" formControlName="descripcionProducto" type="text">
       </mat-form-field>
+      <br>
+      <br>
 
-      <mat-form-field appearance="fill" class="full-width">
-        <mat-label>Pago:</mat-label>
-        <input matInput id="pago" formControlName="pago" type="text">
-      </mat-form-field>
+      <mat-radio-group formControlName="pago" aria-label="Selecciona un tipo de Pago">
+        <mat-label>Eija un tipo de Pago:</mat-label>
+        <br>
+        <br>
+        <mat-radio-button value="EFECTIVO">Efectivo</mat-radio-button>
+        <mat-radio-button value="TRANSFERENCIA">Transferencia</mat-radio-button>
+      </mat-radio-group>
       <!-- Botón de Submit -->
-        <button mat-raised-button type="submit" [disabled]="detalleForm.invalid">Crear Detalle de Transporte</button>
+      <button mat-raised-button type="submit" [disabled]="detalleForm.invalid">Crear Detalle de Transporte</button>
     </form>
 
   </div>

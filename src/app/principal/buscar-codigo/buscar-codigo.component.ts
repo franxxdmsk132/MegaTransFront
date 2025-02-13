@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import {Component} from '@angular/core';
 import {MatDialogActions, MatDialogContent, MatDialogRef, MatDialogTitle} from '@angular/material/dialog';
 import {MatError, MatFormField, MatLabel} from '@angular/material/form-field';
 import {MatInput} from '@angular/material/input';
@@ -29,11 +29,12 @@ import {catchError, of} from 'rxjs';
 export class BuscarCodigoComponent {
 
   numOrden: string = '';
-  errorMessage =''
+  errorMessage = ''
   transporteDetalle: any = null;  // Para almacenar los detalles del transporte encontrado
 
   constructor(public dialogRef: MatDialogRef<BuscarCodigoComponent>,
-              private detalleTransporteService: DetalleTransporteService) {}
+              private detalleTransporteService: DetalleTransporteService) {
+  }
 
   // Método para cerrar el diálogo
   closeDialog(): void {
@@ -44,6 +45,7 @@ export class BuscarCodigoComponent {
   sendNumOrden(): void {
     this.dialogRef.close(this.numOrden);
   }
+
   // Método para realizar la búsqueda cuando el usuario presiona el botón de buscar
   buscar(): void {
     if (!this.numOrden) {
@@ -65,7 +67,9 @@ export class BuscarCodigoComponent {
             this.transporteDetalle = response.detalle;
           } else {
             // Si no se obtiene Detalle, mostramos el mensaje de error
-            this.errorMessage = 'No se encontró el número de orden.';
+            this.errorMessage = `No se encontró el número de orden.
+            Código Incorrecto`;
+
             this.transporteDetalle = null;
           }
         }
