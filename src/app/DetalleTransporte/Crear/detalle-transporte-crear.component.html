@@ -2,8 +2,9 @@
   <div style="display: flex; align-items: center;">
     <form [formGroup]="detalleForm" (ngSubmit)="onSubmit()">
       <mat-form-field appearance="fill" class="full-width">
-        <mat-label>ID de la Unidad:</mat-label>
-        <input matInput id="unidadId" formControlName="unidadId" type="number">
+        <mat-label>Unidad Seleccionada:</mat-label>
+        <input matInput id="unidadId" formControlName="unidadId" type="text" readonly>
+        <button mat-button (click)="abrirDialogo()">Seleccionar Unidad</button>
       </mat-form-field>
 
       <mat-label>Tipo de Servicio:</mat-label>
@@ -34,91 +35,88 @@
         </mat-form-field>
       </div>
 
-
+      <div id="mapOrigen" style="height: 300px; width: 100%;"></div>
+      <!-- Dirección de Origen -->
       <div formGroupName="direccionOrigen">
         <h3>Dirección de Origen</h3>
-        <mat-form-field appearance="fill" class="full-width">
-          <mat-label>Barrio:</mat-label>
-          <input matInput id="barrioOrigen" formControlName="barrio" type="text">
-        </mat-form-field>
+        <div class="form-grid">
+          <mat-form-field appearance="fill">
+            <mat-label>Barrio:</mat-label>
+            <input matInput id="barrioOrigen" formControlName="barrio" type="text">
+          </mat-form-field>
 
-        <mat-form-field appearance="fill" class="full-width">
-          <mat-label>Calle Principal:</mat-label>
-          <input matInput id="callePrincipalOrigen" formControlName="callePrincipal" type="text">
-        </mat-form-field>
+          <mat-form-field appearance="fill">
+            <mat-label>Calle Principal:</mat-label>
+            <input matInput id="callePrincipalOrigen" formControlName="callePrincipal" type="text">
+          </mat-form-field>
 
-        <mat-form-field appearance="fill" class="full-width">
-          <mat-label>Calle Secundaria:</mat-label>
-          <input matInput id="calleSecundariaOrigen" formControlName="calleSecundaria" type="text">
-        </mat-form-field>
+          <mat-form-field appearance="fill">
+            <mat-label>Calle Secundaria:</mat-label>
+            <input matInput id="calleSecundariaOrigen" formControlName="calleSecundaria" type="text">
+          </mat-form-field>
 
-        <mat-form-field appearance="fill" class="full-width">
-          <mat-label>Ciudad:</mat-label>
-          <input matInput id="ciudadOrigen" formControlName="ciudad" type="text">
-        </mat-form-field>
+          <mat-form-field appearance="fill">
+            <mat-label>Ciudad:</mat-label>
+            <input matInput id="ciudadOrigen" formControlName="ciudad" type="text">
+          </mat-form-field>
 
-        <mat-form-field appearance="fill" class="full-width">
-          <mat-label>Latitud:</mat-label>
-          <input matInput id="latitudOrigen" formControlName="latitud" type="number">
-        </mat-form-field>
+          <input id="latitudOrigen" formControlName="latitud" type="hidden">
+          <input id="longitudOrigen" formControlName="longitud" type="hidden">
+        </div>
 
-        <mat-form-field appearance="fill" class="full-width">
-          <mat-label>Longitud:</mat-label>
-          <input matInput id="longitudOrigen" formControlName="longitud" type="number">
-        </mat-form-field>
-
+        <!-- Campo de referencia ocupa toda la fila -->
         <mat-form-field appearance="fill" class="full-width">
           <mat-label>Referencia:</mat-label>
           <input matInput id="referenciaOrigen" formControlName="referencia" type="text">
         </mat-form-field>
 
-        <mat-form-field appearance="fill" class="full-width">
+        <mat-form-field appearance="fill">
           <mat-label>Teléfono:</mat-label>
           <input matInput id="telefonoOrigen" formControlName="telefono" type="text">
         </mat-form-field>
       </div>
 
+      <!-- Mapa para Dirección de Destino -->
+      <div id="mapDestino" style="height: 300px; width: 100%;"></div>
+
+      <!-- Dirección de Destino -->
       <div formGroupName="direccionDestino">
         <h3>Dirección de Destino</h3>
-        <mat-form-field appearance="fill" class="full-width">
-          <mat-label>Barrio:</mat-label>
-          <input matInput id="barrioDestino" formControlName="barrio" type="text">
-        </mat-form-field>
+        <div class="form-grid">
+          <mat-form-field appearance="fill">
+            <mat-label>Barrio:</mat-label>
+            <input matInput id="barrioDestino" formControlName="barrio" type="text">
+          </mat-form-field>
 
-        <mat-form-field appearance="fill" class="full-width">
-          <mat-label>Calle Principal:</mat-label>
-          <input matInput id="callePrincipalDestino" formControlName="callePrincipal" type="text">
-        </mat-form-field>
+          <mat-form-field appearance="fill">
+            <mat-label>Calle Principal:</mat-label>
+            <input matInput id="callePrincipalDestino" formControlName="callePrincipal" type="text">
+          </mat-form-field>
 
-        <mat-form-field appearance="fill" class="full-width">
-          <mat-label>Calle Secundaria:</mat-label>
-          <input matInput id="calleSecundariaDestino" formControlName="calleSecundaria" type="text">
-        </mat-form-field>
+          <mat-form-field appearance="fill">
+            <mat-label>Calle Secundaria:</mat-label>
+            <input matInput id="calleSecundariaDestino" formControlName="calleSecundaria" type="text">
+          </mat-form-field>
 
-        <mat-form-field appearance="fill" class="full-width">
-          <mat-label>Ciudad:</mat-label>
-          <input matInput id="ciudadDestino" formControlName="ciudad" type="text">
-        </mat-form-field>
+          <mat-form-field appearance="fill">
+            <mat-label>Ciudad:</mat-label>
+            <input matInput id="ciudadDestino" formControlName="ciudad" type="text">
+          </mat-form-field>
 
-        <mat-form-field appearance="fill" class="full-width">
-          <mat-label>Latitud:</mat-label>
-          <input matInput id="latitudDestino" formControlName="latitud" type="number">
-        </mat-form-field>
+          <input id="latitudDestino" formControlName="latitud" type="hidden">
+          <input id="longitudDestino" formControlName="longitud" type="hidden">
 
-        <mat-form-field appearance="fill" class="full-width">
-          <mat-label>Longitud:</mat-label>
-          <input matInput id="longitudDestino" formControlName="longitud" type="number">
-        </mat-form-field>
+          <mat-form-field appearance="fill" class="full-width">
+            <mat-label>Teléfono:</mat-label>
+            <input matInput id="telefonoDestino" formControlName="telefono" type="text">
+          </mat-form-field>
+          <mat-form-field appearance="fill" class="full-width">
+            <mat-label>Referencia:</mat-label>
+            <input matInput id="referenciaDestino" formControlName="referencia" type="text">
+          </mat-form-field>
 
-        <mat-form-field appearance="fill" class="full-width">
-          <mat-label>Referencia:</mat-label>
-          <input matInput id="referenciaDestino" formControlName="referencia" type="text">
-        </mat-form-field>
 
-        <mat-form-field appearance="fill" class="full-width">
-          <mat-label>Teléfono:</mat-label>
-          <input matInput id="telefonoDestino" formControlName="telefono" type="text">
-        </mat-form-field>
+        </div>
       </div>
 
       <mat-form-field appearance="fill" class="full-width">
@@ -136,7 +134,7 @@
         <mat-radio-button value="TRANSFERENCIA">Transferencia</mat-radio-button>
       </mat-radio-group>
       <!-- Botón de Submit -->
-      <button mat-raised-button type="submit" [disabled]="detalleForm.invalid">Crear Detalle de Transporte</button>
+      <button mat-raised-button type="submit" [disabled]="detalleForm.invalid">Crear Solicitud de Transporte</button>
     </form>
 
   </div>

@@ -1,0 +1,26 @@
+<h2 mat-dialog-title>Seleccionar Unidad</h2>
+<mat-dialog-content *ngIf="unidades.length > 0; else loading">
+  <mat-grid-list cols="1" rowHeight="200px">
+    <mat-grid-tile *ngFor="let unidad of unidades" (click)="seleccionarUnidad(unidad)">
+      <mat-card class="unidad-card">
+        <mat-card-header>
+          <mat-card-title>{{ unidad.tipo }}</mat-card-title>
+          <mat-card-subtitle>Tipo: {{ unidad.tipo_cajon }}</mat-card-subtitle>
+        </mat-card-header>
+        <mat-card-content class="card-content">
+          <img [src]="'http://localhost:8080' + unidad.imagenUrl" alt="Imagen unidad" />
+        </mat-card-content>
+      </mat-card>
+    </mat-grid-tile>
+  </mat-grid-list>
+</mat-dialog-content>
+
+<ng-template #loading>
+  <p>Cargando unidades...</p>
+</ng-template>
+
+<br>
+
+<mat-dialog-actions align="center">
+  <button mat-button (click)="cerrar()">Cancelar</button>
+</mat-dialog-actions>

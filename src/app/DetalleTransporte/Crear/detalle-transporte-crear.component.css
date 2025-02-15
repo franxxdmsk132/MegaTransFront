@@ -65,3 +65,17 @@ button {
 body {
   overflow-x: hidden; /* Opcional, para evitar el scroll horizontal en el body */
 }
+#map {
+  width: 100%;
+  height: 200px;
+  border-radius: 10px;
+}
+.form-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr); /* Dos columnas */
+  gap: 16px; /* Espaciado entre los campos */
+}
+
+.full-width {
+  grid-column: span 2; /* Hace que la referencia ocupe toda la fila */
+}

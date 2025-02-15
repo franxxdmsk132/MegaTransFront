@@ -10,6 +10,7 @@ import {CommonModule} from '@angular/common';
     RouterOutlet,
     CommonModule,
 
+
   ],
   styleUrls: ['./app.component.css']  // Corregir de styleUrl a styleUrls
 })
