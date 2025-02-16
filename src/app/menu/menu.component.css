@@ -38,3 +38,8 @@ mat-nav-list a mat-icon {
 body {
   overflow-x: hidden; /* Opcional, para evitar el scroll horizontal en el body */
 }
+/* menu.component.css */
+span {
+  font-family: 'TERMINATOR', sans-serif;
+}
+

@@ -79,3 +79,28 @@ body {
 .full-width {
   grid-column: span 2; /* Hace que la referencia ocupe toda la fila */
 }
+.unidad-preview {
+  display: flex;
+  flex-direction: column;
+  align-items: center; /* Centrar contenido */
+  text-align: center;
+  gap: 10px;
+}
+
+.unidad-detalle {
+  font-weight: bold;
+  font-size: 16px;
+  color: #333; /* Color oscuro para contraste */
+}
+
+.unidad-imagen {
+  width: 80%;  /* Ajusta el tamaño de la imagen */
+  height: auto;
+  border-radius: 5px;
+  box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.2); /* Sombra para efecto visual */
+}
+
+button {
+  margin-top: 10px;
+}
+

@@ -1,0 +1,25 @@
+.container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 80vh;
+  flex-direction: column;
+}
+
+.loading-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+}
+
+.profile-card, .error-card {
+  width: 400px;
+  padding: 20px;
+  text-align: left;
+}
+
+.error-message {
+  color: red;
+  font-weight: bold;
+}

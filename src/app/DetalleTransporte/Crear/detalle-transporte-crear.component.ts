@@ -12,6 +12,7 @@ import * as L from 'leaflet';
 import {LatLngExpression} from 'leaflet';
 import {MatDialog} from '@angular/material/dialog';
 import {SelecUnidadComponent} from './selec-unidad/selec-unidad.component';
+import {NgIf} from '@angular/common';
 
 @Component({
   selector: 'app-Detalle-transporte-crear',
@@ -26,7 +27,8 @@ import {SelecUnidadComponent} from './selec-unidad/selec-unidad.component';
     MenuComponent,
     MatRadioGroup,
     MatRadioButton,
-    MatCheckbox
+    MatCheckbox,
+    NgIf
   ],
   standalone: true
 })
@@ -68,7 +70,9 @@ export class CrearDetalleTransporteComponent implements OnInit {
         referencia: [''],
         telefono: ['', Validators.required]
       }),
-      unidadId: ['', Validators.required]
+      unidadId: ['', Validators.required],
+      unidadTipo: [''],
+      unidadImagen: ['']
     });
   }
 
@@ -177,8 +181,22 @@ export class CrearDetalleTransporteComponent implements OnInit {
 
     dialogRef.afterClosed().subscribe(result => {
       if (result) {
-        this.detalleForm.patchValue({ unidadId: result.id });
+        this.detalleForm.patchValue({
+          unidadId: result.id,
+          unidadTipo: result.tipo,
+          unidadImagen: result.imagenUrl // ✅ Sin paréntesis extra
+        });
       }
     });
   }
+
+  limpiarUnidad(): void {
+    this.detalleForm.patchValue({
+      unidadId: '',
+      unidadTipo: '',
+      unidadImagen: ''
+    });
+    this.abrirDialogo()
+  }
+
 }

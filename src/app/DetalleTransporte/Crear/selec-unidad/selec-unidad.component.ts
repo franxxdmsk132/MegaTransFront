@@ -64,9 +64,9 @@ export class SelecUnidadComponent implements OnInit{
 
   ngOnInit(): void {
     this.cargarUnidades()
-    this.unidadService.lista().subscribe((data) => {
-      this.unidades = data;  // Asignas los datos obtenidos al arreglo 'unidades'
-    });
+    // this.unidadService.lista().subscribe((data) => {
+    //   this.unidades = data;  // Asignas los datos obtenidos al arreglo 'unidades'
+    // });
   }
   cargarUnidades(): void {
     this.unidadService.lista().subscribe(
@@ -76,6 +76,7 @@ export class SelecUnidadComponent implements OnInit{
           ...unidad,
           imagenUrl: unidad.imagenUrl ? `${this.unidadService.imgUrl}${unidad.imagenUrl}` : '/assets/default-img.png'
         }));
+        this.unidadesFiltradas = [...this.unidades];
       },
       err => console.log(err)
     );

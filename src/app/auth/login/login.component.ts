@@ -6,12 +6,14 @@ import {AuthService} from '../../service/auth.service';
 import {ToastrService} from 'ngx-toastr';
 import {FormsModule} from '@angular/forms';
 import {MenuComponent} from '../../menu/menu.component';
-import {NgIf} from '@angular/common';
+import {NgClass, NgIf, NgOptimizedImage} from '@angular/common';
 import {MatCard, MatCardContent, MatCardHeader} from '@angular/material/card';
 import {MatTab, MatTabGroup} from '@angular/material/tabs';
 import {MatAnchor, MatButton} from '@angular/material/button';
 import {MatError, MatFormField, MatLabel} from '@angular/material/form-field';
 import {MatInput} from '@angular/material/input';
+import {Mensaje} from '../../models/mensaje';
+import {MatSnackBar} from '@angular/material/snack-bar';
 
 @Component({
   selector: 'app-login',
@@ -32,7 +34,9 @@ import {MatInput} from '@angular/material/input';
     MatButton,
     MatLabel,
     MatError,
-    MatCardContent
+    MatCardContent,
+    NgClass,
+    NgOptimizedImage
   ],
   standalone: true
 })
@@ -50,7 +54,7 @@ export class LoginComponent implements OnInit {
     private tokenService: TokenService,
     private authService: AuthService,
     private router: Router,
-    private toastr: ToastrService
+    private snackBar: MatSnackBar,
   ) { }
 
   ngOnInit() {
@@ -66,28 +70,42 @@ export class LoginComponent implements OnInit {
     this.authService.login(this.loginUsuario).subscribe(
       data => {
         this.isLogged = true;
-
         this.tokenService.setToken(data.token ?? '');
         this.tokenService.setUserName(data.nombreUsuario ?? '');
-        this.tokenService.setFullName(data.nombre ?? '', data.apellido ?? ''); // Guardar nombre completo
+        this.tokenService.setFullName(data.nombre ?? '', data.apellido ?? '');
         this.tokenService.setIdentificacion(data.identificacion ?? '');
         this.tokenService.setTelefono(data.telefono ?? '');
         this.tokenService.setAuthorities(data.authorities);
         this.roles = data.authorities;
-        this.toastr.success('Bienvenido ' + data.nombreUsuario, 'OK', {
-          timeOut: 3000, positionClass: 'toast-top-center'
+
+        // Mostrar un mensaje de éxito con toastr
+        this.snackBar.open('Login exitoso', 'Cerrar', {
+          duration: 3000, // Duración del snackbar (en milisegundos)
+          horizontalPosition: 'center', // Posición horizontal (puedes usar 'start', 'center', 'end')
+          verticalPosition: 'top', // Posición vertical (puedes usar 'top' o 'bottom')
+          panelClass: ['snack-success'] // Clase personalizada para darle estilo al snackbar
         });
+
+
         this.router.navigate(['/']);
       },
       err => {
         this.isLogged = false;
-        this.errMsj = err.error.message;
-        this.toastr.error(this.errMsj, 'Fail', {
-          timeOut: 3000,  positionClass: 'toast-top-center',
+
+        // Mostrar el mensaje de error desde el backend
+        const errorMessage = err.error.mensaje || 'Error desconocido';
+
+        // Mostrar el mensaje de error
+        this.snackBar.open(errorMessage, 'Cerrar', {
+          duration: 3000,
+          horizontalPosition: 'center',
+          verticalPosition: 'top',
+          panelClass: ['snack-error'] // Clase personalizada para el error
         });
-        // console.log(err.error.message);
+
       }
     );
   }
+
 
 }

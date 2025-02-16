@@ -21,6 +21,10 @@
             ],
             "tsConfig": "tsconfig.app.json",
             "assets": [
+              "src/assets",
+              "src/assets/fonts",
+              "src/assets/images",
+              "src/favicon.ico",
               {
                 "glob": "**/*",
                 "input": "public"
@@ -88,6 +92,8 @@
             "tsConfig": "tsconfig.spec.json",
             "assets": [
               "src/assets",
+              "src/assets/fonts",
+              "src/assets.images",
               "src/assets/images/MegaTransLogo.ico",
               {
                 "glob": "**/*",

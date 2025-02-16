@@ -3,9 +3,31 @@
     <form [formGroup]="detalleForm" (ngSubmit)="onSubmit()">
       <mat-form-field appearance="fill" class="full-width">
         <mat-label>Unidad Seleccionada:</mat-label>
-        <input matInput id="unidadId" formControlName="unidadId" type="text" readonly>
-        <button mat-button (click)="abrirDialogo()">Seleccionar Unidad</button>
+
+        <!-- Se agrega un input matInput oculto -->
+        <input matInput [value]="detalleForm.get('unidadId')?.value || ''" hidden>
+
+        <div *ngIf="detalleForm.get('unidadId')?.value; else seleccionarUnidad">
+          <div class="unidad-preview">
+            <!-- Características arriba de la imagen -->
+            <p class="unidad-detalle">{{ detalleForm.get('unidadTipo')?.value }}</p>
+
+            <!-- Imagen centrada y ajustada -->
+            <img *ngIf="detalleForm.get('unidadImagen')?.value"
+                 [src]="detalleForm.get('unidadImagen')?.value"
+                 alt="Imagen de la unidad"
+                 class="unidad-imagen">
+
+            <!-- Botón debajo de todo -->
+            <button mat-button color="warn" (click)="limpiarUnidad()">Cambiar Unidad</button>
+          </div>
+        </div>
+
+        <ng-template #seleccionarUnidad>
+          <button mat-button (click)="abrirDialogo()">Seleccionar Unidad</button>
+        </ng-template>
       </mat-form-field>
+
 
       <mat-label>Tipo de Servicio:</mat-label>
       <br>
@@ -34,11 +56,11 @@
                  [disabled]="!estibajeChecked">
         </mat-form-field>
       </div>
-
+      <h3>Dirección de Origen</h3>
       <div id="mapOrigen" style="height: 300px; width: 100%;"></div>
       <!-- Dirección de Origen -->
+      <br>
       <div formGroupName="direccionOrigen">
-        <h3>Dirección de Origen</h3>
         <div class="form-grid">
           <mat-form-field appearance="fill">
             <mat-label>Barrio:</mat-label>
@@ -77,8 +99,9 @@
       </div>
 
       <!-- Mapa para Dirección de Destino -->
+      <h3>Dirección de Destino</h3>
       <div id="mapDestino" style="height: 300px; width: 100%;"></div>
-
+      <br>
       <!-- Dirección de Destino -->
       <div formGroupName="direccionDestino">
         <h3>Dirección de Destino</h3>

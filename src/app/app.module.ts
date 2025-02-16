@@ -29,6 +29,11 @@ import {DetalleTransporteComponent} from './DetalleTransporte/Detalle/detalle-tr
 import {MatGridListModule} from '@angular/material/grid-list';
 import {AcercaComponent} from './acerca/acerca.component';
 import {PerfilComponent} from './perfil/perfil.component';
+import {MatInputModule} from '@angular/material/input';
+import {MatSnackBarModule} from '@angular/material/snack-bar';
+import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
+import {CambiarPasswordComponent} from './perfil/cambiar-password/cambiar-password.component';
+import {MatLabel} from '@angular/material/form-field';
 
 @NgModule({
   declarations: [  ],
@@ -50,6 +55,7 @@ import {PerfilComponent} from './perfil/perfil.component';
     MatListModule,
     MatButtonModule,
     MatCardModule,
+    MatLabel,
     ListaUnidadComponent,
     RegistroEmplComponent,
     UnidadesRegistroComponent,
@@ -63,7 +69,11 @@ import {PerfilComponent} from './perfil/perfil.component';
     MatGridListModule,
     MatButtonModule,
     AcercaComponent,
-    PerfilComponent
+    PerfilComponent,
+    MatProgressSpinnerModule,
+    MatInputModule,
+    MatSnackBarModule,
+    CambiarPasswordComponent
   ],
   providers: [],
 })

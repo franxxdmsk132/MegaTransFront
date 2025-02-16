@@ -1,19 +1,29 @@
-/* Selecciona las tarjetas dentro del diálogo */
+
+.unidad-grid {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 15px; /* Espacio entre las tarjetas */
+}
+
 .unidad-card {
-  margin-bottom: 30px;  /* Espacio entre las tarjetas */
-  border-radius: 5px;  /* Bordes redondeados */
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Sombra para hacerlas más destacadas */
-  overflow: hidden;
+  width: 90%; /* Ajusta el ancho de las tarjetas */
+  cursor: pointer;
+}
+.acciones {
+  margin-top: 20px;
+  text-align: center;
+}
+.unidad-detalles {
+  display: flex;
+  justify-content: space-between;
   width: 100%;
-  height: auto;
-  position: relative;  /* Asegura que el contenido del texto pueda posicionarse encima de la imagen */
+  margin-top: 10px;
 }
 
-/* Ajustar la imagen para que ocupe más espacio pero sin cortar el contenido */
-.unidad-card img {
-  width: 100%;
-  height: 150px;  /* Ajusta el tamaño de la imagen */
-  object-fit: cover; /* Hace que la imagen cubra el área sin distorsionarse */
+.unidad-detalles p {
+  flex: 1;
+  text-align: center;
+  font-size: 14px;
 }
-
 

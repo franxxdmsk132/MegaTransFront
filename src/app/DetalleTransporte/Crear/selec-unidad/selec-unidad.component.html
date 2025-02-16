@@ -1,26 +1,24 @@
-<h2 mat-dialog-title>Seleccionar Unidad</h2>
-<mat-dialog-content *ngIf="unidades.length > 0; else loading">
-  <mat-grid-list cols="1" rowHeight="200px">
-    <mat-grid-tile *ngFor="let unidad of unidades" (click)="seleccionarUnidad(unidad)">
-      <mat-card class="unidad-card">
-        <mat-card-header>
-          <mat-card-title>{{ unidad.tipo }}</mat-card-title>
-          <mat-card-subtitle>Tipo: {{ unidad.tipo_cajon }}</mat-card-subtitle>
-        </mat-card-header>
-        <mat-card-content class="card-content">
-          <img [src]="'http://localhost:8080' + unidad.imagenUrl" alt="Imagen unidad" />
+<div class="contenedor">
+  <h2>Seleccione una Unidad</h2>
+  <div class="unidad-grid">
+    <div class="unidad-card" *ngFor="let unidad of unidades" (click)="seleccionarUnidad(unidad)">
+      <mat-card>
+<!--        <mat-card-header> &lt;!&ndash; Centra el título &ndash;&gt;-->
+<!--          <mat-card-title>{{ unidad.tipo }}</mat-card-title>-->
+<!--        </mat-card-header>-->
+        <img mat-card-image [src]="unidad.imagenUrl" alt="Imagen de la unidad">
+        <mat-card-content>
+          <div class="unidad-detalles">
+            <p><strong>Alto:</strong> {{ unidad.altura }} m</p>
+            <p><strong>Ancho:</strong> {{ unidad.ancho }} m</p>
+            <p><strong>Largo:</strong> {{ unidad.largo }} m</p>
+          </div>
         </mat-card-content>
       </mat-card>
-    </mat-grid-tile>
-  </mat-grid-list>
-</mat-dialog-content>
-
-<ng-template #loading>
-  <p>Cargando unidades...</p>
-</ng-template>
-
+    </div>
+  </div>
+  <div class="acciones">
+    <button mat-button color="warn" (click)="cerrar()">Cancelar</button>
+  </div>
+</div>
 <br>
-
-<mat-dialog-actions align="center">
-  <button mat-button (click)="cerrar()">Cancelar</button>
-</mat-dialog-actions>

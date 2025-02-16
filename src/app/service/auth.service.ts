@@ -49,4 +49,20 @@ export class AuthService {
     const headers = new HttpHeaders().set('Authorization', `Bearer ${token}`);
     return this.httpClient.get<JwtDTO>(`${this.authURL}perfil/${username}`, { headers });
   }
+
+  public changePassword(username: string, password: string, newPassword: string): Observable<any> {
+    const token = this.tokenService.getToken();
+    const headers = new HttpHeaders().set('Authorization', `Bearer ${token}`);
+
+    const body = { password, newPassword }; // Envía los datos como JSON
+
+    return this.httpClient.put<any>(`${this.authURL}changePass/${username}`, body, { headers });
+  }
+  public actualizarUsuario(username: String, usuarioData: any): Observable<any> {
+    const token = this.tokenService.getToken();
+    const headers = new HttpHeaders().set('Authorization', `Bearer ${token}`).set('Content-Type', 'application/json');
+    return this.httpClient.put(`${this.authURL}usuario/${username}`, usuarioData, { headers });
+  }
+
+
 }

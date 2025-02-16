@@ -16,3 +16,18 @@
   font-size: 16px;      /* Tamaño de fuente */
   padding: 10px 20px;   /* Relleno del botón */
 }
+.error-message {
+  color: red;
+  font-size: 14px;
+  margin-top: 10px;
+}
+
+.snack-success {
+  background-color: #4caf50; /* Verde para éxito */
+  color: white;
+}
+
+.snack-error {
+  background-color: #f44336; /* Rojo para error */
+  color: white;
+}

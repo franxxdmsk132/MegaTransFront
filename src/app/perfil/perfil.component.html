@@ -1,5 +1,38 @@
-
 <app-menu>
-<h1>Perfil</h1>
+  <div class="container">
+    <div *ngIf="loading" class="loading-container">
+      <mat-spinner></mat-spinner>
+    </div>
+
+    <mat-card *ngIf="!loading && userProfile" class="profile-card">
+      <mat-card-header>
+        <mat-card-title>Perfil de Usuario</mat-card-title>
+        <mat-card-subtitle>{{ userProfile.nombre }} {{ userProfile.apellido }}</mat-card-subtitle>
+      </mat-card-header>
+
+      <mat-card-content>
+        <mat-divider></mat-divider>
+        <p><strong>Nombre:</strong> {{ userProfile.nombre }}</p>
+        <p><strong>Apellido:</strong> {{ userProfile.apellido }}</p>
+        <p><strong>Identificación:</strong> {{ userProfile.identificacion }}</p>
+        <p><strong>Teléfono:</strong> {{ userProfile.telefono }}</p>
+        <p><strong>Email:</strong> {{ userProfile.nombreUsuario }}</p>
+        <mat-divider></mat-divider>
+      </mat-card-content>
+
+      <mat-card-actions>
+        <button mat-raised-button color="primary" (click)="abrirDialogoActualizar(userProfile)">Actualizar Perfil</button>
+      </mat-card-actions>
+      <mat-card-actions>
+        <button mat-raised-button color="primary" (click)="abrirDialogoPassword()">Cambiar Contrasena</button>
+      </mat-card-actions>
+    </mat-card>
+
+    <mat-card *ngIf="!loading && errorMessage" class="error-card">
+      <mat-card-content>
+        <p class="error-message">{{ errorMessage }}</p>
+      </mat-card-content>
+    </mat-card>
+  </div>
 
 </app-menu>

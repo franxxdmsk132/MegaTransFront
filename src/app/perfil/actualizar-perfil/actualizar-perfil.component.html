@@ -1,0 +1,29 @@
+<h2 mat-dialog-title>Actualizar Perfil</h2>
+<mat-dialog-content>
+  <form [formGroup]="usuarioForm">
+    <mat-form-field appearance="outline">
+      <mat-label>Nombre</mat-label>
+      <input matInput formControlName="nombre">
+    </mat-form-field>
+
+    <mat-form-field appearance="outline">
+      <mat-label>Apellido</mat-label>
+      <input matInput formControlName="apellido">
+    </mat-form-field>
+
+    <mat-form-field appearance="outline">
+      <mat-label>Identificación</mat-label>
+      <input matInput formControlName="identificacion">
+    </mat-form-field>
+
+    <mat-form-field appearance="outline">
+      <mat-label>Teléfono</mat-label>
+      <input matInput formControlName="telefono">
+    </mat-form-field>
+  </form>
+</mat-dialog-content>
+
+<mat-dialog-actions align="end">
+  <button mat-button (click)="cancelar()">Cancelar</button>
+  <button mat-button color="primary" (click)="actualizarUsuario()" [disabled]="!usuarioForm.valid">Guardar</button>
+</mat-dialog-actions>
