@@ -12,6 +12,7 @@ import {DetalleTransporteListarComponent} from './DetalleTransporte/Lista/detall
 import {DetalleTransporteComponent} from './DetalleTransporte/Detalle/detalle-transporte.component';
 import {AcercaComponent} from './acerca/acerca.component';
 import {PerfilComponent} from './perfil/perfil.component';
+import {DetalleComponent} from './Encomiendas/detalle/detalle.component';
 
 export const routes: Routes = [
   {path: '', component: PrincipalComponent},
@@ -21,6 +22,7 @@ export const routes: Routes = [
   {path: 'crearDetalleTransporte', component: CrearDetalleTransporteComponent},
   {path: 'listarDetalleTransporte', component: DetalleTransporteListarComponent},
   {path: 'detalleTransporte/:id', component: DetalleTransporteComponent},
+  {path: 'detalleEncomienda', component: DetalleComponent},
   {path: 'login', component: LoginComponent},
   {path: 'acercaDe', component: AcercaComponent},
   {path: 'perfil', component: PerfilComponent},

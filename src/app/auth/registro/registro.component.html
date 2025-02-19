@@ -22,18 +22,23 @@
             </mat-form-field>
 
             <mat-form-field class="full-width">
-              <mat-label>Identificación</mat-label>
-              <input matInput type="text" name="identificacion" id="identificacion" [(ngModel)]="identificacion"
-                     required>
+              <mat-label>Cedula/RUC</mat-label>
+              <input matInput type="text" name="identificacion" id="identificacion" [(ngModel)]="identificacion  "
+                     pattern="[0-9]*" maxlength="13" minlength="10" required>
             </mat-form-field>
 
             <mat-form-field class="full-width">
               <mat-label>Teléfono</mat-label>
-              <input matInput type="text" name="telefono" id="telefono" [(ngModel)]="telefono" required>
+              <input matInput type="text" name="telefono" id="telefono" [(ngModel)]="telefono"  pattern="[0-9]*" maxlength="10" minlength="10"  required>
             </mat-form-field>
 
             <mat-form-field class="full-width">
-              <mat-label>Nombre de Usuario</mat-label>
+              <mat-label>Nombre Comercial(opcional)</mat-label>
+              <input matInput type="text" name="nombreComercial" id="nombreComercial" [(ngModel)]="nombreComercial">
+            </mat-form-field>
+
+            <mat-form-field class="full-width">
+              <mat-label>Correo</mat-label>
               <input matInput type="text" name="nombreUsuario" id="nombreUsuario" [(ngModel)]="nombreUsuario" required>
             </mat-form-field>
 

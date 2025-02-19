@@ -2,7 +2,14 @@ import { Component, OnInit } from '@angular/core';
 import { Unidades } from '../unidades';
 import { TokenService } from '../../service/token.service';
 import { UnidadesService } from '../../service/unidades.service';
-import {MatCard, MatCardTitle} from '@angular/material/card';
+import {
+  MatCard,
+  MatCardActions,
+  MatCardContent,
+  MatCardHeader,
+  MatCardSubtitle,
+  MatCardTitle
+} from '@angular/material/card';
 import {MatFormField, MatLabel} from '@angular/material/form-field';
 import {MatInput} from '@angular/material/input';
 import {
@@ -12,12 +19,13 @@ import {
   MatHeaderCell,
   MatHeaderCellDef,
   MatHeaderRow, MatHeaderRowDef, MatRow, MatRowDef,
-  MatTable
+  MatTable,
 } from '@angular/material/table';
-import {MatFabButton, MatIconButton} from '@angular/material/button';
+import {MatButton, MatFabButton, MatIconButton} from '@angular/material/button';
 import {MatIcon} from '@angular/material/icon';
 import {MenuComponent} from '../../menu/menu.component';
 import {Router, RouterLink} from '@angular/router';
+import {NgForOf} from '@angular/common';
 
 @Component({
   selector: 'app-lista-unidad',
@@ -43,7 +51,13 @@ import {Router, RouterLink} from '@angular/router';
     MatLabel,
     MenuComponent,
     MatFabButton,
-    RouterLink
+    RouterLink,
+    MatCardHeader,
+    NgForOf,
+    MatCardContent,
+    MatCardActions,
+    MatButton,
+    MatCardSubtitle
   ],
   standalone: true
 })

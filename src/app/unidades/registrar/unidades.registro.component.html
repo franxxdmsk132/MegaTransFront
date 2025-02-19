@@ -33,11 +33,24 @@
         <mat-error *ngIf="unidadForm.get('largo')?.invalid">Ingrese un valor</mat-error>
       </mat-form-field>
 
-      <div class="file-input">
-        <input type="file" (change)="onFileSelected($event)" accept="imageUrl" name="imagenUrl">
-        <img *ngIf="imagenPreview" [src]="imagenPreview" class="preview">
+      <div class="file-input-container">
+        <input
+          type="file"
+          (change)="onFileSelected($event)"
+          accept="image/*"
+          name="imagenUrl"
+          id="fileInput"
+          hidden
+        />
+        <label for="fileInput" class="file-label">
+          <span class="file-label-text">Seleccionar imagen</span>
+        </label>
+        <br>
+        <img *ngIf="imagenPreview" [src]="imagenPreview" class="preview" />
       </div>
 
+      <br>
+      <br>
       <button mat-raised-button color="primary" type="submit" [disabled]="unidadForm.invalid">
         Registrar
       </button>

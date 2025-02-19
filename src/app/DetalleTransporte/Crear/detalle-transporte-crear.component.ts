@@ -1,18 +1,19 @@
-import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
-import { Router } from '@angular/router';
-import { DetalleTransporteService } from '../../service/detalle-transporte.service';
-import { MatFormField, MatLabel } from '@angular/material/form-field';
-import { MatInput } from '@angular/material/input';
-import { MatButton } from '@angular/material/button';
-import { MenuComponent } from '../../menu/menu.component';
-import { MatRadioButton, MatRadioGroup } from '@angular/material/radio';
-import { MatCheckbox } from '@angular/material/checkbox';
+import {Component, OnInit} from '@angular/core';
+import {FormBuilder, FormGroup, ReactiveFormsModule, Validators} from '@angular/forms';
+import {Router} from '@angular/router';
+import {DetalleTransporteService} from '../../service/detalle-transporte.service';
+import {MatFormField, MatLabel} from '@angular/material/form-field';
+import {MatInput} from '@angular/material/input';
+import {MatButton} from '@angular/material/button';
+import {MenuComponent} from '../../menu/menu.component';
+import {MatRadioButton, MatRadioGroup} from '@angular/material/radio';
+import {MatCheckbox} from '@angular/material/checkbox';
 import * as L from 'leaflet';
 import {LatLngExpression} from 'leaflet';
 import {MatDialog} from '@angular/material/dialog';
 import {SelecUnidadComponent} from './selec-unidad/selec-unidad.component';
 import {NgIf} from '@angular/common';
+import {TokenService} from '../../service/token.service';
 
 @Component({
   selector: 'app-Detalle-transporte-crear',
@@ -35,7 +36,8 @@ import {NgIf} from '@angular/common';
 export class CrearDetalleTransporteComponent implements OnInit {
   detalleForm: FormGroup;
   estibajeChecked: boolean = false;
-  private map!: L.Map;
+  nombreCompleto: string = '';  // Almacenar el nombre completo
+  nombreComercial: string = '';  // Almacenar el nombre comercial  private map!: L.Map;
   private marker!: L.Marker;
 
   constructor(
@@ -43,8 +45,10 @@ export class CrearDetalleTransporteComponent implements OnInit {
     private detalleTransporteService: DetalleTransporteService,
     private router: Router,
     private dialog: MatDialog,
+    private token: TokenService,
   ) {
     this.detalleForm = this.fb.group({
+      numOrden:[''],
       cantidadEstibaje: [0, Validators.required],
       descripcionProducto: ['', Validators.required],
       tipoServicio: ['', Validators.required],
@@ -77,11 +81,21 @@ export class CrearDetalleTransporteComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    const nombreComercial = this.token.getNombreComercial() || 'Nombre Comercial no disponible';
+    const nombreCompleto = this.token.getFullName() || 'Nombre Completo no disponible';
+
+    this.nombreComercial = nombreComercial;
+    this.nombreCompleto = nombreCompleto;
+
+    console.log('Nombre Comercial:', this.nombreComercial);
+    console.log('Nombre Completo:', this.nombreCompleto);
+
     this.initMap('mapOrigen', 'direccionOrigen');
     this.initMap('mapDestino', 'direccionDestino');
     this.estibajeChecked = this.detalleForm.get('estibaje')?.value;
     this.updateCantidadEstibajeState();
   }
+
 
   private initMap(mapId: string, direccionControl: string): void {
     const coordinates: number[] = [-2.900717, -79.006086];  // Un ejemplo de coordenadas
@@ -95,7 +109,7 @@ export class CrearDetalleTransporteComponent implements OnInit {
       attribution: '&copy; OpenStreetMap contributors'
     }).addTo(map);
 
-    const marker = L.marker(latLngDirect, { draggable: true }).addTo(map);  // Usamos latLngDirect para el marcador
+    const marker = L.marker(latLngDirect, {draggable: true}).addTo(map);  // Usamos latLngDirect para el marcador
     const customIcon = L.icon({
       iconUrl: 'https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.7.1/images/marker-icon.png',
       shadowUrl: 'https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.7.1/images/marker-shadow.png',
@@ -143,7 +157,6 @@ export class CrearDetalleTransporteComponent implements OnInit {
   }
 
 
-
   onEstibajeChange(): void {
     this.estibajeChecked = this.detalleForm.get('estibaje')?.value;
     this.updateCantidadEstibajeState();
@@ -172,6 +185,7 @@ export class CrearDetalleTransporteComponent implements OnInit {
       });
     }
   }
+
   abrirDialogo(): void {
     const dialogRef = this.dialog.open(SelecUnidadComponent, {
       width: '95%',         // Ancho del diálogo
@@ -198,5 +212,36 @@ export class CrearDetalleTransporteComponent implements OnInit {
     });
     this.abrirDialogo()
   }
+
+  enviarAWhatsapp(): void {
+    const detalles = this.detalleForm.value;
+
+    const nombreCompleto = this.token.getFullName() || 'Nombre completo no disponible';
+    const nombreComercial = this.token.getNombreComercial() || 'Nombre comercial no disponible';
+
+    // Construir el mensaje de texto
+    const mensaje = `
+  Detalles de la solicitud de transporte:
+  Nombre Cliente/Comercial: ${nombreCompleto} , ${ nombreComercial}
+  Unidad: ${detalles.unidadTipo}
+  Fecha y Hora : ${detalles.descripcionProducto}
+  Tipo de Servicio: ${detalles.tipoServicio}
+  Estibaje: ${detalles.estibaje ? 'Sí' : 'No'} (Cantidad: ${detalles.cantidadEstibaje})
+  Dirección de Origen: ${detalles.direccionOrigen.barrio}, ${detalles.direccionOrigen.callePrincipal}, ${detalles.direccionOrigen.ciudad}
+  Dirección de Destino: ${detalles.direccionDestino.barrio}, ${detalles.direccionDestino.callePrincipal}, ${detalles.direccionDestino.ciudad}
+  Tipo de Pago: ${detalles.pago}
+  Enlace de Google Maps (Origen): https://www.google.com/maps?q=${detalles.direccionOrigen.latitud},${detalles.direccionOrigen.longitud}
+  Enlace de Google Maps (Destino): https://www.google.com/maps?q=${detalles.direccionDestino.latitud},${detalles.direccionDestino.longitud}
+  `;
+
+    // Codificar el mensaje para URL y crear el enlace
+    const mensajeCodificado = encodeURIComponent(mensaje);
+    const telefono = '593983724721';  // Asegúrate de cambiarlo con el número correcto
+    const url = `https://wa.me/${telefono}?text=${mensajeCodificado}`;
+
+    // Abrir el enlace en WhatsApp
+    window.open(url, '_blank');
+  }
+
 
 }

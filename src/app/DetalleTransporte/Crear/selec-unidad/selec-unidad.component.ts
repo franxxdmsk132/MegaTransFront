@@ -21,6 +21,7 @@ import {
 import {Unidades} from '../../../unidades/unidades';
 import {MatCell, MatCellDef, MatColumnDef, MatHeaderCell, MatHeaderCellDef} from '@angular/material/table';
 import {MatGridList, MatGridTile} from '@angular/material/grid-list';
+import {MatProgressSpinner} from '@angular/material/progress-spinner';
 
 @Component({
   selector: 'app-selec-unidad',
@@ -48,13 +49,16 @@ import {MatGridList, MatGridTile} from '@angular/material/grid-list';
     MatHeaderCell,
     MatHeaderCellDef,
     MatGridList,
-    MatGridTile
+    MatGridTile,
+    MatProgressSpinner
   ]
 })
 export class SelecUnidadComponent implements OnInit{
   unidades: any[] = [];
   unidadesFiltradas: Unidades[] = [];
 
+  loading: boolean = true;
+  errorMessage: string | undefined;
 
   constructor(
     public dialogRef: MatDialogRef<SelecUnidadComponent>,
@@ -69,6 +73,9 @@ export class SelecUnidadComponent implements OnInit{
     // });
   }
   cargarUnidades(): void {
+    this.loading = true; // Establecer loading a true antes de hacer la llamada
+    this.errorMessage = ''; // Limpiar cualquier mensaje de error anterior
+
     this.unidadService.lista().subscribe(
       data => {
         console.log('Unidades recibidas:', data);
@@ -77,8 +84,13 @@ export class SelecUnidadComponent implements OnInit{
           imagenUrl: unidad.imagenUrl ? `${this.unidadService.imgUrl}${unidad.imagenUrl}` : '/assets/default-img.png'
         }));
         this.unidadesFiltradas = [...this.unidades];
+        this.loading = false; // Establecer loading a false cuando los datos se reciban
       },
-      err => console.log(err)
+      err => {
+        console.error(err);
+        this.errorMessage = 'Error al cargar las unidades'; // Mostrar el mensaje de error
+        this.loading = false; // Establecer loading a false en caso de error
+      }
     );
   }
 

@@ -4,28 +4,47 @@
   <!-- Contenido principal -->
   <div class="container text-center">
     <mat-card class="welcome-card">
+
+
+
       <mat-card-header>
-        <mat-card-title>Bienvenido</mat-card-title>
-      </mat-card-header>
+        <mat-card-title>
+          <h3 style="font-family: 'TERMINATOR', sans-serif"><b>BIENVENIDO!</b></h3>
+        </mat-card-title>      </mat-card-header>
+      <img src="assets/images/MegaTrans.png" alt="Descripción de la imagen" class="welcome-image">
+
       <mat-card-content>
         <div *ngIf="isLogged; else loggedOut">
-          <h2>¡Hola, {{nombreCompleto}}!</h2>
-          <p>Bienvenido a MegaTrans. Aquí puedes gestionar tu transporte.</p>
+          <!-- Verificamos si nombreComercial existe -->
+          <h2 *ngIf="nombreComercial && nombreComercial.trim() !== ''" class="nombre-comercial">
+            ¡Hola, {{ nombreComercial }}!
+            <h6>{{nombreCompleto}}</h6>
+          </h2>
 
-          <!-- Cuadrado con botones distribuidos -->
+
+
+          <!-- Si no tiene nombreComercial, mostramos solo nombreCompleto -->
+          <h2 *ngIf="!nombreComercial || nombreComercial.trim() === ''" class="nombre-completo">
+            ¡Hola, {{ nombreCompleto }}!
+          </h2>
+
+
+
+          <p>Bienvenido a MegaTrans. Aquí puedes gestionar tu transporte.</p>
           <div class="button-grid">
-            <button mat-raised-button color="primary" routerLink="/crearDetalleTransporte" class="button-item">
-              Transporte / Mudanza
+            <button mat-raised-button class="custom-button" routerLink="/crearDetalleTransporte" >
+              Transporte/Mudanza
             </button>
-            <button mat-raised-button color="primary" routerLink="/encomiendas" class="button-item">
+            <button mat-raised-button class="custom-button" routerLink="/detalleEncomienda" >
               Encomiendas
             </button>
-            <button mat-raised-button color="primary" routerLink="/facturacion" class="button-item">
+            <button mat-raised-button class="custom-button" routerLink="/detalleEncomienda" >
               Facturación
             </button>
-            <button mat-raised-button color="primary" (click)="openSearchDialog()" class="button-item">
+            <button mat-raised-button class="custom-button" (click)="openSearchDialog()">
               Búsqueda
             </button>
+
           </div>
         </div>
 

@@ -1,20 +1,31 @@
 <div class="contenedor">
+  <div *ngIf="loading" class="loading-container">
+    <mat-spinner></mat-spinner>
+  </div>
   <h2>Seleccione una Unidad</h2>
-  <div class="unidad-grid">
-    <div class="unidad-card" *ngFor="let unidad of unidades" (click)="seleccionarUnidad(unidad)">
-      <mat-card>
-<!--        <mat-card-header> &lt;!&ndash; Centra el título &ndash;&gt;-->
-<!--          <mat-card-title>{{ unidad.tipo }}</mat-card-title>-->
-<!--        </mat-card-header>-->
-        <img mat-card-image [src]="unidad.imagenUrl" alt="Imagen de la unidad">
-        <mat-card-content>
-          <div class="unidad-detalles">
-            <p><strong>Alto:</strong> {{ unidad.altura }} m</p>
-            <p><strong>Ancho:</strong> {{ unidad.ancho }} m</p>
-            <p><strong>Largo:</strong> {{ unidad.largo }} m</p>
-          </div>
-        </mat-card-content>
-      </mat-card>
+  <div *ngIf="!loading && unidades">
+    <div class="unidad-grid">
+      <div class="unidad-card" *ngFor="let unidad of unidades" (click)="seleccionarUnidad(unidad)">
+        <mat-card>
+          <!--        <mat-card-header> &lt;!&ndash; Centra el título &ndash;&gt;-->
+          <!--          <mat-card-title>{{ unidad.tipo }}</mat-card-title>-->
+          <!--        </mat-card-header>-->
+          <img mat-card-image [src]="unidad.imagenUrl" alt="Imagen de la unidad">
+          <mat-card-content>
+            <div class="unidad-detalles">
+              <p><strong>Alto:</strong> {{ unidad.altura }} m</p>
+              <p><strong>Ancho:</strong> {{ unidad.ancho }} m</p>
+              <p><strong>Largo:</strong> {{ unidad.largo }} m</p>
+            </div>
+          </mat-card-content>
+        </mat-card>
+
+        <mat-card *ngIf="!loading && errorMessage" class="error-card">
+          <mat-card-content>
+            <p class="error-message">{{ errorMessage }}</p>
+          </mat-card-content>
+        </mat-card>
+      </div>
     </div>
   </div>
   <div class="acciones">

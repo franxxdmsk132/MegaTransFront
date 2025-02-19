@@ -9,7 +9,7 @@
         <img src="assets/images/MegaTrans.png" alt="MegaTrans Logo" height="100%" width="100%">
         <br>
         <br>
-        <mat-label class="welcome-message" style="text-align: center">¡BIENVENIDO! INGRESE SU CORREO Y CONTRASEÑA PARA ACCEDER</mat-label>
+        <mat-label class="welcome-message" style="text-align: center">¡BIENVENIDO! SE REQUIERE SU CORREO Y CONTRASEÑA PARA ACCEDER</mat-label>
         <br>
         <br>
         <mat-card-content>
@@ -17,10 +17,10 @@
             <!-- Nombre de Usuario -->
             <mat-form-field class="full-width"
                             [ngClass]="{'mat-form-field-invalid': f.submitted && !nombreUsuario || errMsj?.includes('Usuario') }">
-              <mat-label>Nombre de Usuario</mat-label>
+              <mat-label>Correo</mat-label>
               <input matInput type="text" name="nombreUsuario" id="nombreUsuario" [(ngModel)]="nombreUsuario" required>
-              <mat-error *ngIf="f.submitted && !nombreUsuario">El nombre de usuario es obligatorio</mat-error>
-              <mat-error *ngIf="errMsj?.includes('Usuario')">El nombre de usuario no existe</mat-error>
+              <mat-error *ngIf="f.submitted && !nombreUsuario">El correo es obligatorio</mat-error>
+              <mat-error *ngIf="errMsj?.includes('Usuario')">El correo de usuario no existe</mat-error>
             </mat-form-field>
 
             <!-- Contraseña -->

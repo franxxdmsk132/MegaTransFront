@@ -14,3 +14,39 @@ mat-card {
   margin-top: 10px;
   border-radius: 5px;
 }
+.file-input-container {
+  position: relative;
+  display: inline-block;
+  width: 100%;
+}
+
+input[type="file"] {
+  display: none; /* Ocultamos el input real */
+}
+
+.file-label {
+  display: inline-block;
+  background-color: #004386;
+  color: white;
+  padding: 10px 20px;
+  font-size: 16px;
+  cursor: pointer;
+  border-radius: 5px;
+  transition: background-color 0.3s;
+}
+
+.file-label:hover {
+  background-color: #956767;
+}
+
+.file-label-text {
+  font-weight: bold;
+}
+
+.preview {
+  display: block;
+  margin-top: 10px;
+  max-width: 100%;
+  max-height: 200px;
+  border-radius: 8px;
+}

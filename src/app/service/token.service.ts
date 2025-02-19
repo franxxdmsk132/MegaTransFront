@@ -6,6 +6,8 @@ const AUTHORITIES_KEY = 'AuthAuthorities';
 const FULLNAME_KEY = 'AuthFullName';
 const IDENTIFICACION_KEY = 'AuthIdentificacion';
 const TELEFONO_KEY = 'AuthTelefono';
+const NOMBRE_COMERCIAL_KEY = 'AuthNombreComercial';
+
 
 @Injectable({
   providedIn: 'root'
@@ -18,57 +20,65 @@ export class TokenService {
   }
 
   public setToken(token: string): void {
-    window.sessionStorage.setItem(TOKEN_KEY, token);
+    window.localStorage.setItem(TOKEN_KEY, token);
   }
 
 
   public getToken(): string  {
-    return sessionStorage.getItem(TOKEN_KEY) || "";
+    return localStorage.getItem(TOKEN_KEY) || "";
   }
 
   public setUserName(userName: string): void {
-    window.sessionStorage.removeItem(USERNAME_KEY);
-    window.sessionStorage.setItem(USERNAME_KEY, userName);
+    window.localStorage.removeItem(USERNAME_KEY);
+    window.localStorage.setItem(USERNAME_KEY, userName);
   }
 
   public getUserName(): string {
-    return sessionStorage.getItem(USERNAME_KEY)|| "";
+    return localStorage.getItem(USERNAME_KEY)|| "";
   }
 
   public setFullName(nombre: string, apellido: string): void {
-    window.sessionStorage.removeItem('AuthFullName');
-    window.sessionStorage.setItem('AuthFullName', `${nombre} ${apellido}`);
+    window.localStorage.removeItem('AuthFullName');
+    window.localStorage.setItem('AuthFullName', `${nombre} ${apellido}`);
   }
 
   public getFullName(): string {
-    return sessionStorage.getItem('AuthFullName')|| "";
+    return localStorage.getItem('AuthFullName')|| "";
   }
   public setIdentificacion(identificacion: string): void {
-    window.sessionStorage.removeItem(IDENTIFICACION_KEY);
-    window.sessionStorage.setItem(IDENTIFICACION_KEY, identificacion);
+    window.localStorage.removeItem(IDENTIFICACION_KEY);
+    window.localStorage.setItem(IDENTIFICACION_KEY, identificacion);
   }
 
   public getIdentificacion(): string {
-    return sessionStorage.getItem(IDENTIFICACION_KEY)|| "";
+    return localStorage.getItem(IDENTIFICACION_KEY)|| "";
   }
 
   public setTelefono(telefono: string): void {
-    window.sessionStorage.removeItem(TELEFONO_KEY);
-    window.sessionStorage.setItem(TELEFONO_KEY, telefono);
+    window.localStorage.removeItem(TELEFONO_KEY);
+    window.localStorage.setItem(TELEFONO_KEY, telefono);
   }
 
   public getTelefono(): string {
-    return sessionStorage.getItem(TELEFONO_KEY)|| "";
+    return localStorage.getItem(TELEFONO_KEY)|| "";
+  }
+
+  public getNombreComercial(): string {
+    return localStorage.getItem(NOMBRE_COMERCIAL_KEY)|| "";
+  }
+  public setNombreComercial(nombreComercial: string): void {
+    window.localStorage.removeItem(NOMBRE_COMERCIAL_KEY);
+    window.localStorage.setItem(NOMBRE_COMERCIAL_KEY, nombreComercial);
   }
 
   public setAuthorities(authorities: string[]): void {
-    window.sessionStorage.removeItem(AUTHORITIES_KEY);
-    window.sessionStorage.setItem(AUTHORITIES_KEY, JSON.stringify(authorities));
+    window.localStorage.removeItem(AUTHORITIES_KEY);
+    window.localStorage.setItem(AUTHORITIES_KEY, JSON.stringify(authorities));
   }
 
   public getAuthorities(): string[] {
     this.roles = [];
-    const authorities = sessionStorage.getItem(AUTHORITIES_KEY);
+    const authorities = localStorage.getItem(AUTHORITIES_KEY);
     if (authorities) {
       JSON.parse(authorities).forEach((authority: any) => {
         this.roles.push(authority.authority);
@@ -87,6 +97,8 @@ export class TokenService {
   }
 
   public logOut(): void {
-    window.sessionStorage.clear();
+    window.localStorage.clear();
   }
+
+
 }

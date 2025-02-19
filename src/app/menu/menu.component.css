@@ -13,8 +13,15 @@ mat-toolbar {
   display: flex;
   justify-content: space-between;
   padding: 0 16px;
+  align-items: center;
+  position: relative;
 }
-
+.center-span {
+  position: absolute;
+  left:55%;
+  transform: translateX(-50%);
+  white-space: nowrap; /* Evita que el texto se divida en varias líneas */
+}
 mat-sidenav {
   width: 250px; /* Ancho del menú */
 }
@@ -41,5 +48,12 @@ body {
 /* menu.component.css */
 span {
   font-family: 'TERMINATOR', sans-serif;
+  font-size: 0.7em;
+  text-align: start;
+}
+
+/* Asegúrate de que esta clase esté correctamente definida */
+.red-icon {
+  color: #ff3838 !important;
 }
 

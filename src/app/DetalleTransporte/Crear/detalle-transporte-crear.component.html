@@ -2,7 +2,7 @@
   <div style="display: flex; align-items: center;">
     <form [formGroup]="detalleForm" (ngSubmit)="onSubmit()">
       <mat-form-field appearance="fill" class="full-width">
-        <mat-label>Unidad Seleccionada:</mat-label>
+        <mat-label>Selecione su tipo de Unidad:</mat-label>
 
         <!-- Se agrega un input matInput oculto -->
         <input matInput [value]="detalleForm.get('unidadId')?.value || ''" hidden>
@@ -34,13 +34,13 @@
       <br>
       <mat-radio-group formControlName="tipoServicio" aria-label="Selecciona un tipo de servicio">
         <mat-radio-button value="MUDANZA">Mudanza</mat-radio-button>
-        <mat-radio-button value="MERCADERIA">Mercadería</mat-radio-button>
+        <mat-radio-button value="MERCADERIA">Desalojo</mat-radio-button>
         <mat-radio-button value="DISTRIBUCION">Distribución</mat-radio-button>
       </mat-radio-group>
       <br>
       <br>
 
-      <mat-label>Desea de Estibaje ?</mat-label>
+      <mat-label>Personal para Carga o Estibaje: </mat-label>
       <br>
 
       <div style="display: flex; align-items: center; gap: 16px; margin-top: 8px;">
@@ -51,12 +51,13 @@
         <br>
         <!-- El input con un tamaño adecuado y margen a la izquierda -->
         <mat-form-field appearance="fill" style="width: 150px;">
-          <mat-label>Cantidad de Estibaje:</mat-label>
+          <mat-label>Numero de Personas:</mat-label>
           <input matInput id="cantidadEstibaje" formControlName="cantidadEstibaje" type="number"
                  [disabled]="!estibajeChecked">
         </mat-form-field>
       </div>
-      <h3>Dirección de Origen</h3>
+
+      <h3>Seleccione el Punto de Inicio:</h3>
       <div id="mapOrigen" style="height: 300px; width: 100%;"></div>
       <!-- Dirección de Origen -->
       <br>
@@ -99,7 +100,7 @@
       </div>
 
       <!-- Mapa para Dirección de Destino -->
-      <h3>Dirección de Destino</h3>
+      <h3>Seleccione el Lugar de Destino</h3>
       <div id="mapDestino" style="height: 300px; width: 100%;"></div>
       <br>
       <!-- Dirección de Destino -->
@@ -143,7 +144,7 @@
       </div>
 
       <mat-form-field appearance="fill" class="full-width">
-        <mat-label>Descripción del Producto:</mat-label>
+        <mat-label>Indique una Fecha y Hora para el transporte</mat-label>
         <input matInput id="descripcionProducto" formControlName="descripcionProducto" type="text">
       </mat-form-field>
       <br>
@@ -158,7 +159,9 @@
       </mat-radio-group>
       <!-- Botón de Submit -->
       <button mat-raised-button type="submit" [disabled]="detalleForm.invalid">Crear Solicitud de Transporte</button>
+      <button mat-raised-button (click)="enviarAWhatsapp()" [disabled]="detalleForm.invalid">Enviar Solicitud</button>
     </form>
+    <br>
 
   </div>
 </app-menu>

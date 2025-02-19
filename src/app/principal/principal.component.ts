@@ -40,6 +40,8 @@ export class PrincipalComponent implements OnInit {
   isLogged = false;
   nombreUsuario = '';
   nombreCompleto = '';
+  nombreComercial = '';
+
 
   constructor(private tokenService: TokenService,
               private dialog: MatDialog,
@@ -50,9 +52,13 @@ export class PrincipalComponent implements OnInit {
     if (this.tokenService.getToken()) {
       this.isLogged = true;
       this.nombreCompleto = this.tokenService.getFullName();
+      this.nombreComercial = this.tokenService.getNombreComercial();
+
     } else {
       this.isLogged = false;
       this.nombreCompleto = '';
+      this.nombreComercial = '';  // Asegúrate de limpiar el valor en caso de no estar logueado
+
     }
   }
   openSearchDialog(): void {

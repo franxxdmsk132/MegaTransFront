@@ -5,6 +5,8 @@ export class JwtDTO {
   nombre?: string;
 
   apellido?: string;
+  nombreComercial?: string;
+
 
   telefono?: string;
   identificacion?: string;

@@ -3,18 +3,47 @@
 }
 
 .unidad-img {
-  width: 80px;
-  height: 60px;
-  object-fit: cover;
-  border-radius: 4px;
+  width: 100%; /* Hace que la imagen ocupe todo el ancho de la tarjeta */
+  height: auto; /* Ajusta la altura automáticamente para mantener la proporción */
+  object-fit: cover; /* Asegura que la imagen cubra todo el área sin deformarse */
+  border-radius: 8px; /* Bordes redondeados para la imagen */
 }
 
 .w-100 {
   width: 100%;
 }
+
 .add-btn {
   position: fixed;
   bottom: 20px; /* Distancia desde el borde inferior */
   right: 20px;  /* Distancia desde el borde derecho */
   z-index: 1000; /* Asegura que el botón esté encima del contenido */
+}
+
+/* Contenedor de tarjetas con un espaciado adecuado */
+.card-container {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); /* Ajuste para que las tarjetas se acomoden responsivamente */
+  gap: 16px;
+  padding: 16px;
+  margin: 0 10px; /* Márgenes a los lados para separar de los bordes de la pantalla */
+}
+
+/* Estilo para las tarjetas */
+.unidad-card {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  width: 100%; /* La tarjeta ocupa todo el ancho disponible */
+  border-radius: 8px; /* Bordes redondeados en la tarjeta */
+  padding: 16px; /* Espaciado interno de la tarjeta */
+  box-sizing: border-box; /* Asegura que el padding no afecte el tamaño total */
+  background-color: #fff; /* Fondo blanco para la tarjeta */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Sombra ligera para dar profundidad */
+}
+
+.mat-card-actions {
+  display: flex;
+  justify-content: space-between;
+  padding-top: 10px; /* Espaciado adicional entre el contenido y los botones */
 }

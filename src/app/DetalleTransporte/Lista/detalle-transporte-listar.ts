@@ -68,6 +68,10 @@ import {TokenService} from '../../service/token.service';
   styleUrls: ['./detalle-transporte-listar.css']
 })
 export class DetalleTransporteListarComponent implements OnInit {
+
+  isLoading = true;
+  errorMessage: string | undefined;
+
   dataSource = new MatTableDataSource<DetalleTransporte>();
   displayedColumns: string[] = [
     'cantidadEstibaje', 'descripcionProducto', 'estado', 'tipoServicio', 'estibaje', 'fecha',
@@ -97,9 +101,13 @@ export class DetalleTransporteListarComponent implements OnInit {
         console.log('Detalles de transporte recibidos:', detalles);
         this.dataSource.data = detalles;
         this.dataSource.paginator = this.paginator;
+        this.isLoading = false; // Desactivar el indicador de carga
       },
       error: (error) => {
+        this.errorMessage = 'No se pudo obtener las solicitudes';
         console.error('Error al obtener detalles de transporte', error);
+        this.isLoading = false; // Desactivar el indicador de carga en caso de error
+
       }
     });
   }

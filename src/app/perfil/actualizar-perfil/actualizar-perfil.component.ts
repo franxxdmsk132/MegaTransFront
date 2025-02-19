@@ -50,6 +50,8 @@ export class ActualizarPerfilComponent implements OnInit {
       apellido: ['', Validators.required],
       identificacion: ['', Validators.required],
       telefono: ['', Validators.required],
+      nombreComercial: [''],
+
     });
     this.route.params.subscribe(params => {
       this.username = params['username'];
@@ -67,11 +69,12 @@ export class ActualizarPerfilComponent implements OnInit {
           localStorage.setItem('AuthFullName', this.usuarioForm.value.nombre + ' ' + this.usuarioForm.value.apellido);
           localStorage.setItem('AuthIdentificacion', this.usuarioForm.value.identificacion);
           localStorage.setItem('AuthTelefono', this.usuarioForm.value.telefono);
+          localStorage.setItem('AuthNombreComercial', this.usuarioForm.value.nombreComercial);
 
           // También puedes actualizar el sessionStorage si lo estás utilizando
-          sessionStorage.setItem('AuthFullName', this.usuarioForm.value.nombre + ' ' + this.usuarioForm.value.apellido);
-          sessionStorage.setItem('AuthIdentificacion', this.usuarioForm.value.identificacion);
-          sessionStorage.setItem('AuthTelefono', this.usuarioForm.value.telefono);
+          localStorage.setItem('AuthFullName', this.usuarioForm.value.nombre + ' ' + this.usuarioForm.value.apellido);
+          localStorage.setItem('AuthIdentificacion', this.usuarioForm.value.identificacion);
+          localStorage.setItem('AuthTelefono', this.usuarioForm.value.telefono);
 
           // Forzar la actualización de la vista
           this.cdRef.detectChanges();

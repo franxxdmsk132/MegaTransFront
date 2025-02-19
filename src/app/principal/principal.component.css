@@ -43,3 +43,20 @@ button.mat-raised-button {
   text-align: center;
   margin-bottom: 10px;
 }
+/* Estilos para el botón personalizado */
+.custom-button {
+  background-color: black !important;
+  color: white !important;
+  border: 2px solid red !important;
+  width: 12em;         /* Ancho en unidades relativas */
+  height: 2.8em;         /* Altura en unidades relativas */
+  font-size: 1rem;     /* Tamaño de texto relativo */
+  padding: 0.5em 1em;  /* Espaciado interno relativo */
+}
+
+
+.custom-button:hover {
+  background-color: darkgray !important; /* Fondo al pasar el ratón */
+  border: 2px solid red !important;      /* Bordes rojos al pasar el ratón */
+}
+

@@ -19,6 +19,8 @@ import {MatLine} from '@angular/material/core';
 import {MatButton} from '@angular/material/button';
 import {DatePipe, NgIf} from '@angular/common';
 import {MatDivider} from '@angular/material/divider';
+import {MatSnackBar} from '@angular/material/snack-bar';
+import {MatProgressSpinner} from '@angular/material/progress-spinner';
 
 @Component({
   selector: 'app-Detalle',
@@ -41,7 +43,8 @@ import {MatDivider} from '@angular/material/divider';
     MatCardSubtitle,
     NgIf,
     MatDivider,
-    DatePipe
+    DatePipe,
+    MatProgressSpinner
 
   ],
   styleUrl: './detalle-transporte.component.css'
@@ -55,20 +58,23 @@ export class DetalleTransporteComponent implements  OnInit{
     private router: Router,
     private toastr: ToastrService,
     private activatedRoute: ActivatedRoute,
+    private snackBar:MatSnackBar
   ) {
   }
 
 
   isLoading = true;
-
+  errorMessage: string | undefined;
   ngOnInit(): void {
     const id = this.activatedRoute.snapshot.params['id'];
     console.log("ID recibido:", id); // Verifica si el ID es correcto
 
     if (!id) {
-      this.toastr.error('ID no válido', 'Error', {
-        timeOut: 3000,
-        positionClass: 'toast-top-center',
+      this.snackBar.open('Error id no encontrado', 'OK', {
+        duration: 3000,
+        horizontalPosition: 'center',
+        verticalPosition: 'top',
+        panelClass: ['error-snackbar'] // Clase CSS opcional para estilos
       });
       this.volver();
       return;
@@ -82,6 +88,7 @@ export class DetalleTransporteComponent implements  OnInit{
       },
       error => {
         console.error("Error en la API:", error);
+        this.errorMessage = 'Error al cargar la solicitud ';
         this.toastr.error(error.error?.message || 'Error desconocido', 'Fail', {
           timeOut: 3000, positionClass: 'toast-top-center',
         });

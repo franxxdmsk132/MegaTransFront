@@ -5,16 +5,22 @@ import { Observable } from 'rxjs';
 import { LoginUsuario } from '../models/login-usuario';
 import { JwtDTO } from '../models/jwt-dto';
 import {TokenService} from './token.service';
+import {environment} from '../../environments/environment';
+
 
 @Injectable({
   providedIn: 'root'
 })
 export class AuthService {
 
-  authURL = 'http://192.168.0.107:8080/auth/';
+  //authURL = 'http://192.168.0.107:8080/auth/';
+  authURL = 'http://104.196.131.87:8080/auth/';
+  authURL2 = environment.apiUrl + '/auth'
+
+
 
   constructor(private httpClient: HttpClient,
-              private tokenService: TokenService) { }
+              private tokenService: TokenService,) { }
 
 
   private getAuthHeaders(): HttpHeaders {

@@ -67,3 +67,36 @@
   width: 95%;
   padding: 10px;
 }
+.loading-card {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 200px;
+}
+
+.loading-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+}
+
+.profile-card, .error-card {
+  width: 400px;
+  padding: 20px;
+  text-align: left;
+}
+
+.error-message {
+  color: red;
+  font-weight: bold;
+}
+.success-snackbar {
+  background-color: #4caf50;
+  color: white;
+}
+
+.error-snackbar {
+  background-color: #f44336;
+  color: white;
+}
