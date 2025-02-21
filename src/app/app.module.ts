@@ -36,6 +36,8 @@ import {CambiarPasswordComponent} from './perfil/cambiar-password/cambiar-passwo
 import {MatLabel} from '@angular/material/form-field';
 import {ZXingScannerModule} from '@zxing/ngx-scanner';
 import {DetalleEncomiendaService} from './service/detalle-encomienda.service';
+import {MatNativeDateModule} from '@angular/material/core';
+import {MatDatepickerModule} from '@angular/material/datepicker';
 
 @NgModule({
   declarations: [  ],
@@ -77,6 +79,8 @@ import {DetalleEncomiendaService} from './service/detalle-encomienda.service';
     MatSnackBarModule,
     CambiarPasswordComponent,
     ZXingScannerModule,
+    MatDatepickerModule,
+    MatNativeDateModule
 
   ],
   providers: [],
