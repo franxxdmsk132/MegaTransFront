@@ -13,6 +13,9 @@ import {MatDividerModule} from '@angular/material/divider';
 import {MatDialog} from '@angular/material/dialog';
 import {DetalleTransporteService} from '../service/detalle-transporte.service';
 import {BuscarCodigoComponent} from './buscar-codigo/buscar-codigo.component';
+import {BuscarQrComponent} from './buscar-qr/buscar-qr.component';
+import {DetalleEncomiendaService} from '../service/detalle-encomienda.service';
+import {DetalleComponent} from '../Encomiendas/detalle/detalle.component';
 
 @Component({
   selector: 'app-principal',
@@ -46,7 +49,8 @@ export class PrincipalComponent implements OnInit {
   constructor(private tokenService: TokenService,
               private dialog: MatDialog,
               private router: Router,
-              private detalleTransporteService: DetalleTransporteService,) { }
+              private detalleTransporteService: DetalleTransporteService,
+              private detalleEncomiendaService: DetalleEncomiendaService) { }
 
   ngOnInit(): void {
     if (this.tokenService.getToken()) {
@@ -73,6 +77,7 @@ export class PrincipalComponent implements OnInit {
       }
     });
   }
+
   // Método para buscar el Detalle de transporte usando el servicio
   buscarPorNumOrden(numOrden: string): void {
     this.detalleTransporteService.buscarPorNumOrden(numOrden).subscribe(
@@ -87,4 +92,40 @@ export class PrincipalComponent implements OnInit {
       }
     );
   }
+  openQrScanner() {
+    const dialogRef = this.dialog.open(BuscarQrComponent, {
+      width: '400px',
+      disableClose: true  // Evita que el usuario cierre accidentalmente el escáner
+    });
+
+    dialogRef.afterClosed().subscribe((qrCode) => {
+      if (qrCode) {
+        this.obtenerDetalleEncomienda(qrCode);
+      }
+    });
+  }
+
+  obtenerDetalleEncomienda(qrCode: string) {
+    this.detalleEncomiendaService.obtenerDetalleEncomiendaPorNumGuia(qrCode).subscribe(
+      (detalle) => {
+        if (detalle && detalle.id) {  // Verificamos que el objeto tenga un id
+          this.mostrarDetalleEncomienda(detalle.id);  // Solo pasamos el ID
+        } else {
+          console.warn('No se encontraron detalles para este código QR.');
+          alert('No se encontraron detalles para este código QR.');
+        }
+      },
+      (error) => {
+        console.error('Error al obtener detalles de encomienda:', error);
+        alert('Error al obtener detalles. Intenta nuevamente.');
+      }
+    );
+  }
+
+  mostrarDetalleEncomienda(id: number) {
+    // Abrimos el dialogo y le pasamos el ID
+    this.router.navigate(['/detalleEncomienda', id]);
+  }
+
+
 }

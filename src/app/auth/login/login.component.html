@@ -9,7 +9,9 @@
         <img src="assets/images/MegaTrans.png" alt="MegaTrans Logo" height="100%" width="100%">
         <br>
         <br>
-        <mat-label class="welcome-message" style="text-align: center">¡BIENVENIDO! SE REQUIERE SU CORREO Y CONTRASEÑA PARA ACCEDER</mat-label>
+        <mat-label class="welcome-message" style="text-align: center">¡BIENVENIDO! SE REQUIERE SU CORREO Y CONTRASEÑA
+          PARA ACCEDER
+        </mat-label>
         <br>
         <br>
         <mat-card-content>
@@ -38,18 +40,17 @@
             </div>
 
             <!-- Botón con mat-raised-button -->
-            <div class="form-group">
-              <button mat-raised-button color="primary" class="full-width custom-login-button" [disabled]="!f.valid">
+            <!-- Contenedor para centrar los botones -->
+            <div style="text-align: center">
+              <button mat-raised-button color="primary" class="custom-button2" [disabled]="!f.valid">
                 <i class="fas fa-sign-in-alt"></i> Ingresar
               </button>
+              <br><br>
+              <button mat-raised-button routerLink="/registro" class="custom-button2">Registrarse</button>
             </div>
 
           </form>
         </mat-card-content>
-
-<br>
-          <button mat-flat-button routerLink="/registro" class="custom-button">Registrarse</button>
-        <br>
       </mat-card>
 
     </div>

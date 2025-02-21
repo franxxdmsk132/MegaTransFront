@@ -1,0 +1,23 @@
+.custom-button2 {
+  background-color: black !important;
+  color: white !important;
+  border: 2px solid red !important;
+  width: 18em;         /* Ancho en unidades relativas */
+  height: 2.8em;       /* Altura en unidades relativas */
+  font-size: 1rem;     /* Tamaño de texto relativo */
+  padding: 0.5em 1em;  /* Espaciado interno relativo */
+  display: inline-block;
+  margin: 5px auto;    /* Centra los botones horizontalmente */
+  text-align: center;
+  cursor: pointer;     /* Cursor de puntero */
+  transition: background-color 0.3s ease-in-out;
+}
+
+.custom-button:hover {
+  background-color: darkgray !important; /* Fondo al pasar el ratón */
+  border: 2px solid red !important;      /* Bordes rojos al pasar el ratón */
+}
+
+.full-width {
+  width: 100%;
+}

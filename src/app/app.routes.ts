@@ -13,6 +13,9 @@ import {DetalleTransporteComponent} from './DetalleTransporte/Detalle/detalle-tr
 import {AcercaComponent} from './acerca/acerca.component';
 import {PerfilComponent} from './perfil/perfil.component';
 import {DetalleComponent} from './Encomiendas/detalle/detalle.component';
+import {SoporteComponent} from './soporte/soporte.component';
+import {ListaComponent} from './Encomiendas/lista/lista.component';
+import {CrearComponent} from './Encomiendas/crear/crear.component';
 
 export const routes: Routes = [
   {path: '', component: PrincipalComponent},
@@ -22,8 +25,11 @@ export const routes: Routes = [
   {path: 'crearDetalleTransporte', component: CrearDetalleTransporteComponent},
   {path: 'listarDetalleTransporte', component: DetalleTransporteListarComponent},
   {path: 'detalleTransporte/:id', component: DetalleTransporteComponent},
-  {path: 'detalleEncomienda', component: DetalleComponent},
+  {path: 'detalleEncomienda/:id', component: DetalleComponent},
+  {path: 'listaEncomienda', component: ListaComponent},
+  {path: 'crearEncomienda', component: CrearComponent},
   {path: 'login', component: LoginComponent},
+  {path: 'soporte', component: SoporteComponent},
   {path: 'acercaDe', component: AcercaComponent},
   {path: 'perfil', component: PerfilComponent},
   {path: 'registro', component: RegistroComponent},

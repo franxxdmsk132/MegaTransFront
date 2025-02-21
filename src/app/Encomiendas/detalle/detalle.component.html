@@ -1,4 +1,57 @@
 <app-menu>
-<h1><b>  Disculpas :( </b></h1>
-<h1><b>  Aun estamos trabajando...</b></h1>
+  <mat-card *ngIf="!isLoading" class="detalle-card">
+  <mat-card-header>
+    <mat-card-title>Detalle de Encomienda</mat-card-title>
+    <mat-card-subtitle>{{detalleEncomienda.numGuia}}</mat-card-subtitle>
+  </mat-card-header>
+
+  <mat-card-content>
+    <div *ngIf="detalleEncomienda">
+      <div class="detalle-section">
+        <mat-divider></mat-divider>
+        <h3>Datos del Remitente</h3>
+        <p><strong>Nombre:</strong> {{detalleEncomienda.nombreD}} {{detalleEncomienda.apellidoD}}</p>
+        <p><strong>Identificación:</strong> {{detalleEncomienda.identificacionD}}</p>
+        <p><strong>Teléfono Beneficiario:</strong> {{detalleEncomienda.telfBeneficiario}}</p>
+        <p><strong>Teléfono Encargado:</strong> {{detalleEncomienda.telfEncargado}}</p>
+        <p><strong>Correo:</strong> {{detalleEncomienda.correoD}}</p>
+        <p><strong>Dirección:</strong> {{detalleEncomienda.dirRemitente}}</p>
+        <mat-divider></mat-divider>
+      </div>
+
+      <div class="detalle-section">
+        <h3>Información de Entrega</h3>
+        <p><strong>Tipo de Entrega:</strong> {{detalleEncomienda.tipoEntrega}}</p>
+        <p><strong>Ruta:</strong> {{detalleEncomienda.ruta}}</p>
+        <p><strong>Referencia:</strong> {{detalleEncomienda.referenciaD}}</p>
+        <p><strong>Estado:</strong> {{detalleEncomienda.estado}}</p>
+      </div>
+
+      <div class="detalle-section">
+        <h3>Fecha de Encomienda</h3>
+        <p><strong>Fecha:</strong> {{detalleEncomienda.fecha | date:'dd/MM/yyyy'}}</p>
+        <mat-divider></mat-divider>
+      </div>
+
+      <div class="detalle-section">
+        <h3>Productos</h3>
+        <div *ngFor="let producto of detalleEncomienda.productosDto">
+          <p><strong>Producto:</strong> Alto: {{producto.alto}} cm, Ancho: {{producto.ancho}} cm, Largo: {{producto.largo}} cm, Peso: {{producto.peso}} kg, Fragil: {{producto.fragil ? 'Sí' : 'No'}}</p>
+        </div>
+      </div>
+
+      <div *ngIf="detalleEncomienda.qrCodePath" class="qr-section">
+        <h3>QR Code</h3>
+        <mat-divider></mat-divider>
+        <img [src]="'http://104.196.131.87:8080' + detalleEncomienda.qrCodePath" alt="QR Code">
+      </div>
+    </div>
+  </mat-card-content>
+
+  <mat-card-actions>
+    <button mat-button color="primary" (click)="volver()">Volver</button>
+  </mat-card-actions>
+</mat-card>
+
+<mat-progress-spinner *ngIf="isLoading" diameter="50" mode="indeterminate"></mat-progress-spinner>
 </app-menu>

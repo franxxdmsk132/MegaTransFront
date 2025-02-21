@@ -1,0 +1,27 @@
+.detalle-card {
+  max-width: 800px;
+  margin: 20px auto;
+}
+
+.detalle-section {
+  margin-bottom: 20px;
+}
+
+h3 {
+  font-size: 1.2em;
+  margin-bottom: 10px;
+}
+
+.mat-card-actions {
+  display: flex;
+  justify-content: flex-end;
+}
+
+.qr-section {
+  margin-top: 20px;
+  text-align: center;
+}
+
+button {
+  width: 100px;
+}

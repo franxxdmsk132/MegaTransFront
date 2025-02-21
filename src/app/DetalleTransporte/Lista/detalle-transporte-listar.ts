@@ -30,6 +30,9 @@ import {JwtDTO} from '../../models/jwt-dto';
 import {MatSort, MatSortModule} from '@angular/material/sort';
 import {Router} from '@angular/router';
 import {TokenService} from '../../service/token.service';
+import {MatTab, MatTabGroup} from '@angular/material/tabs';
+import {EstadoDialogComponent} from './estado-dialog/estado-dialog.component';
+import {MatDialog} from '@angular/material/dialog';
 
 @Component({
   selector: 'app-Detalle-transporte-listar',
@@ -63,7 +66,10 @@ import {TokenService} from '../../service/token.service';
     MatSort,
     MatSortModule,
     MatCardTitle,
-    MatCardSubtitle
+    MatCardSubtitle,
+    MatTabGroup,
+    MatTab,
+
   ],
   styleUrls: ['./detalle-transporte-listar.css']
 })
@@ -71,7 +77,7 @@ export class DetalleTransporteListarComponent implements OnInit {
 
   isLoading = true;
   errorMessage: string | undefined;
-
+  dataFiltrada: DetalleTransporte[] = [];
   dataSource = new MatTableDataSource<DetalleTransporte>();
   displayedColumns: string[] = [
     'cantidadEstibaje', 'descripcionProducto', 'estado', 'tipoServicio', 'estibaje', 'fecha',
@@ -84,16 +90,19 @@ export class DetalleTransporteListarComponent implements OnInit {
   constructor(
     private detalleTransporteService: DetalleTransporteService,
     private tokenService: TokenService,
-    private router: Router) {
+    private router: Router,
+    private dialog : MatDialog) {
   }
 
   ngOnInit(): void {
     this.obtenerDetallesTransporte();
   }
+  //
+  // ngAfterViewInit(): void {
+  //   this.dataSource.sort = this.sort;
+  // }
+  selectedTabIndex = 0;
 
-  ngAfterViewInit(): void {
-    this.dataSource.sort = this.sort;
-  }
 
   obtenerDetallesTransporte(): void {
     this.detalleTransporteService.obtenerDetallesTransporte().subscribe({
@@ -101,16 +110,43 @@ export class DetalleTransporteListarComponent implements OnInit {
         console.log('Detalles de transporte recibidos:', detalles);
         this.dataSource.data = detalles;
         this.dataSource.paginator = this.paginator;
-        this.isLoading = false; // Desactivar el indicador de carga
+        this.isLoading = false;
+        this.filtrarPorEstado();  // Aplicar filtro después de cargar los datos
       },
       error: (error) => {
         this.errorMessage = 'No se pudo obtener las solicitudes';
         console.error('Error al obtener detalles de transporte', error);
-        this.isLoading = false; // Desactivar el indicador de carga en caso de error
-
+        this.isLoading = false;
       }
     });
   }
+
+  // Método para filtrar por estado según la pestaña seleccionada
+  filtrarPorEstado(): void {
+    if (!this.dataSource.data) {
+      this.dataFiltrada = [];
+      return;
+    }
+
+    switch (this.selectedTabIndex) {
+      case 0:
+        this.dataFiltrada = this.dataSource.data.filter(detalle => detalle.estado === 'PENDIENTE');
+        break;
+      case 1:
+        this.dataFiltrada = this.dataSource.data.filter(detalle => detalle.estado === 'PROCESANDO');
+        break;
+      case 2:
+        this.dataFiltrada = this.dataSource.data.filter(detalle => detalle.estado === 'FINALIZADO');
+        break;
+      case 3:
+        this.dataFiltrada = this.dataSource.data.filter(detalle => detalle.estado === 'MOVIMIENTO');
+        break;
+      default:
+        this.dataFiltrada = this.dataSource.data;
+    }
+  }
+
+
 
   eliminarDetalle(id: number): void {
     if (confirm('¿Estás seguro de eliminar este Detalle de transporte?')) {
@@ -130,7 +166,23 @@ export class DetalleTransporteListarComponent implements OnInit {
     this.router.navigate(['detalleTransporte/', detalle.id])
   }
 
+  // Método para abrir el dialog de cambio de estado
+  abrirDialogoEstado(detalle: DetalleTransporte): void {
+    const dialogRef = this.dialog.open(EstadoDialogComponent, {
+      width: '300px',
+      data: { id: detalle.id, estado: detalle.estado } // Enviar el ID y el estado actual
+    });
 
+    dialogRef.afterClosed().subscribe(result => {
+      if (result) {
+        // Actualizar el estado en la lista si se ha cambiado con éxito
+        const index = this.dataSource.data.findIndex(d => d.id === detalle.id);
+        if (index !== -1) {
+          this.dataSource.data[index].estado = detalle.estado;
+        }
+      }
+    });
+  }
 
 
 

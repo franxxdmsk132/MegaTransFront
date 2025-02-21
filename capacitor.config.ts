@@ -9,8 +9,17 @@ const config: CapacitorConfig = {
     // allowNavigation: ['192.168.0.107'],
     allowNavigation: ['104.196.131.87'],
     androidScheme: 'http'
-
   }
+  // },
+  // plugins: {
+  //   Camera: {
+  //     permissions: {
+  //       ios: 'camera',
+  //       android: 'CAMERA'
+  //     }
+  //   }
+  // }
+
 };
 
 

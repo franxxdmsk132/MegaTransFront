@@ -5,7 +5,14 @@
       <mat-spinner></mat-spinner>
     </div>
     <div *ngIf="!isLoading && dataSource">
-      <mat-card *ngFor="let element of dataSource.data" class="detalle-card">
+
+      <mat-tab-group [(selectedIndex)]="selectedTabIndex" (selectedTabChange)="filtrarPorEstado()" class="sticky-tabs">
+        <mat-tab label="Pendiente"></mat-tab>
+        <mat-tab label="Proceso"></mat-tab>
+        <mat-tab label="Finalizado"></mat-tab>
+      </mat-tab-group>
+
+      <mat-card *ngFor="let element of dataFiltrada" class="detalle-card">
         <mat-card-header>
           <mat-card-title>{{ element.cliente?.nombre }} {{ element.cliente?.apellido }}</mat-card-title>
           <mat-card-subtitle>Número de Orden: {{ element.numOrden }}</mat-card-subtitle>
@@ -22,10 +29,16 @@
 
         <mat-card-actions>
           <button mat-flat-button color="primary" (click)="visualizarDetalle(element)">Ver más</button>
+          <button mat-flat-button color="primary" (click)="abrirDialogoEstado(element)">Estado</button>
         </mat-card-actions>
       </mat-card>
     </div>
-
+    <!-- Mensaje de error si no hay datos o ocurrió un problema -->
+    <mat-card *ngIf="!isLoading && dataFiltrada.length === 0" class="error-card">
+      <mat-card-content>
+        <p>No se encontraron detalles de Transporte.</p>
+      </mat-card-content>
+    </mat-card>
     <!-- Indicador de carga -->
     <mat-card *ngIf="!isLoading && errorMessage" class="error-card">
       <mat-card-content class="loading-content">

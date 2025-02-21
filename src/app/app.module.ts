@@ -34,6 +34,8 @@ import {MatSnackBarModule} from '@angular/material/snack-bar';
 import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
 import {CambiarPasswordComponent} from './perfil/cambiar-password/cambiar-password.component';
 import {MatLabel} from '@angular/material/form-field';
+import {ZXingScannerModule} from '@zxing/ngx-scanner';
+import {DetalleEncomiendaService} from './service/detalle-encomienda.service';
 
 @NgModule({
   declarations: [  ],
@@ -73,7 +75,9 @@ import {MatLabel} from '@angular/material/form-field';
     MatProgressSpinnerModule,
     MatInputModule,
     MatSnackBarModule,
-    CambiarPasswordComponent
+    CambiarPasswordComponent,
+    ZXingScannerModule,
+
   ],
   providers: [],
 })

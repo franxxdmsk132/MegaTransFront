@@ -1,33 +1,35 @@
-<h2 mat-dialog-title>Actualizar Perfil</h2>
-<mat-dialog-content>
-  <form [formGroup]="usuarioForm">
-    <mat-form-field appearance="outline">
+<h2 mat-dialog-title style="text-align: center;">Actualizar Perfil</h2>
+
+<mat-dialog-content style="display: flex; flex-direction: column; align-items: center;">
+  <form [formGroup]="usuarioForm" style="width: 100%; max-width: 400px;">
+    <mat-form-field appearance="outline" class="full-width">
       <mat-label>Nombre</mat-label>
       <input matInput formControlName="nombre">
     </mat-form-field>
 
-    <mat-form-field appearance="outline">
+    <mat-form-field appearance="outline" class="full-width">
       <mat-label>Apellido</mat-label>
       <input matInput formControlName="apellido">
     </mat-form-field>
 
-    <mat-form-field appearance="outline">
+    <mat-form-field appearance="outline" class="full-width">
       <mat-label>Identificación</mat-label>
       <input matInput formControlName="identificacion">
     </mat-form-field>
-    <mat-form-field appearance="outline">
+
+    <mat-form-field appearance="outline" class="full-width">
       <mat-label>Nombre Comercial</mat-label>
       <input matInput formControlName="nombreComercial">
     </mat-form-field>
 
-    <mat-form-field appearance="outline">
+    <mat-form-field appearance="outline" class="full-width">
       <mat-label>Teléfono</mat-label>
       <input matInput formControlName="telefono">
     </mat-form-field>
   </form>
 </mat-dialog-content>
 
-<mat-dialog-actions align="end">
-  <button mat-button (click)="cancelar()">Cancelar</button>
-  <button mat-button color="primary" (click)="actualizarUsuario()" [disabled]="!usuarioForm.valid">Guardar</button>
+<mat-dialog-actions style="display: flex; justify-content: center; gap: 10px; width: 100%; max-width: 400px; margin: 0 auto;">
+  <button mat-button (click)="cancelar()" class="custom-button2" style="flex: 1; text-align: center;">Cancelar</button>
+  <button mat-button class="custom-button2" (click)="actualizarUsuario()" [disabled]="!usuarioForm.valid" style="flex: 1; text-align: center;">Guardar</button>
 </mat-dialog-actions>

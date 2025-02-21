@@ -30,7 +30,9 @@
 
 
 
-          <p>Bienvenido a MegaTrans. Aquí puedes gestionar tu transporte.</p>
+          <p>Bienvenido! ,aquí puedes gestionar tu transporte en </p>
+          <p style="font-family: 'TERMINATOR', sans-serif ; text-align: center" >CAMIONESMEGATRANS.</p>
+          <br>
           <div class="button-grid">
             <button mat-raised-button class="custom-button" routerLink="/crearDetalleTransporte" >
               Transporte/Mudanza
@@ -44,6 +46,10 @@
             <button mat-raised-button class="custom-button" (click)="openSearchDialog()">
               Búsqueda
             </button>
+            <button mat-raised-button class="custom-button" (click)="openQrScanner()">
+              📷 Escanear QR
+            </button>
+
 
           </div>
         </div>
@@ -51,7 +57,7 @@
         <ng-template #loggedOut>
           <h2>No has iniciado sesión</h2>
           <p>Por favor, ingresa para comenzar a utilizar la aplicación.</p>
-          <button mat-raised-button color="primary" routerLink="/login" class="mt-3">
+          <button mat-raised-button color="primary" routerLink="/login" class="custom-button2">
             Ingresar o Registrarse
           </button>
         </ng-template>

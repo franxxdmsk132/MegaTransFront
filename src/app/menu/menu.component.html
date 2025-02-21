@@ -17,14 +17,17 @@
       <a mat-list-item *ngIf="isLogged" routerLink="/crearDetalleTransporte" (click)="sidenav.close()">
         <mat-icon class="red-icon">local_shipping</mat-icon> <b>  Transporte</b>
       </a>
-      <a mat-list-item *ngIf="isLogged" routerLink="/detalleEncomienda" (click)="sidenav.close()">
+      <a mat-list-item *ngIf="isLogged" routerLink="/crearEncomienda" (click)="sidenav.close()">
         <mat-icon class="red-icon">local_shipping</mat-icon> <b>  Encomiendas</b>
       </a>
 <!--      <a mat-list-item *ngIf="isLogged" routerLink="/listarDetalleTransporte" (click)="sidenav.close()">-->
 <!--        <mat-icon>assignment</mat-icon> Mis Solicitudes-->
 <!--      </a>-->
       <a mat-list-item *ngIf="isLogged" routerLink="/listarDetalleTransporte" (click)="sidenav.close()">
-        <mat-icon class="red-icon">assignment</mat-icon> <b>  Solicitudes</b>
+        <mat-icon class="red-icon">assignment</mat-icon> <b>Pedidos Transporte</b>
+      </a>
+      <a mat-list-item *ngIf="isLogged" routerLink="/listaEncomienda" (click)="sidenav.close()">
+        <mat-icon class="red-icon">assignment</mat-icon> <b>Pedidos Encomienda</b>
       </a>
       <a mat-list-item *ngIf="isAdmin" routerLink="/unidades" (click)="sidenav.close()">
         <mat-icon class="red-icon">directions_bus</mat-icon> <b>  Unidades</b>
@@ -32,7 +35,7 @@
       <a mat-list-item *ngIf="isAdmin" routerLink="/registroEmpleado" (click)="sidenav.close()">
         <mat-icon class="red-icon">person_outline</mat-icon> <b>  Empleados</b>
       </a>
-      <a mat-list-item *ngIf="isLogged" routerLink="/empleado/lista" (click)="sidenav.close()">
+      <a mat-list-item *ngIf="isLogged" routerLink="/soporte" (click)="sidenav.close()">
         <mat-icon class="red-icon">chat</mat-icon> <b>  Soporte</b>
       </a>
       <a mat-list-item *ngIf="isLogged" routerLink="/acercaDe" (click)="sidenav.close()">

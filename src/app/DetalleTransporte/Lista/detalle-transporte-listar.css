@@ -50,12 +50,7 @@
   color: gray;
   margin-top: 20px;
 }
-.sticky-menu {
-  position: sticky;
-  top: 0;
-  z-index: 1000; /* Esto asegura que se mantenga encima de otros elementos */
-  width: 100%; /* Asegúrate de que ocupe todo el ancho de la pantalla */
-}
+
 .card-container {
   display: flex;
   flex-wrap: wrap;
@@ -99,4 +94,17 @@
 .error-snackbar {
   background-color: #f44336;
   color: white;
+}
+.sticky-menu {
+  position: sticky;
+  top: 0;
+  z-index: 1000; /* Esto asegura que se mantenga encima de otros elementos */
+  width: 100%; /* Asegúrate de que ocupe todo el ancho de la pantalla */
+}
+.sticky-tabs {
+  position: sticky;
+  top: 0; /* Ajusta según la altura de tu menú */
+  z-index: 999; /* Asegura que se mantengan por encima del contenido */
+  background: white; /* Fondo sólido para que no se mezclen con el contenido */
+  box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
 }

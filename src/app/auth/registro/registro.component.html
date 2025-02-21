@@ -6,7 +6,7 @@
   <ng-template #loggedOut>
     <div class="container d-flex justify-content-center">
       <mat-card class="login-card">
-          <button mat-flat-button routerLink="/login" class="custom-button" >Iniciar Sesion
+          <button mat-flat-button routerLink="/login" class="custom-button2" >Iniciar Sesion
           </button>
         <br>
         <mat-card-content>
@@ -47,8 +47,8 @@
               <input matInput type="password" name="password" id="password" [(ngModel)]="password" required>
             </mat-form-field>
 
-            <div class="button-container">
-              <button mat-raised-button color="primary" class="full-width" [disabled]="!f.valid">
+            <div style="text-align: center">
+              <button mat-raised-button color="primary" class="custom-button2" [disabled]="!f.valid">
                 <mat-icon>person_add</mat-icon>
                 Crear Cuenta
               </button>
