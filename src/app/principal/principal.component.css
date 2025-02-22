@@ -48,7 +48,7 @@ button.mat-raised-button {
   background-color: black !important;
   color: white !important;
   border: 2px solid red !important;
-  width: 11em;         /* Ancho en unidades relativas */
+  width: 9em;         /* Ancho en unidades relativas */
   height: 2.8em;         /* Altura en unidades relativas */
   font-size: 1rem;     /* Tamaño de texto relativo */
   padding: 0.5em 1em;  /* Espaciado interno relativo */
@@ -57,7 +57,7 @@ button.mat-raised-button {
   background-color: black !important;
   color: white !important;
   border: 2px solid red !important;
-  width: 12em;         /* Ancho en unidades relativas */
+  width: 13em;         /* Ancho en unidades relativas */
   height: 2.8em;         /* Altura en unidades relativas */
   font-size: 1rem;     /* Tamaño de texto relativo */
   padding: 0.5em 1em;  /* Espaciado interno relativo */
@@ -69,3 +69,7 @@ button.mat-raised-button {
   border: 2px solid red !important;      /* Bordes rojos al pasar el ratón */
 }
 
+.welcome-card {
+  padding:6px;
+  margin: 2%/* Ajusta el valor según el espacio que desees */
+}

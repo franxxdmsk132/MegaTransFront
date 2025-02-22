@@ -1,49 +1,68 @@
-<app-menu class="sticky-menu">
-  <div class="card-container">
-    <!-- Contenedor para aplicar *ngIf y *ngFor -->
-    <div *ngIf="isLoading" class="loading-container">
-      <mat-spinner></mat-spinner>
-    </div>
-    <div *ngIf="!isLoading && dataSource">
+  <app-menu class="sticky-menu">
+    <div class="card-container" (window:scroll)="onScroll($event)" >
+      <div *ngIf="isLoading" class="loading-container">
+      </div>
 
-      <mat-tab-group [(selectedIndex)]="selectedTabIndex" (selectedTabChange)="filtrarPorEstado()" class="sticky-tabs">
-        <mat-tab label="Pendiente"></mat-tab>
-        <mat-tab label="Proceso"></mat-tab>
-        <mat-tab label="Finalizado"></mat-tab>
-      </mat-tab-group>
+      <div *ngIf="!isLoading && dataSource"  >
+        <mat-tab-group [(selectedIndex)]="selectedTabIndex" (selectedTabChange)="filtrarPorEstado()" class="sticky-tabs" >
+          <mat-tab>
+            <ng-template mat-tab-label>
+              <mat-icon class="mat-icon">watch_later</mat-icon>
+              <b>Pendiente</b>
+            </ng-template>
+          </mat-tab>
+          <mat-tab>
+            <ng-template mat-tab-label>
+              <mat-icon>local_shipping</mat-icon>
+              <b>Proceso</b>
+            </ng-template>
+          </mat-tab>
+          <mat-tab>
+            <ng-template mat-tab-label>
+              <mat-icon>check_circle</mat-icon>
+              <b>Finalizado</b>
+            </ng-template>
+          </mat-tab>
+        </mat-tab-group>
 
-      <mat-card *ngFor="let element of dataFiltrada" class="detalle-card">
-        <mat-card-header>
-          <mat-card-title>{{ element.cliente?.nombre }} {{ element.cliente?.apellido }}</mat-card-title>
-          <mat-card-subtitle>Número de Orden: {{ element.numOrden }}</mat-card-subtitle>
-        </mat-card-header>
+        <mat-card *ngFor="let element of dataFiltrada" class="detalle-card"  >
+          <mat-card-header>
+            <div class="card-header-top">
+              <mat-card-title>{{ element.numOrden }}</mat-card-title>
+              <div class="estado-container">
+                <p>{{ element.estado }}</p>
+                <p><strong>Tipo de Unidad:</strong> {{ element.unidad ? element.unidad.tipo : 'N/A' }}</p>
+              </div>
+            </div>
+          </mat-card-header>
 
+          <mat-card-content>
+            <div class="info-row">
+              <div>
+                <p><strong>Fecha:</strong> {{ element.fecha }}</p>
+                <p><strong>Tipo de Servicio:</strong> {{ element.tipoServicio }}</p>
+                <p><strong>Origen:</strong> {{ element.dirOrigen.callePrincipal }}, {{ element.dirOrigen.calleSecundaria }}</p>
+                <p><strong>Destino:</strong> {{ element.dirDestino.callePrincipal }}, {{ element.dirDestino.calleSecundaria }}</p>
+              </div>
+            </div>
+          </mat-card-content>
+
+          <mat-card-actions class="center-buttons">
+            <button mat-flat-button color="primary" (click)="visualizarDetalle(element)" class="custom-button">Ver más</button>
+            <button mat-flat-button color="primary" *ngIf="isAdmin || isEmpl" (click)="abrirDialogoEstado(element)" class="custom-button">Estado</button>
+          </mat-card-actions>
+        </mat-card>
+      </div>
+      <mat-card *ngIf="!isLoading && dataFiltrada.length === 0" class="error-card">
         <mat-card-content>
-          <p><strong>Fecha:</strong> {{ element.fecha }}</p>
-          <p><strong>Tipo de Servicio:</strong> {{ element.tipoServicio }}</p>
-          <p><strong>Tipo de Unidad:</strong> {{ element.unidad ? element.unidad.tipo : 'N/A' }}</p>
-          <p><strong>Origen:</strong> {{ element.dirOrigen.callePrincipal }}, {{ element.dirOrigen.calleSecundaria }}</p>
-          <p><strong>Destino:</strong> {{ element.dirDestino.callePrincipal }}, {{ element.dirDestino.calleSecundaria }}</p>
-          <p><strong>Estado:</strong> {{ element.estado }}</p>
+          <p>No se encontraron detalles de Transporte.</p>
         </mat-card-content>
+      </mat-card>
 
-        <mat-card-actions>
-          <button mat-flat-button color="primary" (click)="visualizarDetalle(element)">Ver más</button>
-          <button mat-flat-button color="primary" (click)="abrirDialogoEstado(element)">Estado</button>
-        </mat-card-actions>
+      <mat-card *ngIf="!isLoading && errorMessage" class="error-card">
+        <mat-card-content class="loading-content">
+          <p>Cargando...</p>
+        </mat-card-content>
       </mat-card>
     </div>
-    <!-- Mensaje de error si no hay datos o ocurrió un problema -->
-    <mat-card *ngIf="!isLoading && dataFiltrada.length === 0" class="error-card">
-      <mat-card-content>
-        <p>No se encontraron detalles de Transporte.</p>
-      </mat-card-content>
-    </mat-card>
-    <!-- Indicador de carga -->
-    <mat-card *ngIf="!isLoading && errorMessage" class="error-card">
-      <mat-card-content class="loading-content">
-        <p>Cargando...</p>
-      </mat-card-content>
-    </mat-card>
-  </div>
-</app-menu>
+  </app-menu>

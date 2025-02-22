@@ -1,64 +1,76 @@
 <app-menu>
   <div style="display: flex; align-items: center;">
     <form [formGroup]="detalleForm" (ngSubmit)="onSubmit()">
-      <mat-form-field appearance="fill" class="full-width">
-        <mat-label>Selecione su tipo de Unidad:</mat-label>
-
-        <!-- Se agrega un input matInput oculto -->
+      <mat-form-field appearance="fill" class="full-width" style="text-align: center">
         <input matInput [value]="detalleForm.get('unidadId')?.value || ''" hidden>
-
-        <div *ngIf="detalleForm.get('unidadId')?.value; else seleccionarUnidad">
+        <div *ngIf="detalleForm.get('unidadId')?.value; else seleccionarUnidad" class="full-width">
+          <br>
           <div class="unidad-preview">
             <!-- Características arriba de la imagen -->
             <p class="unidad-detalle">{{ detalleForm.get('unidadTipo')?.value }}</p>
-
             <!-- Imagen centrada y ajustada -->
             <img *ngIf="detalleForm.get('unidadImagen')?.value"
                  [src]="detalleForm.get('unidadImagen')?.value"
                  alt="Imagen de la unidad"
                  class="unidad-imagen">
-
             <!-- Botón debajo de todo -->
-            <button mat-button color="warn" (click)="limpiarUnidad()">Cambiar Unidad</button>
+            <button mat-button class="custom-button2" (click)="limpiarUnidad()">Cambiar Unidad</button>
+            <br>
           </div>
         </div>
 
         <ng-template #seleccionarUnidad>
-          <button mat-button (click)="abrirDialogo()">Seleccionar Unidad</button>
+          <button mat-button class="custom-button" (click)="abrirDialogo()">Seleccione una Unidad</button>
         </ng-template>
       </mat-form-field>
 
 
-      <mat-label>Tipo de Servicio:</mat-label>
+      <mat-label><h3>Tipo de Servicio:</h3></mat-label>
+
+      <mat-chip-listbox formControlName="tipoServicio" aria-label="Selecciona un tipo de servicio">
+        <mat-chip-option value="MUDANZA"><b>Mudanza</b></mat-chip-option>
+        <mat-chip-option value="MERCADERIA"><b>Desalojo</b></mat-chip-option>
+        <mat-chip-option value="DISTRIBUCION"><b>Distribución</b></mat-chip-option>
+      </mat-chip-listbox>
       <br>
-      <br>
-      <mat-radio-group formControlName="tipoServicio" aria-label="Selecciona un tipo de servicio">
-        <mat-radio-button value="MUDANZA">Mudanza</mat-radio-button>
-        <mat-radio-button value="MERCADERIA">Desalojo</mat-radio-button>
-        <mat-radio-button value="DISTRIBUCION">Distribución</mat-radio-button>
-      </mat-radio-group>
-      <br>
+      <mat-divider></mat-divider>
+
       <br>
 
-      <mat-label>Personal para Carga o Estibaje: </mat-label>
-      <br>
+      <mat-label><h3>Personal para Carga o Estibaje:</h3></mat-label>
+      <h5>Indique la cantidad de personas que requiera para cargar/descargar</h5>
 
-      <div style="display: flex; align-items: center; gap: 16px; margin-top: 8px;">
-        <!-- El checkbox con un margen a la derecha -->
-        <mat-checkbox formControlName="estibaje" (change)="onEstibajeChange()">Estibaje</mat-checkbox>
-        <br>
-        <br>
-        <br>
-        <!-- El input con un tamaño adecuado y margen a la izquierda -->
+      <div style="display: flex; align-items: center; gap: 20px; margin-top: 10px;">
+        <!-- El mat-slide-toggle -->
+        <mat-slide-toggle formControlName="estibaje" (change)="onEstibajeChange()" style="height: 2.8em"><b>Estibaje
+          - </b>
+          <span *ngIf="estibajeChecked; else noEstibaje"><b>Si</b></span>
+          <ng-template #noEstibaje><span><b>No</b></span></ng-template>
+        </mat-slide-toggle>
+
+        <!-- Mostrar el mensaje "Sí" o "No" dependiendo del estado del slide -->
+
+
+        <!-- El input para la cantidad de personas -->
         <mat-form-field appearance="fill" style="width: 150px;">
           <mat-label>Numero de Personas:</mat-label>
-          <input matInput id="cantidadEstibaje" formControlName="cantidadEstibaje" type="number"
-                 [disabled]="!estibajeChecked">
+          <input
+            matInput
+            id="cantidadEstibaje"
+            formControlName="cantidadEstibaje"
+            type="number"
+            [disabled]="!estibajeChecked"
+            min="0"
+            step="1"
+            placeholder="Cantidad de Estibaje">
         </mat-form-field>
       </div>
 
+
+      <mat-divider></mat-divider>
+
       <h3>Seleccione el Punto de Inicio:</h3>
-      <div id="mapOrigen" style="height: 300px; width: 100%;"></div>
+      <div id="mapOrigen" style="height: 220px; width: 100%;"></div>
       <!-- Dirección de Origen -->
       <br>
       <div formGroupName="direccionOrigen">
@@ -67,21 +79,19 @@
             <mat-label>Barrio:</mat-label>
             <input matInput id="barrioOrigen" formControlName="barrio" type="text">
           </mat-form-field>
-
+          <mat-form-field appearance="fill">
+            <mat-label>Ciudad:</mat-label>
+            <input matInput id="ciudadOrigen" formControlName="ciudad" type="text">
+          </mat-form-field>
           <mat-form-field appearance="fill">
             <mat-label>Calle Principal:</mat-label>
             <input matInput id="callePrincipalOrigen" formControlName="callePrincipal" type="text">
           </mat-form-field>
-
           <mat-form-field appearance="fill">
             <mat-label>Calle Secundaria:</mat-label>
             <input matInput id="calleSecundariaOrigen" formControlName="calleSecundaria" type="text">
           </mat-form-field>
 
-          <mat-form-field appearance="fill">
-            <mat-label>Ciudad:</mat-label>
-            <input matInput id="ciudadOrigen" formControlName="ciudad" type="text">
-          </mat-form-field>
 
           <input id="latitudOrigen" formControlName="latitud" type="hidden">
           <input id="longitudOrigen" formControlName="longitud" type="hidden">
@@ -98,15 +108,22 @@
           <input matInput id="telefonoOrigen" formControlName="telefono" type="text">
         </mat-form-field>
       </div>
+      <mat-divider></mat-divider>
 
       <!-- Mapa para Dirección de Destino -->
       <h3>Seleccione el Lugar de Destino</h3>
-      <div id="mapDestino" style="height: 300px; width: 100%;"></div>
+      <div id="mapDestino" style="height: 220px; width: 100%;"></div>
       <br>
       <!-- Dirección de Destino -->
       <div formGroupName="direccionDestino">
         <h3>Dirección de Destino</h3>
         <div class="form-grid">
+
+          <mat-form-field appearance="fill">
+            <mat-label>Ciudad:</mat-label>
+            <input matInput id="ciudadDestino" formControlName="ciudad" type="text">
+          </mat-form-field>
+
           <mat-form-field appearance="fill">
             <mat-label>Barrio:</mat-label>
             <input matInput id="barrioDestino" formControlName="barrio" type="text">
@@ -122,21 +139,17 @@
             <input matInput id="calleSecundariaDestino" formControlName="calleSecundaria" type="text">
           </mat-form-field>
 
-          <mat-form-field appearance="fill">
-            <mat-label>Ciudad:</mat-label>
-            <input matInput id="ciudadDestino" formControlName="ciudad" type="text">
-          </mat-form-field>
-
           <input id="latitudDestino" formControlName="latitud" type="hidden">
           <input id="longitudDestino" formControlName="longitud" type="hidden">
 
           <mat-form-field appearance="fill" class="full-width">
-            <mat-label>Teléfono:</mat-label>
-            <input matInput id="telefonoDestino" formControlName="telefono" type="text">
-          </mat-form-field>
-          <mat-form-field appearance="fill" class="full-width">
             <mat-label>Referencia:</mat-label>
             <input matInput id="referenciaDestino" formControlName="referencia" type="text">
+          </mat-form-field>
+
+          <mat-form-field appearance="fill" class="full-width">
+            <mat-label>Teléfono:</mat-label>
+            <input matInput id="telefonoDestino" formControlName="telefono" type="text">
           </mat-form-field>
 
 
@@ -144,24 +157,31 @@
       </div>
 
       <mat-form-field appearance="fill" class="full-width">
-        <mat-label>Indique una Fecha y Hora para el transporte</mat-label>
+        <mat-label>Fecha y Hora para el transporte</mat-label>
         <input matInput id="descripcionProducto" formControlName="descripcionProducto" type="text">
       </mat-form-field>
-      <br>
-      <br>
 
-      <mat-radio-group formControlName="pago" aria-label="Selecciona un tipo de Pago">
-        <mat-label>Eija un tipo de Pago:</mat-label>
-        <br>
-        <br>
-        <mat-radio-button value="EFECTIVO">Efectivo</mat-radio-button>
-        <mat-radio-button value="TRANSFERENCIA">Transferencia</mat-radio-button>
-      </mat-radio-group>
+      <mat-divider></mat-divider>
+      <br>
+      <mat-label><h3>Elija un tipo de Pago:</h3></mat-label>
+      <mat-chip-listbox
+        class="chip-container"
+        formControlName="pago"
+        aria-label="Selecciona un tipo de Pago">
+        <mat-chip-option value="EFECTIVO">Efectivo</mat-chip-option>
+        <mat-chip-option value="TRANSFERENCIA">Transferencia</mat-chip-option>
+      </mat-chip-listbox>
+
+
+      <br><br>
       <!-- Botón de Submit -->
-      <button mat-raised-button type="submit" [disabled]="detalleForm.invalid">Crear Solicitud de Transporte</button>
-      <button mat-raised-button (click)="enviarAWhatsapp()" [disabled]="detalleForm.invalid">Enviar Solicitud</button>
+      <div style="text-align: center">
+        <!--        <button mat-raised-button type="submit" class="custom-button3" [disabled]="detalleForm.invalid">Crear Solicitud de Transporte</button>-->
+        <button mat-raised-button class="custom-button3" (click)="enviarAWhatsapp()" [disabled]="detalleForm.invalid">
+          Enviar Solicitud
+        </button>
+      </div>
+      <br>
     </form>
-    <br>
-
   </div>
 </app-menu>

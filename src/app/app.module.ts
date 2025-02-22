@@ -38,6 +38,7 @@ import {ZXingScannerModule} from '@zxing/ngx-scanner';
 import {DetalleEncomiendaService} from './service/detalle-encomienda.service';
 import {MatNativeDateModule} from '@angular/material/core';
 import {MatDatepickerModule} from '@angular/material/datepicker';
+import {MatButtonToggle, MatButtonToggleModule} from '@angular/material/button-toggle';
 
 @NgModule({
   declarations: [  ],
@@ -80,7 +81,9 @@ import {MatDatepickerModule} from '@angular/material/datepicker';
     CambiarPasswordComponent,
     ZXingScannerModule,
     MatDatepickerModule,
-    MatNativeDateModule
+    MatNativeDateModule,
+    MatButtonToggleModule,
+    MatButtonToggle,
 
   ],
   providers: [],

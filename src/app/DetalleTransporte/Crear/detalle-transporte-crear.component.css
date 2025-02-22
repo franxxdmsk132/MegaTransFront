@@ -77,30 +77,87 @@ body {
 }
 
 .full-width {
-  grid-column: span 2; /* Hace que la referencia ocupe toda la fila */
+  grid-column: span 2;
 }
 .unidad-preview {
   display: flex;
   flex-direction: column;
   align-items: center; /* Centrar contenido */
   text-align: center;
-  gap: 10px;
+  gap: 6px;
 }
 
 .unidad-detalle {
   font-weight: bold;
   font-size: 16px;
-  color: #333; /* Color oscuro para contraste */
+  color: #000000; /* Color oscuro para contraste */
 }
 
 .unidad-imagen {
-  width: 80%;  /* Ajusta el tamaño de la imagen */
-  height: auto;
+  width: 90%;  /* Ajusta el tamaño de la imagen */
+  height: 90%;
   border-radius: 5px;
-  box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.2); /* Sombra para efecto visual */
+  /*box-shadow: 2px 2px 2px rgb(0, 0, 0); !* Sombra para efecto visual *!*/
 }
 
 button {
-  margin-top: 10px;
+  margin-top: 5px;
 }
+
+.custom-button2 {
+  background-color: black !important;
+  color: white !important;
+  border: 2px solid red !important;
+  width: 12em;         /* Ancho en unidades relativas */
+  height: 2.8em;         /* Altura en unidades relativas */
+  font-size: 1rem;     /* Tamaño de texto relativo */
+  padding: 0.5em 1em;  /* Espaciado interno relativo */
+}
+.custom-button {
+  background-color: black !important;
+  color: white !important;
+  border: 2px solid red !important;
+  width: 14em;         /* Ancho en unidades relativas */
+  height: 2.9em;         /* Altura en unidades relativas */
+  font-size: 1rem;
+  text-align: center;/* Tamaño de texto relativo */
+  padding: 0.5em 1em;  /* Espaciado interno relativo */
+}
+.custom-button3 {
+  background-color: black !important;
+  color: white !important;
+  border: 2px solid red !important;
+  width: 20em;         /* Ancho en unidades relativas */
+  height: 3em;         /* Altura en unidades relativas */
+  font-size: 1rem;
+  text-align: center;/* Tamaño de texto relativo */
+  padding: 0.5em 1em;  /* Espaciado interno relativo */
+}
+
+
+.custom-button:hover {
+  background-color: darkgray !important; /* Fondo al pasar el ratón */
+  border: 2px solid red !important;      /* Bordes rojos al pasar el ratón */
+}
+::ng-deep mat-form-field {
+  border-radius: 12px !important;
+}
+
+::ng-deep .mat-form-field-appearance-fill .mat-form-field-outline {
+  border-radius: 12px !important;
+}
+
+::ng-deep .mat-form-field-appearance-fill .mat-form-field-outline-thick {
+  border-radius: 12px !important;
+}
+
+
+.chip-container {
+  display: flex;
+  justify-content: center;
+  gap: 20px;
+  flex-wrap: wrap;
+  width: 100%;
+}
+
 

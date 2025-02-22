@@ -10,8 +10,8 @@ import {FormBuilder, FormGroup, FormsModule, Validators} from '@angular/forms';
 import {NgIf} from '@angular/common';
 import {MatCard, MatCardContent, MatCardHeader} from '@angular/material/card';
 import {MatTab, MatTabGroup} from '@angular/material/tabs';
-import {MatAnchor, MatButton} from '@angular/material/button';
-import {MatError, MatFormField, MatLabel} from '@angular/material/form-field';
+import {MatAnchor, MatButton, MatIconButton} from '@angular/material/button';
+import {MatError, MatFormField, MatLabel, MatSuffix} from '@angular/material/form-field';
 import {MatInput} from '@angular/material/input';
 import {MatIcon} from '@angular/material/icon';
 import {MatSnackBar} from '@angular/material/snack-bar';
@@ -36,7 +36,9 @@ import {MatSnackBar} from '@angular/material/snack-bar';
     MatIcon,
     MatButton,
     MatLabel,
-    MatError
+    MatError,
+    MatIconButton,
+    MatSuffix
   ],
   styleUrls: ['./registro.component.css']
 })
@@ -53,6 +55,7 @@ export class RegistroComponent implements OnInit {
   errMsj: string = "";
   isLogged = false;
   registroForm!: FormGroup;
+  hidePassword = true;
 
   constructor(
     private fb: FormBuilder,
@@ -70,6 +73,9 @@ export class RegistroComponent implements OnInit {
     }
   }
 
+  togglePasswordVisibility() {
+    this.hidePassword = !this.hidePassword;
+  }
 
   onRegister(): void {
     if (!this.nombreUsuario || !/^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/.test(this.nombreUsuario)) {

@@ -9,11 +9,12 @@ import {MenuComponent} from '../../menu/menu.component';
 import {NgClass, NgIf, NgOptimizedImage} from '@angular/common';
 import {MatCard, MatCardContent, MatCardHeader} from '@angular/material/card';
 import {MatTab, MatTabGroup} from '@angular/material/tabs';
-import {MatAnchor, MatButton} from '@angular/material/button';
-import {MatError, MatFormField, MatLabel} from '@angular/material/form-field';
+import {MatAnchor, MatButton, MatIconButton} from '@angular/material/button';
+import {MatError, MatFormField, MatLabel, MatSuffix} from '@angular/material/form-field';
 import {MatInput} from '@angular/material/input';
 import {Mensaje} from '../../models/mensaje';
 import {MatSnackBar} from '@angular/material/snack-bar';
+import {MatIcon, MatIconModule} from '@angular/material/icon';
 
 @Component({
   selector: 'app-login',
@@ -36,7 +37,11 @@ import {MatSnackBar} from '@angular/material/snack-bar';
     MatError,
     MatCardContent,
     NgClass,
-    NgOptimizedImage
+    NgOptimizedImage,
+    MatIconButton,
+    MatIcon,
+    MatIconModule,
+    MatSuffix
   ],
   standalone: true
 })
@@ -49,6 +54,11 @@ export class LoginComponent implements OnInit {
   password: string ="";
   roles: string[] = [];
   errMsj: string ="";
+  hidePassword = true;
+
+  togglePasswordVisibility() {
+    this.hidePassword = !this.hidePassword;
+  }
 
   constructor(
     private tokenService: TokenService,

@@ -30,9 +30,10 @@ import {JwtDTO} from '../../models/jwt-dto';
 import {MatSort, MatSortModule} from '@angular/material/sort';
 import {Router} from '@angular/router';
 import {TokenService} from '../../service/token.service';
-import {MatTab, MatTabGroup} from '@angular/material/tabs';
+import {MatTab, MatTabGroup, MatTabLabel} from '@angular/material/tabs';
 import {EstadoDialogComponent} from './estado-dialog/estado-dialog.component';
 import {MatDialog} from '@angular/material/dialog';
+import {ReactiveFormsModule} from '@angular/forms';
 
 @Component({
   selector: 'app-Detalle-transporte-listar',
@@ -69,14 +70,19 @@ import {MatDialog} from '@angular/material/dialog';
     MatCardSubtitle,
     MatTabGroup,
     MatTab,
+    ReactiveFormsModule,
+    MatTabLabel,
 
   ],
   styleUrls: ['./detalle-transporte-listar.css']
 })
 export class DetalleTransporteListarComponent implements OnInit {
-
+  isAdmin =false;
+  isEmpl = false
+  isLogged = false;
   isLoading = true;
   errorMessage: string | undefined;
+  isLoadingScroll: boolean = false; // Nueva variable para el spinner del scroll
   dataFiltrada: DetalleTransporte[] = [];
   dataSource = new MatTableDataSource<DetalleTransporte>();
   displayedColumns: string[] = [
@@ -96,6 +102,10 @@ export class DetalleTransporteListarComponent implements OnInit {
 
   ngOnInit(): void {
     this.obtenerDetallesTransporte();
+    this.isLogged = !!this.tokenService.getToken();
+    this.isAdmin = this.isLogged && this.tokenService.isAdmin();
+    this.isEmpl = this.isLogged && this.tokenService.isEmpl();
+
   }
   //
   // ngAfterViewInit(): void {
@@ -175,15 +185,22 @@ export class DetalleTransporteListarComponent implements OnInit {
 
     dialogRef.afterClosed().subscribe(result => {
       if (result) {
-        // Actualizar el estado en la lista si se ha cambiado con éxito
+        // Encuentra el índice del detalle actualizado
         const index = this.dataSource.data.findIndex(d => d.id === detalle.id);
         if (index !== -1) {
-          this.dataSource.data[index].estado = detalle.estado;
+          this.dataSource.data[index].estado = result; // Actualizar con el nuevo estado
+          this.obtenerDetallesTransporte() // Refrescar la tabla
         }
       }
     });
+
   }
 
 
+  onScroll(event: any): void {
+    if (window.scrollY === 0) {  // Si el usuario ha llegado al inicio
+      this.obtenerDetallesTransporte();  // Recargar los datos
+    }
+  }
 
 }

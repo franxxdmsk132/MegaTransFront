@@ -1,6 +1,6 @@
 .login-card {
   width: 100%;
-  max-width: 500px;  /* Tamaño máximo de la tarjeta */
+  max-width: initial;  /* Tamaño máximo de la tarjeta */
   margin-top: 50px;
   justify-content: center;
   display: flex;

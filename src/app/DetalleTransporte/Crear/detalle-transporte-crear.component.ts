@@ -14,6 +14,9 @@ import {MatDialog} from '@angular/material/dialog';
 import {SelecUnidadComponent} from './selec-unidad/selec-unidad.component';
 import {NgIf} from '@angular/common';
 import {TokenService} from '../../service/token.service';
+import {MatSlideToggle} from '@angular/material/slide-toggle';
+import {MatChipListbox, MatChipOption} from '@angular/material/chips';
+import {MatDivider} from '@angular/material/divider';
 
 @Component({
   selector: 'app-Detalle-transporte-crear',
@@ -29,7 +32,11 @@ import {TokenService} from '../../service/token.service';
     MatRadioGroup,
     MatRadioButton,
     MatCheckbox,
-    NgIf
+    NgIf,
+    MatSlideToggle,
+    MatChipListbox,
+    MatChipOption,
+    MatDivider
   ],
   standalone: true
 })
@@ -96,7 +103,6 @@ export class CrearDetalleTransporteComponent implements OnInit {
     this.updateCantidadEstibajeState();
   }
 
-
   private initMap(mapId: string, direccionControl: string): void {
     const coordinates: number[] = [-2.900717, -79.006086];  // Un ejemplo de coordenadas
 
@@ -120,6 +126,18 @@ export class CrearDetalleTransporteComponent implements OnInit {
 
     marker.setIcon(customIcon);
 
+    // Función que mantiene el marcador en el centro del mapa
+    map.on('move', () => {
+      const center = map.getCenter();  // Obtén las coordenadas del centro
+      marker.setLatLng(center);        // Mueve el marcador al centro
+      this.detalleForm.patchValue({
+        [direccionControl]: {
+          latitud: center.lat.toFixed(6),
+          longitud: center.lng.toFixed(6)
+        }
+      });
+      this.getLocationDetails(center.lat, center.lng, direccionControl);  // Obtén detalles de la nueva ubicación
+    });
 
     marker.on('dragend', async () => {
       const position = marker.getLatLng();
@@ -132,6 +150,7 @@ export class CrearDetalleTransporteComponent implements OnInit {
       await this.getLocationDetails(position.lat, position.lng, direccionControl);
     });
   }
+
 
 
   async getLocationDetails(lat: number, lng: number, direccionControl: string) {

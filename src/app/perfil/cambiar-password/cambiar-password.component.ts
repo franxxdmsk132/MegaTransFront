@@ -2,10 +2,11 @@ import {Component, Inject, OnInit} from '@angular/core';
 import {FormBuilder, FormControl, FormGroup, ReactiveFormsModule, Validators} from '@angular/forms';
 import {AuthService} from '../../service/auth.service';
 import {MAT_DIALOG_DATA, MatDialogRef} from '@angular/material/dialog';
-import {MatFormField, MatLabel} from '@angular/material/form-field';
+import {MatFormField, MatLabel, MatSuffix} from '@angular/material/form-field';
 import {MatInput} from '@angular/material/input';
-import {MatButton} from '@angular/material/button';
+import {MatButton, MatIconButton} from '@angular/material/button';
 import {MatSnackBar} from '@angular/material/snack-bar';
+import {MatIcon} from '@angular/material/icon';
 
 @Component({
   selector: 'app-cambiar-password',
@@ -16,14 +17,22 @@ import {MatSnackBar} from '@angular/material/snack-bar';
     MatFormField,
     MatInput,
     MatButton,
-    MatLabel
+    MatLabel,
+    MatIcon,
+    MatIconButton,
+    MatSuffix
   ],
   styleUrl: './cambiar-password.component.css'
 })
 export class CambiarPasswordComponent implements OnInit{
   passwordForm:FormGroup;
   username:string;
+  hidePassword = true;
 
+  togglePasswordVisibility() {
+    this.hidePassword = !this.hidePassword;
+
+  }
 
   constructor(
     private fb: FormBuilder,

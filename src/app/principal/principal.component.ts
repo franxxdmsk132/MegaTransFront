@@ -16,6 +16,7 @@ import {BuscarCodigoComponent} from './buscar-codigo/buscar-codigo.component';
 import {BuscarQrComponent} from './buscar-qr/buscar-qr.component';
 import {DetalleEncomiendaService} from '../service/detalle-encomienda.service';
 import {DetalleComponent} from '../Encomiendas/detalle/detalle.component';
+import {AuthService} from '../service/auth.service';
 
 @Component({
   selector: 'app-principal',
@@ -41,18 +42,29 @@ import {DetalleComponent} from '../Encomiendas/detalle/detalle.component';
 export class PrincipalComponent implements OnInit {
 
   isLogged = false;
+  isAdmin =false;
   nombreUsuario = '';
   nombreCompleto = '';
   nombreComercial = '';
+  usuarioCount = 0;
 
 
   constructor(private tokenService: TokenService,
               private dialog: MatDialog,
               private router: Router,
               private detalleTransporteService: DetalleTransporteService,
-              private detalleEncomiendaService: DetalleEncomiendaService) { }
+              private detalleEncomiendaService: DetalleEncomiendaService,
+              private authService: AuthService,) { }
 
   ngOnInit(): void {
+    this.authService.getCountUsuarios().subscribe(
+      countUsuarios => {
+        this.usuarioCount = countUsuarios;
+      },
+      error => {
+        console.log(error,"Error al Obtener el conteo de usuarios");
+      }
+    )
     if (this.tokenService.getToken()) {
       this.isLogged = true;
       this.nombreCompleto = this.tokenService.getFullName();
@@ -64,6 +76,7 @@ export class PrincipalComponent implements OnInit {
       this.nombreComercial = '';  // Asegúrate de limpiar el valor en caso de no estar logueado
 
     }
+    this.isAdmin = this.isLogged && this.tokenService.isAdmin();
   }
   openSearchDialog(): void {
     const dialogRef = this.dialog.open(BuscarCodigoComponent);

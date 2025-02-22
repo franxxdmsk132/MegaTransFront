@@ -52,3 +52,19 @@
   background-color: #f44336;
   color: white;
 }
+.custom-button {
+  background-color: black !important;
+  color: white !important;
+  border: 2px solid red !important;
+  width: 14em;         /* Ancho en unidades relativas */
+  height: 2.8em;         /* Altura en unidades relativas */
+  font-size: 1rem;
+  text-align: center;/* Tamaño de texto relativo */
+  padding: 0.5em 1em;  /* Espaciado interno relativo */
+}
+
+
+.custom-button:hover {
+  background-color: darkgray !important; /* Fondo al pasar el ratón */
+  border: 2px solid red !important;      /* Bordes rojos al pasar el ratón */
+}

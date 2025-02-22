@@ -4,24 +4,21 @@
   <!-- Contenido principal -->
   <div class="container text-center">
     <mat-card class="welcome-card">
-
-
-
       <mat-card-header>
         <mat-card-title>
           <h3 style="font-family: 'TERMINATOR', sans-serif"><b>BIENVENIDO!</b></h3>
-        </mat-card-title>      </mat-card-header>
+        </mat-card-title>
+      </mat-card-header>
       <img src="assets/images/MegaTrans.png" alt="Descripción de la imagen" class="welcome-image">
 
       <mat-card-content>
+
         <div *ngIf="isLogged; else loggedOut">
           <!-- Verificamos si nombreComercial existe -->
           <h2 *ngIf="nombreComercial && nombreComercial.trim() !== ''" class="nombre-comercial">
             ¡Hola, {{ nombreComercial }}!
-            <h6>{{nombreCompleto}}</h6>
+            <h6>{{ nombreCompleto }}</h6>
           </h2>
-
-
 
           <!-- Si no tiene nombreComercial, mostramos solo nombreCompleto -->
           <h2 *ngIf="!nombreComercial || nombreComercial.trim() === ''" class="nombre-completo">
@@ -30,36 +27,42 @@
 
 
 
-          <p>Bienvenido! ,aquí puedes gestionar tu transporte en </p>
-          <p style="font-family: 'TERMINATOR', sans-serif ; text-align: center" >CAMIONESMEGATRANS.</p>
+          <p style="align-items: center">Bienvenido! ,aquí puedes gestionar tu transporte en </p>
+          <p style="font-family: 'TERMINATOR', sans-serif ; text-align: center">CAMIONESMEGATRANS.</p>
           <br>
+          <h3>Selecciona un servicio a continuacion: </h3>
+
           <div class="button-grid">
-            <button mat-raised-button class="custom-button" routerLink="/crearDetalleTransporte" >
-              Transporte/Mudanza
+            <button mat-raised-button class="custom-button" routerLink="/crearDetalleTransporte">
+              Transporte
             </button>
-            <button mat-raised-button class="custom-button" routerLink="/crearEncomienda" >
+            <button mat-raised-button class="custom-button" routerLink="/crearEncomienda">
               Encomiendas
             </button>
-            <button mat-raised-button class="custom-button" routerLink="/detalleEncomienda" >
-              Facturación
-            </button>
+<!--            <button mat-raised-button class="custom-button" routerLink="/detalleEncomienda">-->
+<!--              Facturación-->
+<!--            </button>-->
             <button mat-raised-button class="custom-button" (click)="openSearchDialog()">
               Búsqueda
             </button>
             <button mat-raised-button class="custom-button" (click)="openQrScanner()">
-              📷 Escanear QR
+              QR
             </button>
 
 
           </div>
+
         </div>
+        <h6 *ngIf="isAdmin" >Conteo de usuarios: {{ usuarioCount }}</h6>
 
         <ng-template #loggedOut>
           <h2>No has iniciado sesión</h2>
           <p>Por favor, ingresa para comenzar a utilizar la aplicación.</p>
-          <button mat-raised-button color="primary" routerLink="/login" class="custom-button2">
-            Ingresar o Registrarse
-          </button>
+          <div style="text-align: center">
+            <button mat-raised-button color="primary" routerLink="/login" class="custom-button2">
+              Ingresar o Registrarse
+            </button>
+          </div>
         </ng-template>
       </mat-card-content>
     </mat-card>

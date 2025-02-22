@@ -25,7 +25,7 @@
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); /* Ajuste para que las tarjetas se acomoden responsivamente */
   gap: 16px;
-  padding: 16px;
+  padding: 4px;
   margin: 0 10px; /* Márgenes a los lados para separar de los bordes de la pantalla */
 }
 
@@ -36,7 +36,7 @@
   justify-content: space-between;
   width: 100%; /* La tarjeta ocupa todo el ancho disponible */
   border-radius: 8px; /* Bordes redondeados en la tarjeta */
-  padding: 16px; /* Espaciado interno de la tarjeta */
+  padding: 8px; /* Espaciado interno de la tarjeta */
   box-sizing: border-box; /* Asegura que el padding no afecte el tamaño total */
   background-color: #fff; /* Fondo blanco para la tarjeta */
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Sombra ligera para dar profundidad */

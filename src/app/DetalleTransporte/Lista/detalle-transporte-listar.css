@@ -1,72 +1,58 @@
 .detalle-card {
-  margin: 10px 0;
+  width: 100%;
+  max-width: 95%; /* Limita el ancho máximo de la tarjeta */
+  margin: 0; /* Elimina el margen para que esté perfectamente centrado */
   padding: 15px;
   border-radius: 8px;
-  box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+  box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.39);
+  display: flex;
+  flex-direction: column;
+  background-color: white;
 }
 
-.header {
+.card-header-top {
   display: flex;
   justify-content: space-between;
-  align-items: center;
-  font-size: 16px;
+  align-items: flex-start;
+  margin-bottom: 15px;
 }
 
-.orden-fecha {
+.estado-container {
   text-align: right;
-}
-
-.transporte-label {
-  font-weight: bold;
-  color: #3f51b5;
+  font-size: 14px;
+  color: #000000;
 }
 
 .info-row {
   display: flex;
-  justify-content: space-between;
-  padding: 5px 0;
-}
-
-.label {
-  font-weight: bold;
-}
-
-.tipo-transporte,
-.tipo-unidad,
-.estado {
-  font-weight: bold;
-  color: #ff4081;
-}
-
-.acciones {
-  display: flex;
-  justify-content: center;
+  flex-direction: column;
   margin-top: 10px;
 }
 
-.no-data {
+.info-row p {
+  margin: 5px 0;
+}
+
+.card-header-top mat-card-title {
+  font-size: 18px;
+  font-weight: bold;
+  color: #000000;
+}
+
+.mat-card-content p {
+  font-size: 14px;
+}
+
+.compact-button {
+  margin: 5px;
   text-align: center;
-  font-size: 16px;
-  color: gray;
-  margin-top: 20px;
 }
 
 .card-container {
   display: flex;
   flex-wrap: wrap;
-  gap: 16px;
+  gap: 20px; /* Aumenta el espacio entre las tarjetas */
   justify-content: center;
-}
-
-.detalle-card {
-  width: 95%;
-  padding: 10px;
-}
-.loading-card {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  height: 200px;
 }
 
 .loading-container {
@@ -76,35 +62,85 @@
   height: 100vh;
 }
 
-.profile-card, .error-card {
-  width: 400px;
+.error-card {
+  width: 100%;
   padding: 20px;
-  text-align: left;
+  text-align: center;
+  background-color: #f9f9f9;
+  border-radius: 8px;
+  margin-top: 20px;
 }
 
-.error-message {
-  color: red;
-  font-weight: bold;
-}
-.success-snackbar {
-  background-color: #4caf50;
-  color: white;
-}
-
-.error-snackbar {
-  background-color: #f44336;
-  color: white;
-}
-.sticky-menu {
-  position: sticky;
-  top: 0;
-  z-index: 1000; /* Esto asegura que se mantenga encima de otros elementos */
-  width: 100%; /* Asegúrate de que ocupe todo el ancho de la pantalla */
-}
 .sticky-tabs {
   position: sticky;
-  top: 0; /* Ajusta según la altura de tu menú */
-  z-index: 999; /* Asegura que se mantengan por encima del contenido */
-  background: white; /* Fondo sólido para que no se mezclen con el contenido */
-  box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+  width: 100%;
+  margin-top: 10px; /* Se quedará pegado en la parte superior */
+  z-index: 1000; /* Para asegurarse de que esté por encima de otros elementos */
+  background: white; /* Color de fondo para evitar transparencia */
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2); /* Sombra opcional para resaltar */
+}
+
+
+@media screen and (max-width: 769px) {
+  .detalle-card {
+    width: 100%;
+    margin: 10px auto; /* Centra las tarjetas agregando márgenes automáticos */
+  }
+
+  .card-container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+    justify-content: center; /* Asegura que las tarjetas estén centradas */
+    margin: auto; /* Asegura que el contenedor esté centrado */
+  }
+
+  .card-header-top {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .estado-container {
+    text-align: left;
+    margin-top: 10px;
+  }
+
+  .info-row {
+    flex-direction: column;
+  }
+}
+
+
+.center-buttons {
+  display: flex;
+  justify-content: center;
+  gap: 20px; /* Reduce el espacio entre los botones */
+}
+
+.compact-button {
+  margin: 0;
+}
+
+.custom-button {
+  background-color: black !important;
+  color: white !important;
+  border: 2px solid red !important;
+  width: 8em; /* Ancho de los botones */
+  height: 2.9em; /* Altura de los botones */
+  font-size: 1rem; /* Tamaño de texto */
+  padding: 0.5em 1em; /* Espaciado interno */
+}
+
+.custom-button:hover {
+  background-color: darkgray !important;
+  border: 2px solid red !important;
+}
+
+.mat-icon {
+  color: #ff3838 !important;
+}
+
+.mat-icon2 {
+  color: rgb(255, 255, 255) !important;
+  font-size: 16px;
 }

@@ -9,15 +9,15 @@
         <img src="assets/images/MegaTrans.png" alt="MegaTrans Logo" height="100%" width="100%">
         <br>
         <br>
-        <mat-label class="welcome-message" style="text-align: center">¡BIENVENIDO! SE REQUIERE SU CORREO Y CONTRASEÑA
-          PARA ACCEDER
+        <mat-label class="welcome-message" style="text-align: center"> <b>¡BIENVENIDO! SE REQUIERE SU CORREO Y CONTRASEÑA
+          PARA ACCEDER</b>
         </mat-label>
         <br>
         <br>
         <mat-card-content>
           <form #f="ngForm" (ngSubmit)="onLogin()" novalidate>
             <!-- Nombre de Usuario -->
-            <mat-form-field class="full-width"
+            <mat-form-field class="full-width" appearance="fill"
                             [ngClass]="{'mat-form-field-invalid': f.submitted && !nombreUsuario || errMsj?.includes('Usuario') }">
               <mat-label>Correo</mat-label>
               <input matInput type="text" name="nombreUsuario" id="nombreUsuario" [(ngModel)]="nombreUsuario" required>
@@ -26,13 +26,26 @@
             </mat-form-field>
 
             <!-- Contraseña -->
-            <mat-form-field class="full-width"
+            <mat-form-field class="full-width" appearance="fill"
                             [ngClass]="{'mat-form-field-invalid': f.submitted && !password || errMsj?.includes('Contraseña') }">
               <mat-label>Contraseña</mat-label>
-              <input matInput type="password" name="password" id="password" [(ngModel)]="password" required>
+              <input matInput [type]="hidePassword ? 'password' : 'text'"
+                     name="password"
+                     id="password"
+                     [(ngModel)]="password"
+                     required >
+
+              <!-- Botón para mostrar/ocultar contraseña con matSuffix -->
+              <button mat-icon-button matIconSuffix  (click)="togglePasswordVisibility()" type="button">
+                <mat-icon>{{ hidePassword ? 'visibility_off' : 'visibility' }}</mat-icon>
+              </button>
+
               <mat-error *ngIf="f.submitted && !password">La contraseña es obligatoria</mat-error>
               <mat-error *ngIf="errMsj?.includes('Contraseña')">La contraseña es incorrecta</mat-error>
             </mat-form-field>
+
+
+
 
             <!-- Mensaje de error de autenticación -->
             <div *ngIf="errMsj && !errMsj.includes('Usuario') && !errMsj.includes('Contraseña')" class="error-message">

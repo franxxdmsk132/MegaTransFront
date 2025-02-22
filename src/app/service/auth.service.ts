@@ -69,6 +69,11 @@ export class AuthService {
     const headers = new HttpHeaders().set('Authorization', `Bearer ${token}`).set('Content-Type', 'application/json');
     return this.httpClient.put(`${this.authURL}usuario/${username}`, usuarioData, { headers });
   }
+  public getCountUsuarios(): Observable<number> {
+    // const token = this.tokenService.getToken();
+    // const headers = new HttpHeaders().set('Authorization', `Bearer ${token}`);
+    return this.httpClient.get<number>(`${this.authURL}count`);
+  }
 
 
 }
