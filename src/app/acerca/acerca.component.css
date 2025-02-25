@@ -1,0 +1,281 @@
+/* Estilos para el contenedor principal de la sección */
+app-menu {
+  font-family: 'Poppins', sans-serif; /* Fuente más moderna */
+  text-align: center; /* Centra los textos */
+  padding: 40px 20px; /* Da más espacio a los elementos */
+  display: block;
+  margin: 0 auto;
+}
+
+/* Estilo de la imagen principal */
+app-menu img {
+  width: 100%;
+  max-width: 500px;
+  height: auto;
+  border-radius: 10px;
+  margin-bottom: 20px;
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+/* Estilos para los textos */
+h1, h2, h3, h5 {
+  text-align: center; /* Centrado de títulos */
+  font-weight: bold;
+  margin-bottom: 10px; /* Se redujo de 20px a 10px */
+}
+
+/* Párrafos con justificación y buen interlineado */
+p {
+  text-align: justify;
+  line-height: 1.4; /* Se redujo de 1.6 a 1.4 */
+  max-width: 800px;
+  margin: 0 auto 10px; /* Se agrega un margen inferior de 10px */
+}
+
+/* Estilo global (restablece márgenes y fuentes) */
+* {
+  margin: 0;
+  padding: 0;
+  font-family: 'Poppins', sans-serif;
+}
+
+/* Contenedor del slider sin altura fija */
+.slider-frame {
+  max-width: 100%;
+  margin: 20px auto;
+  overflow: hidden;
+  border-radius: 10px;
+  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2);
+}
+
+.info-card {
+  width: 90%;
+  max-width: 400px;
+  background: #9f9999;
+  padding: 20px;
+  border-radius: 10px;
+  text-align: center;
+  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+  opacity: 0;
+  transform: translateY(20px);
+  animation: fadeIn 1s ease-in-out forwards;
+}
+
+.info-card h2 {
+  text-align: left;
+  font-size: 1.5rem;
+  color: #131313;
+  margin-bottom: 5px; /* Se redujo de 10px a 5px */
+}
+
+.info-card p {
+  font-size: 1.1rem;
+  color: #333;
+  margin-bottom: 0; /* Se elimina margen extra */
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+
+/* Cada elemento del slider */
+.slider-frame li {
+  list-style: none;
+  width: 100%;
+}
+
+/* Ajuste de las imágenes para que se muestren completas */
+.slider-frame img {
+  width: 100%;
+  height: auto;            /* Permite que la imagen se ajuste según su proporción */
+  object-fit: contain;     /* Muestra la imagen completa, sin recortarla */
+}
+
+
+@keyframes slide {
+  0%, 10% { margin-left: 0%; }
+  12.5%, 22.5% { margin-left: -100%; }
+  25%, 35% { margin-left: -200%; }
+  37.5%, 47.5% { margin-left: -300%; }
+  50%, 60% { margin-left: -400%; }
+  62.5%, 72.5% { margin-left: -500%; }
+  75%, 85% { margin-left: -600%; }
+  87.5%, 97.5% { margin-left: -700%; }
+  100% { margin-left: -800%; }
+}
+
+/* Ajuste de la lista */
+.slider-frame ul {
+  display: flex;
+  padding: 0;
+  width: 800%; /* Para 8 imágenes */
+  animation: slide 40s infinite ease-in-out;
+}
+/* Mejoras en la lista de servicios */
+.servicios {
+  max-width: 800px;
+  margin: 20px auto;
+  text-align: center;
+}
+
+.servicios h3 {
+  font-size: 1.2rem;
+  margin-bottom: 10px;
+}
+.whatsapp-float {
+  position: fixed;
+  bottom: 50px;
+  right: 20px;
+  width: 60px;
+  height: 60px;
+  background-color: #25D366;
+  border-radius: 50%;
+  box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.3);
+  display: flex;
+  align-items: center;    /* Centra verticalmente */
+  justify-content: center; /* Centra horizontalmente */
+  z-index: 1000;
+}
+
+.whatsapp-float img {
+  width: 70%;
+  height: auto;
+  display: block;
+  margin: 0; /* Elimina márgenes que puedan desalinear */
+  object-fit: contain;
+}
+
+
+
+/* Asegura que el contenido ocupe toda la pantalla */
+body, html {
+  height: 100%;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+}
+
+/* Contenedor principal para empujar el footer */
+.main-content {
+  flex: 1; /* Hace que el contenido ocupe el espacio disponible */
+}
+
+/* Pie de página */
+.footer {
+  margin: 50px 50px; /* 50px de margen en todos los lados (arriba, derecha, abajo, izquierda) */
+  background-color: #f11313; /* Color de fondo rojo brillante */
+  color: #f3efef; /* Color de texto blanco grisáceo */
+  text-align: center; /* Centra el texto en el pie de página */
+  padding: 20px 20px; /* Aumenta el espacio interno arriba y abajo, y agrega más espacio a los lados */
+  font-size: 0.9rem; /* Tamaño de fuente un poco más pequeño */
+  width: auto; /* Cambia a auto para respetar los márgenes */
+  max-width: 90%; /* Ajusta el ancho para no ocupar toda la pantalla */
+  border: 5px solid #390101; /* Borde de 5px con color oscuro */
+  border-radius: 10px; /* Bordes redondeados */
+}
+
+
+
+
+
+
+.footer a {
+  color: #ece8e8; /* Color de los enlaces */
+  text-decoration: none; /* Quitar subrayado */
+  padding: 0 10px;
+}
+
+.footer a:hover {
+  text-decoration: underline; /* Subraya los enlaces al pasar el mouse */
+}
+
+
+/* Estilos para los enlaces de redes sociales */
+.footer-links {
+  margin-top: 10px;
+  font-size: 1rem;
+  display: flex;
+  gap: 15px; /* Espacio entre los enlaces */
+  justify-content: center; /* Centra los enlaces */
+  flex-wrap: wrap; /* Permite que los enlaces se ajusten en pantallas pequeñas */
+}
+
+/* Sección de información centrada */
+.info-section {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 20px;
+  padding: 20px;
+  text-align: center; /* Asegura que el texto también esté centrado */
+}
+
+
+/* Estilo general de la sección */
+.section-title {
+  text-align: center;
+  margin-bottom: 20px;
+  font-size: 1.8rem;
+  color: #333;
+  font-weight: bold;
+}
+
+/* Contenedor de testimonios */
+.testimonials-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 20px; /* Espaciado entre testimonios */
+  max-width: 600px;
+  margin: 0 auto;
+}
+
+/* Tarjeta de cada testimonio */
+.testimonial {
+  background: #9f9999;
+  border-radius: 10px;
+  padding: 20px;
+  width: 100%;
+  text-align: center;
+  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2);
+  transition: transform 0.3s ease-in-out;
+}
+
+.testimonial:hover {
+  transform: scale(1.05);
+}
+
+.testimonial p {
+  font-size: 1.1rem;
+  color: #555;
+  font-style: italic;
+}
+
+.testimonial h4 {
+  margin-top: 10px;
+  color: #171616;
+  font-weight: bold;
+}
+.icono-telefono {
+  width: 16px;  /* Ajusta el tamaño según sea necesario */
+  height: 16px;
+  vertical-align: middle; /* Alinea con el texto */
+}
+
+
+
+
+
+
+
+
