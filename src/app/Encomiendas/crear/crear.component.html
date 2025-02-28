@@ -76,8 +76,8 @@
           <h3>Seleccione el Lugar de Destino</h3>
           <div id="mapDestino" style="height: 220px; width: 100%;"></div>
           <div>
-            <input id="latitudDestino" formControlName="latitudDestino" type="hidden" >
-            <input id="longitudDestino" formControlName="longitudDestino" type="hidden" >
+            <input id="latitudDestino" formControlName="latitudDestino" type="hidden">
+            <input id="longitudDestino" formControlName="longitudDestino" type="hidden">
             <br>
           </div>
 
@@ -107,36 +107,62 @@
 
           <mat-form-field appearance="fill" class="full-width">
             <mat-label>Ruta</mat-label>
-            <input matInput formControlName="ruta" required/>
+            <input matInput [matAutocomplete]="auto" formControlName="ruta" required>
+            <mat-autocomplete #auto="matAutocomplete">
+              <mat-option *ngFor="let ruta of filteredRutas | async" [value]="ruta.origen + ' - ' + ruta.destino">
+                {{ ruta.origen }} - {{ ruta.destino }}
+              </mat-option>
+            </mat-autocomplete>
             <mat-error *ngIf="detalleEncomienda.get('ruta')?.hasError('required')">
               Ruta es obligatoria.
+            </mat-error>
+            <mat-error *ngIf="detalleEncomienda.get('ruta')?.hasError('rutaInvalida')">
+              Ruta no válida. Seleccione una ruta existente.
             </mat-error>
           </mat-form-field>
 
 
-          <div formArrayName="productosDto">
-            <div *ngFor="let producto of productos.controls; let i = index" [formGroupName]="i">
-              <mat-form-field>
-                <input matInput placeholder="Tipo de Producto" formControlName="tipoProducto" required/>
-              </mat-form-field>
-              <mat-form-field>
-                <input matInput placeholder="Alto" formControlName="alto" required/>
-              </mat-form-field>
-              <mat-form-field>
-                <input matInput placeholder="Ancho" formControlName="ancho" required/>
-              </mat-form-field>
-              <mat-form-field>
-                <input matInput placeholder="Largo" formControlName="largo" required/>
-              </mat-form-field>
-              <mat-form-field>
-                <input matInput placeholder="Peso" formControlName="peso" required/>
-              </mat-form-field>
-              <mat-checkbox formControlName="fragil">Frágil</mat-checkbox>
-              <button mat-button (click)="removeProducto(i)">Eliminar Producto</button>
-            </div>
-          </div>
-
-          <button mat-button (click)="addProducto()">Añadir Producto</button>
+          <mat-card class="form-card">
+            <mat-card-header>
+              <mat-card-title>Agregar Productos</mat-card-title>
+            </mat-card-header>
+            <mat-card-content>
+              <div formArrayName="productosDto">
+                <div *ngFor="let producto of productos.controls; let i = index" [formGroupName]="i"
+                     class="producto-form-group">
+                  <div class="form-row">
+                    <mat-form-field class="full-width">
+                      <input matInput placeholder="Tipo de Producto" formControlName="tipoProducto" required/>
+                    </mat-form-field>
+                  </div>
+                  <div class="form-row">
+                    <mat-form-field class="half-width">
+                      <input matInput placeholder="Alto" formControlName="alto" required/>
+                    </mat-form-field>
+                    <mat-form-field class="half-width">
+                      <input matInput placeholder="Ancho" formControlName="ancho" required/>
+                    </mat-form-field>
+                  </div>
+                  <div class="form-row">
+                    <mat-form-field class="half-width">
+                      <input matInput placeholder="Largo" formControlName="largo" required/>
+                    </mat-form-field>
+                    <mat-form-field class="half-width">
+                      <input matInput placeholder="Peso" formControlName="peso" required/>
+                    </mat-form-field>
+                  </div>
+                  <mat-checkbox formControlName="fragil" class="fragil-checkbox">Frágil</mat-checkbox>
+                  <div class="button-container">
+                    <button mat-raised-button color="warn" (click)="removeProducto(i)">Eliminar Producto</button>
+                  </div>
+                  <br>
+                </div>
+              </div>
+              <div class="add-button-container">
+                <button mat-raised-button color="primary" (click)="addProducto()">Añadir Producto</button>
+              </div>
+            </mat-card-content>
+          </mat-card>
 
 
           <button mat-raised-button color="primary" type="submit" [disabled]="!detalleEncomienda.valid">Crear

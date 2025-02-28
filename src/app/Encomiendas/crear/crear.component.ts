@@ -6,16 +6,31 @@ import {Router} from '@angular/router';
 import {MatDialog} from '@angular/material/dialog';
 import {TokenService} from '../../service/token.service';
 import {DetalleEncomiendaService} from '../../service/detalle-encomienda.service';
-import {MatButton} from '@angular/material/button';
+import {MatButton, MatIconButton} from '@angular/material/button';
 import {MatCheckbox} from '@angular/material/checkbox';
 import {MatError, MatFormField, MatLabel} from '@angular/material/form-field';
 import {MatInput} from '@angular/material/input';
 import {MatRadioButton, MatRadioGroup} from '@angular/material/radio';
-import {NgForOf, NgIf} from '@angular/common';
+import {AsyncPipe, NgForOf, NgIf} from '@angular/common';
 import {MatCard, MatCardContent, MatCardHeader, MatCardTitle} from '@angular/material/card';
 import {MatDatepicker, MatDatepickerInput, MatDatepickerToggle} from '@angular/material/datepicker';
 import * as L from 'leaflet';
 import {LatLngExpression} from 'leaflet';
+import {Rutas} from '../../Rutas/rutas';
+import {RutaService} from '../../service/ruta-service';
+import {MatOption, MatSelect} from '@angular/material/select';
+import {MatAutocomplete, MatAutocompleteTrigger} from '@angular/material/autocomplete';
+import {map, Observable, startWith} from 'rxjs';
+import {
+  MatCell, MatCellDef,
+  MatColumnDef,
+  MatHeaderCell, MatHeaderCellDef,
+  MatHeaderRow,
+  MatHeaderRowDef, MatRow,
+  MatRowDef,
+  MatTable
+} from '@angular/material/table';
+import {MatIcon} from '@angular/material/icon';
 
 @Component({
   selector: 'app-crear',
@@ -40,15 +55,36 @@ import {LatLngExpression} from 'leaflet';
     MatDatepicker,
     MatCardTitle,
     MatError,
-    NgForOf
+    NgForOf,
+    MatSelect,
+    MatOption,
+    MatAutocomplete,
+    MatAutocompleteTrigger,
+    AsyncPipe,
+    MatTable,
+    MatColumnDef,
+    MatHeaderCell,
+    MatCell,
+    MatIconButton,
+    MatIcon,
+    MatHeaderRow,
+    MatHeaderRowDef,
+    MatRowDef,
+    MatRow,
+    MatCellDef,
+    MatHeaderCellDef
   ],
   styleUrl: './crear.component.css'
 })
 export class CrearComponent implements OnInit {
+  displayedColumns: string[] = ['tipoProducto', 'alto', 'ancho', 'largo', 'peso', 'fragil', 'acciones'];
 
   detalleEncomienda: FormGroup;
   fragilChecked: boolean = false;
   currentDate: string
+  rutas: Rutas[] = [];
+  filteredRutas?: Observable<Rutas[]> = new Observable();  // Rutas filtradas
+// Lista para almacenar las rutas
   private marker!: L.Marker;
 
   constructor(
@@ -57,7 +93,9 @@ export class CrearComponent implements OnInit {
     private router: Router,
     private dialog: MatDialog,
     private token: TokenService,
-    private detalleEncomiendaService: DetalleEncomiendaService
+    private detalleEncomiendaService: DetalleEncomiendaService,
+    private rutasService: RutaService  // Inyectar el servicio de rutas
+
   ) {
     const today = new Date();
     this.currentDate = today.toISOString().split('T')[0];
@@ -83,7 +121,13 @@ export class CrearComponent implements OnInit {
     });
 
   }
-
+  // Método para filtrar las rutas
+  private filterRutas(value: string): Rutas[] {
+    const filterValue = value.toLowerCase();
+    return this.rutas.filter(ruta =>
+      (ruta.origen + ' - ' + ruta.destino).toLowerCase().includes(filterValue)
+    );
+  }
 // Crear un nuevo grupo de formulario para un producto
   createProducto(): FormGroup {
     return this.fb.group({
@@ -100,14 +144,27 @@ export class CrearComponent implements OnInit {
   get productos() {
     return (this.detalleEncomienda.get('productosDto') as FormArray);
   }
+// Método que verifica si la ruta ingresada es válida
+  validateRuta(value: string): void {
+    const matchingRutas = this.filterRutas(value); // Obtén las rutas que coinciden con el valor ingresado
+    if (matchingRutas.length === 0) {
+      // Si no hay coincidencias, borrar el valor del campo
+      this.detalleEncomienda.patchValue({
+        ruta: ''  // Borra el valor del campo de ruta
+      });
+
+      // Opcional: Mostrar un mensaje de advertencia
+      this.showSnackbar('Ruta no válida. Por favor, seleccione una ruta de la lista.', 'Advertencia');
+    }
+  }
 
   // Agregar un nuevo producto
-  addProducto() {
+  addProducto(): void {
     this.productos.push(this.createProducto());
   }
 
   // Eliminar un producto
-  removeProducto(index: number) {
+  removeProducto(index: number): void {
     this.productos.removeAt(index);
   }
 
@@ -131,6 +188,35 @@ export class CrearComponent implements OnInit {
   ngOnInit(): void {
     this.initMap('mapOrigen', 'latitudOrg', 'longitudOrg');
     this.initMap('mapDestino', 'latitudDestino', 'longitudDestino');
+    this.getRutas();
+    this.filteredRutas = this.detalleEncomienda.get('ruta')?.valueChanges.pipe(
+      startWith(''),  // Comienza con un valor vacío
+      map(value => {
+        this.validateRuta(value);  // Validar la ruta
+        return this.filterRutas(value);  // Filtra las rutas conforme el usuario escribe
+      })
+    );
+  }
+  // Obtener las rutas
+  getRutas(): void {
+    this.rutasService.getRutas().subscribe({
+      next: (rutas: Rutas[]) => {
+        this.rutas = rutas;  // Asignamos las rutas a la variable rutas
+      },
+      error: (err) => {
+        console.error('Error al obtener las rutas', err);
+        this.showSnackbar('Error al obtener las rutas', 'Error');
+      }
+    });
+  }
+  // Método para mostrar mensajes de error con Snackbar
+// Método para mostrar mensajes de error con Snackbar
+  showSnackbar(message: string, action: string): void {
+    this.snackBar.open(message, action, {
+      duration: 3000,  // Duración del Snackbar (en milisegundos)
+      verticalPosition: 'top',  // Posición vertical
+      horizontalPosition: 'right',  // Posición horizontal
+    });
   }
 
   private initMap(mapId: string, latControl: string, lngControl: string): void {

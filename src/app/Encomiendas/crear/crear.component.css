@@ -9,3 +9,20 @@ button {
   height: 200px;
   border-radius: 10px;
 }
+@media (max-width: 600px) {
+  .mat-column-alto,
+  .mat-column-ancho,
+  .mat-column-largo,
+  .mat-column-peso {
+    display: none; /* Oculta columnas en pantallas pequeñas */
+  }
+
+  th, td {
+    font-size: 10px; /* Reduce más el tamaño del texto */
+    padding: 2px 4px;
+  }
+
+  .mat-form-field {
+    width: 60px !important; /* Hace que los campos sean más pequeños */
+  }
+}
