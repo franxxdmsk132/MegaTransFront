@@ -175,3 +175,11 @@ button {
   background-color: rgba(189, 124, 124, 0.62) !important; /* Rojo translúcido */
   color: #616161 !important; /* Texto blanco */
 }
+::ng-deep .efectivo-chip {
+  background-color: rgba(189, 124, 124, 0.62) !important; /* Rojo translúcido */
+  color: #616161 !important; /* Texto blanco */
+}
+::ng-deep .transferencia-chip {
+  background-color: rgba(189, 124, 124, 0.62) !important; /* Rojo translúcido */
+  color: #616161 !important; /* Texto blanco */
+}

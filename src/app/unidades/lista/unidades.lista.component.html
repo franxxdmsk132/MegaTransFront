@@ -23,16 +23,17 @@
         </mat-card-content>
 
         <!-- Botones de acción -->
-        <mat-card-actions>
-          <button mat-button color="primary" (click)="editarUnidad(unidad)">Editar</button>
-          <button mat-button color="warn" (click)="eliminarUnidad(unidad.id)">Eliminar</button>
+        <mat-card-actions style="display: flex; justify-content: center; gap: 10px;">
+
+          <button mat-button class="custom-button" (click)="editarUnidad(unidad)">Editar</button>
+          <button mat-button class="custom-button" (click)="eliminarUnidad(unidad.id)">Eliminar</button>
         </mat-card-actions>
       </mat-card>
     </div>
   </mat-card>
 
   <!-- Botón de añadir unidad -->
-  <button mat-fab color="primary" class="add-btn" (click)="agregarUnidad()">
+  <button mat-fab color="primary" class="add-btn custom-button1" (click)="agregarUnidad()">
     <mat-icon>add</mat-icon>
   </button>
 </app-menu>

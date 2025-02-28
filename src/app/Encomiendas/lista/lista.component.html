@@ -9,9 +9,24 @@
 
       <!-- Tabs para filtrar por estado -->
       <mat-tab-group [(selectedIndex)]="selectedTabIndex" (selectedTabChange)="filtrarPorEstado()" class="sticky-tabs">
-        <mat-tab label="Recoletar"></mat-tab>
-        <mat-tab label="Transporte"></mat-tab>
-        <mat-tab label="Entregado"></mat-tab>
+        <mat-tab>
+          <ng-template mat-tab-label>
+            <mat-icon class="mat-icon">watch_later</mat-icon>
+            <b>Recolectar</b>
+          </ng-template>
+        </mat-tab>
+        <mat-tab>
+          <ng-template mat-tab-label>
+            <mat-icon>local_shipping</mat-icon>
+            <b>Transporte</b>
+          </ng-template>
+        </mat-tab>
+        <mat-tab>
+          <ng-template mat-tab-label>
+            <mat-icon>check_circle</mat-icon>
+            <b>Entregado</b>
+          </ng-template>
+        </mat-tab>
       </mat-tab-group>
 
       <!-- Tarjetas para cada detalle de encomienda -->
@@ -43,17 +58,17 @@
           <p><strong>Correo:</strong> {{ element.correoD }}</p>
         </mat-card-content>
 
-        <mat-card-actions>
+        <mat-card-actions style="display: flex; justify-content: center; gap: 10px;">
           <!-- Botón para ver más detalles -->
-          <button mat-flat-button color="primary" (click)="visualizarDetalle(element)">Ver más</button>
+          <button mat-flat-button class="transporte-label" (click)="visualizarDetalle(element)">Ver más</button>
 
           <!-- Botón para cambiar el estado -->
-          <button mat-flat-button color="primary" (click)="abrirDialogoEstado(element)">Cambiar Estado</button>
+          <button mat-flat-button class="transporte-label1" (click)="abrirDialogoEstado(element)">Cambiar Estado</button>
         </mat-card-actions>
       </mat-card>
       <!-- Botón de añadir unidad -->
-      <button mat-fab color="primary" class="add-btn" (click)="obtenerDetallesEncomienda()">
-        <mat-icon>autorenew</mat-icon>
+      <button mat-fab color="primary" class="add-btn transporte-label2 " (click)="obtenerDetallesEncomienda()">
+        <mat-icon class="mat-icon1">autorenew</mat-icon>
       </button>
     </div>
 

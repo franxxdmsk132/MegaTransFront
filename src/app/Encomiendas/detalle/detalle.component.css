@@ -22,6 +22,11 @@ h3 {
   text-align: center;
 }
 
-button {
-  width: 100px;
-}
+
+  button {
+    background-color: black !important;
+    color: white !important;
+    border: 2px solid red !important;
+    width: 8em;
+  }
+

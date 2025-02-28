@@ -2,7 +2,7 @@
   <mat-card>
     <mat-card-title>Registrar Unidad</mat-card-title>
     <form [formGroup]="unidadForm" (ngSubmit)="onCreate()">
-
+<div class="form-container">
       <mat-form-field appearance="outline">
         <mat-label>Tipo de Unidad</mat-label>
         <input matInput formControlName="tipo" required>
@@ -32,7 +32,7 @@
         <input matInput type="number" formControlName="largo" required>
         <mat-error *ngIf="unidadForm.get('largo')?.invalid">Ingrese un valor</mat-error>
       </mat-form-field>
-
+</div>
       <div class="file-input-container">
         <input
           type="file"
@@ -42,6 +42,7 @@
           id="fileInput"
           hidden
         />
+
         <label for="fileInput" class="file-label">
           <span class="file-label-text">Seleccionar imagen</span>
         </label>
@@ -51,13 +52,14 @@
 
       <br>
       <br>
-      <button mat-raised-button color="primary" type="submit" [disabled]="unidadForm.invalid">
+      <div style="display: flex; justify-content: center; gap: 10px;">
+      <button mat-raised-button class="file-label" type="submit" [disabled]="unidadForm.invalid">
         Registrar
       </button>
-      <button mat-raised-button color="primary" routerLink="/unidades">
+      <button mat-raised-button class="file-label1" routerLink="/unidades">
         Volver
       </button>
-
+      </div>
     </form>
   </mat-card>
 

@@ -47,3 +47,33 @@
   justify-content: space-between;
   padding-top: 10px; /* Espaciado adicional entre el contenido y los botones */
 }
+.custom-button {
+  background-color: black !important;
+  color: white !important;
+  border: 2px solid red !important;
+  width: 9em;         /* Ancho en unidades relativas */
+  height: 2.9em;         /* Altura en unidades relativas */
+  font-size: 1rem;
+  text-align: center;/* Tamaño de texto relativo */
+  padding: 0.5em 1em;  /* Espaciado interno relativo */
+}
+
+
+
+.custom-button:hover {
+  background-color: darkgray !important; /* Fondo al pasar el ratón */
+  border: 2px solid red !important;      /* Bordes rojos al pasar el ratón */
+}
+
+.custom-button1{
+  background-color: black !important;
+  color: white !important;
+  border: 2px solid red !important;
+  width: 4em;         /* Ancho en unidades relativas */
+  height: 2.9em;         /* Altura en unidades relativas */
+  font-size: 1rem;
+  text-align: center;/* Tamaño de texto relativo */
+  padding: 0.5em 1em;  /* Espaciado interno relativo */
+}
+
+

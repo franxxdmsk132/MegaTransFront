@@ -17,10 +17,23 @@
 }
 
 .transporte-label {
-  font-weight: bold;
-  color: #3f51b5;
+  background-color: black !important;
+  color: white !important;
+  border: 2px solid red !important;
+  min-width: 150px;
 }
-
+.transporte-label1 {
+  background-color: black !important;
+  color: white !important;
+  border: 2px solid red !important;
+  min-width: 150px;
+}
+.transporte-label2 {
+  background-color: black !important;
+  color: white !important;
+  border: 2px solid red !important;
+  min-width: 5px;
+}
 .info-row {
   display: flex;
   justify-content: space-between;
@@ -113,4 +126,10 @@
   bottom: 20px; /* Distancia desde el borde inferior */
   right: 20px;  /* Distancia desde el borde derecho */
   z-index: 1000; /* Asegura que el botón esté encima del contenido */
+}
+.mat-icon {
+  color: #ff3838 !important;
+}
+.mat-icon1{
+  color: #fbfafa !important;
 }
