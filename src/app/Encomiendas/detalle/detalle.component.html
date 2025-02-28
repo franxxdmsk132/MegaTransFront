@@ -1,57 +1,94 @@
 <app-menu>
   <mat-card *ngIf="!isLoading" class="detalle-card">
-  <mat-card-header>
-    <mat-card-title>Detalle de Encomienda</mat-card-title>
-    <mat-card-subtitle>{{detalleEncomienda.numGuia}}</mat-card-subtitle>
-  </mat-card-header>
+    <mat-card-header>
+      <mat-card-title><strong>Detalle de Encomienda</strong></mat-card-title>
+      <mat-card-subtitle>#Guia: {{ detalleEncomienda.numGuia }}</mat-card-subtitle>
+      <!-- Condición para mostrar el número de lote o un texto alternativo -->
+      <mat-card-subtitle>
+        #Lote:
+        <span *ngIf="detalleEncomienda.lote?.numLote; else noLote">
+          {{ detalleEncomienda.lote.numLote }}
+        </span>
+        <ng-template #noLote>
+          ------
+        </ng-template>
+      </mat-card-subtitle>
+    </mat-card-header>
 
-  <mat-card-content>
-    <div *ngIf="detalleEncomienda">
-      <div class="detalle-section">
-        <mat-divider></mat-divider>
-        <h3>Datos del Remitente</h3>
-        <p><strong>Nombre:</strong> {{detalleEncomienda.nombreD}} {{detalleEncomienda.apellidoD}}</p>
-        <p><strong>Identificación:</strong> {{detalleEncomienda.identificacionD}}</p>
-        <p><strong>Teléfono Beneficiario:</strong> {{detalleEncomienda.telfBeneficiario}}</p>
-        <p><strong>Teléfono Encargado:</strong> {{detalleEncomienda.telfEncargado}}</p>
-        <p><strong>Correo:</strong> {{detalleEncomienda.correoD}}</p>
-        <p><strong>Dirección:</strong> {{detalleEncomienda.dirRemitente}}</p>
-        <mat-divider></mat-divider>
-      </div>
+    <mat-card-content>
+      <div *ngIf="detalleEncomienda">
+        <div class="detalle-section">
+          <mat-divider></mat-divider>
+          <h3>Datos del Destinatario</h3>
+          <p><strong>Nombre:</strong> {{ detalleEncomienda.nombreD }} {{ detalleEncomienda.apellidoD }}</p>
+          <p><strong>Identificación:</strong> {{ detalleEncomienda.identificacionD }}</p>
+          <p><strong>Teléfono Beneficiario:</strong> {{ detalleEncomienda.telfBeneficiario }}</p>
+          <p><strong>Teléfono Encargado:</strong> {{ detalleEncomienda.telfEncargado }}</p>
+          <p><strong>Correo:</strong> {{ detalleEncomienda.correoD }}</p>
+          <p><strong>Dirección:</strong> {{ detalleEncomienda.dirDestino }}</p>
+          <mat-divider></mat-divider>
+          <h3>Datos del Remitente</h3>
+          <p><strong>Nombres:</strong> {{ detalleEncomienda.usuario.nombre }} {{ detalleEncomienda.usuario.apellido }}
+          </p>
+          <p><strong>Nombre Comercial:</strong> {{ detalleEncomienda.usuario.nombreComercial || '' }}</p>
+          <p><strong>Telf:</strong> {{ detalleEncomienda.usuario.telefono }}</p>
+          <p><strong>correo:</strong> {{ detalleEncomienda.usuario.nombreUsuario }}</p>
+          <p><strong>Dirección:</strong> {{ detalleEncomienda.dirRemitente }}</p>
+          <mat-divider></mat-divider>
+        </div>
 
-      <div class="detalle-section">
-        <h3>Información de Entrega</h3>
-        <p><strong>Tipo de Entrega:</strong> {{detalleEncomienda.tipoEntrega}}</p>
-        <p><strong>Ruta:</strong> {{detalleEncomienda.ruta}}</p>
-        <p><strong>Referencia:</strong> {{detalleEncomienda.referenciaD}}</p>
-        <p><strong>Estado:</strong> {{detalleEncomienda.estado}}</p>
-      </div>
+        <div class="detalle-section">
+          <h3>Información de Recolección</h3>
+          <p><strong>Dirección Recolección:</strong> {{ detalleEncomienda.dirRemitente }}</p>
+          <p><strong>Ubicación de Recolección:</strong>
+            <a href="https://www.google.com/maps?q={{detalleEncomienda.latitudOrg}},{{detalleEncomienda.longitudOrg}}"
+               target="_blank">
+              Ver en Google Maps
+            </a>
+          </p>
 
-      <div class="detalle-section">
-        <h3>Fecha de Encomienda</h3>
-        <p><strong>Fecha:</strong> {{detalleEncomienda.fecha | date:'dd/MM/yyyy'}}</p>
-        <mat-divider></mat-divider>
-      </div>
+          <h3>Información de Entrega</h3>
+          <p><strong>Tipo de Entrega:</strong> {{ detalleEncomienda.tipoEntrega }}</p>
+          <p><strong>Ruta:</strong> {{ detalleEncomienda.ruta }}</p>
+          <p><strong>Dirección Entrega:</strong> {{ detalleEncomienda.dirDestino }}</p>
+          <p><strong>Referencia:</strong> {{ detalleEncomienda.referenciaD }}</p>
+          <p><strong>Ubicación de Entrega:</strong>
+            <a
+              href="https://www.google.com/maps?q={{detalleEncomienda.latitudDestino}},{{detalleEncomienda.longitudDestino}}"
+              target="_blank">
+              Ver en Google Maps
+            </a>
+          </p>
+          <p><strong>Estado:</strong> {{ detalleEncomienda.estado }}</p>
+        </div>
 
-      <div class="detalle-section">
-        <h3>Productos</h3>
-        <div *ngFor="let producto of detalleEncomienda.productosDto">
-          <p><strong>Producto:</strong> Alto: {{producto.alto}} cm, Ancho: {{producto.ancho}} cm, Largo: {{producto.largo}} cm, Peso: {{producto.peso}} kg, Fragil: {{producto.fragil ? 'Sí' : 'No'}}</p>
+
+        <div class="detalle-section">
+          <h3>Fecha de Encomienda</h3>
+          <p><strong>Fecha:</strong> {{ detalleEncomienda.fecha | date:'dd/MM/yyyy' }}</p>
+          <mat-divider></mat-divider>
+        </div>
+
+        <div class="detalle-section">
+          <h3>Productos</h3>
+          <div *ngFor="let producto of detalleEncomienda.productosDto">
+            <p><strong>Producto:</strong> Alto: {{ producto.alto }} cm, Ancho: {{ producto.ancho }} cm,
+              Largo: {{ producto.largo }} cm, Peso: {{ producto.peso }} kg, Fragil: {{ producto.fragil ? 'Sí' : 'No' }}
+            </p>
+          </div>
+        </div>
+
+        <div *ngIf="detalleEncomienda.qrCodePath" class="qr-section">
+          <h3>QR Code</h3>
+          <mat-divider></mat-divider>
+          <img [src]="'http://104.196.61.204:8080' + detalleEncomienda.qrCodePath" alt="QR Code">
         </div>
       </div>
+    </mat-card-content>
 
-      <div *ngIf="detalleEncomienda.qrCodePath" class="qr-section">
-        <h3>QR Code</h3>
-        <mat-divider></mat-divider>
-        <img [src]="'http://104.196.131.87:8080' + detalleEncomienda.qrCodePath" alt="QR Code">
-      </div>
-    </div>
-  </mat-card-content>
-
-  <mat-card-actions>
-    <button mat-button color="primary" (click)="volver()">Volver</button>
-  </mat-card-actions>
-</mat-card>
-
-<mat-progress-spinner *ngIf="isLoading" diameter="50" mode="indeterminate"></mat-progress-spinner>
+    <mat-card-actions>
+      <button mat-button color="primary" (click)="volver()">Volver</button>
+    </mat-card-actions>
+  </mat-card>
+  <mat-progress-spinner *ngIf="isLoading" diameter="50" mode="indeterminate"></mat-progress-spinner>
 </app-menu>

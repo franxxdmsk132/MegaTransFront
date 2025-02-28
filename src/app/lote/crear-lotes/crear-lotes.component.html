@@ -1,0 +1,38 @@
+<app-menu>
+  <div class="crear-lote">
+    <h2>Crear Lote</h2>
+    <form [formGroup]="loteForm" (ngSubmit)="crearLote()">
+
+      <mat-form-field appearance="fill">
+        <mat-label>Número de Lote</mat-label>
+        <input matInput formControlName="numLote" required>
+        <mat-error *ngIf="loteForm.get('numLote')?.hasError('required')">Este campo es obligatorio</mat-error>
+      </mat-form-field>
+
+
+      <mat-form-field appearance="fill">
+        <mat-label>Estado</mat-label>
+        <input matInput formControlName="estado" required>
+        <mat-error *ngIf="loteForm.get('estado')?.hasError('required')">Este campo es obligatorio</mat-error>
+      </mat-form-field>
+
+      <mat-form-field appearance="fill">
+        <mat-label>Ruta</mat-label>
+        <input matInput formControlName="ruta" required>
+        <mat-error *ngIf="loteForm.get('ruta')?.hasError('required')">Este campo es obligatorio</mat-error>
+      </mat-form-field>
+
+      <mat-form-field appearance="fill">
+        <mat-label>Unidad</mat-label>
+        <input matInput formControlName="unidad" required>
+        <mat-error *ngIf="loteForm.get('unidad')?.hasError('required')">Este campo es obligatorio</mat-error>
+      </mat-form-field>
+
+      <!-- Si tienes campos adicionales, como los de las encomiendas y números de guía, agrégales sus campos respectivos aquí -->
+
+      <div class="actions">
+        <button mat-raised-button color="primary" type="submit" [disabled]="loteForm.invalid">Crear Lote</button>
+      </div>
+    </form>
+  </div>
+</app-menu>

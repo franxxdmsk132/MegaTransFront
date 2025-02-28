@@ -16,6 +16,12 @@ import {DetalleComponent} from './Encomiendas/detalle/detalle.component';
 import {SoporteComponent} from './soporte/soporte.component';
 import {ListaComponent} from './Encomiendas/lista/lista.component';
 import {CrearComponent} from './Encomiendas/crear/crear.component';
+import {ListarLotesComponent} from './lote/lista-lotes/lista-lotes.component';
+import {DetalleLotesComponent} from './lote/detalle-lotes/detalle-lotes.component';
+import {CrearLotesComponent} from './lote/crear-lotes/crear-lotes.component';
+import {ListaRutasComponent} from './Rutas/lista-rutas/lista-rutas.component';
+import {ActualizarRutasComponent} from './Rutas/actualizar-rutas/actualizar-rutas.component';
+import {CrearRutasComponent} from './Rutas/crear-rutas/crear-rutas.component';
 
 export const routes: Routes = [
   {path: '', component: PrincipalComponent},
@@ -29,6 +35,13 @@ export const routes: Routes = [
   {path: 'listaEncomienda', component: ListaComponent},
   {path: 'crearEncomienda', component: CrearComponent},
   {path: 'login', component: LoginComponent},
+  {path: 'lotes', component: ListarLotesComponent},
+  {path: 'rutas', component: ListaRutasComponent},
+  {path: 'actualizar-ruta/:id', component: ActualizarRutasComponent},
+  {path: 'crear-ruta', component: CrearRutasComponent},
+
+  {path: 'crearLote', component: CrearLotesComponent},
+  {path: 'detalleLotes/:id', component: DetalleLotesComponent},
   {path: 'soporte', component: SoporteComponent},
   {path: 'acercaDe', component: AcercaComponent},
   {path: 'perfil', component: PerfilComponent},

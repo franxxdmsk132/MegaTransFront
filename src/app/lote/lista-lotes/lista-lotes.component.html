@@ -1,0 +1,32 @@
+<app-menu>
+  <div class="container">
+    <h2>Listado de Lotes</h2>
+
+    <div class="card-container">
+      <!-- Iteramos sobre los datos usando la propiedad 'data' de MatTableDataSource -->
+      <mat-card *ngFor="let lote of dataSource.data" class="lote-card mat-elevation-z8">
+        <mat-card-header>
+          <mat-card-title>{{ lote.numLote ? lote.numLote : 'No hay número de lote' }}</mat-card-title>
+          <mat-card-subtitle>ID: {{ lote.id }}</mat-card-subtitle>
+        </mat-card-header>
+
+        <mat-card-content>
+          <p><strong>Fecha:</strong> {{ lote.fecha }}</p>
+          <p><strong>Estado:</strong> {{ lote.estado }}</p>
+          <p><strong>Unidad:</strong> {{ lote.unidad?.id }}</p>
+          <p><strong>Números de Guía:</strong> {{ lote.numerosGuia }}</p>
+          <p><strong>Ruta:</strong> {{ lote.ruta }}</p>
+        </mat-card-content>
+
+        <mat-card-actions>
+          <button mat-flat-button color="primary"   (click)="abrirDialogoEstado(lote)">Editar</button>
+          <button mat-flat-button color="warn" (click)="verDetalles(lote)" >Detalles</button>
+        </mat-card-actions>
+      </mat-card>
+      <button mat-fab color="primary" class="add-btn" (click)="crearLote()">
+        <mat-icon>add</mat-icon>
+      </button>
+    </div>
+
+  </div>
+</app-menu>

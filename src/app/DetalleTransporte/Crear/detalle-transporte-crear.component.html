@@ -1,41 +1,21 @@
 <app-menu>
   <div style="display: flex; align-items: center;">
     <form [formGroup]="detalleForm" (ngSubmit)="onSubmit()">
-      <mat-form-field appearance="fill" class="full-width" style="text-align: center">
-        <input matInput [value]="detalleForm.get('unidadId')?.value || ''" hidden>
-        <div *ngIf="detalleForm.get('unidadId')?.value; else seleccionarUnidad" class="full-width">
-          <br>
-          <div class="unidad-preview">
-            <!-- Características arriba de la imagen -->
-            <p class="unidad-detalle">{{ detalleForm.get('unidadTipo')?.value }}</p>
-            <!-- Imagen centrada y ajustada -->
-            <img *ngIf="detalleForm.get('unidadImagen')?.value"
-                 [src]="detalleForm.get('unidadImagen')?.value"
-                 alt="Imagen de la unidad"
-                 class="unidad-imagen">
-            <!-- Botón debajo de todo -->
-            <button mat-button class="custom-button2" (click)="limpiarUnidad()">Cambiar Unidad</button>
-            <br>
-          </div>
-        </div>
-
-        <ng-template #seleccionarUnidad>
-          <button mat-button class="custom-button" (click)="abrirDialogo()">Seleccione una Unidad</button>
-        </ng-template>
-      </mat-form-field>
 
 
       <mat-label><h3>Tipo de Servicio:</h3></mat-label>
 
-      <mat-chip-listbox formControlName="tipoServicio" aria-label="Selecciona un tipo de servicio">
-        <mat-chip-option value="MUDANZA"><b>Mudanza</b></mat-chip-option>
-        <mat-chip-option value="MERCADERIA"><b>Desalojo</b></mat-chip-option>
-        <mat-chip-option value="DISTRIBUCION"><b>Distribución</b></mat-chip-option>
+      <mat-chip-listbox formControlName="tipoServicio">
+        <mat-chip-option value="MUDANZA" class="mudanza-chip"><b>Mudanza</b></mat-chip-option>
+        <mat-chip-option value="MERCADERIA" class="desalojo-chip"><b>Desalojo</b></mat-chip-option>
+        <mat-chip-option value="DISTRIBUCION" class="distribucion-chip"><b>Distribución</b></mat-chip-option>
       </mat-chip-listbox>
-      <br>
-      <mat-divider></mat-divider>
+
 
       <br>
+      <mat-divider></mat-divider>
+      <br>
+
 
       <mat-label><h3>Personal para Carga o Estibaje:</h3></mat-label>
       <h5>Indique la cantidad de personas que requiera para cargar/descargar</h5>
@@ -68,6 +48,31 @@
 
 
       <mat-divider></mat-divider>
+
+      <br>
+      <mat-form-field appearance="fill" class="full-width" style="text-align: center">
+        <input matInput [value]="detalleForm.get('unidadId')?.value || ''" hidden>
+        <div *ngIf="detalleForm.get('unidadId')?.value; else seleccionarUnidad" class="full-width">
+          <br>
+          <div class="unidad-preview">
+            <!-- Características arriba de la imagen -->
+            <p class="unidad-detalle">{{ detalleForm.get('unidadTipo')?.value }}</p>
+            <!-- Imagen centrada y ajustada -->
+            <img *ngIf="detalleForm.get('unidadImagen')?.value"
+                 [src]="detalleForm.get('unidadImagen')?.value"
+                 alt="Imagen de la unidad"
+                 class="unidad-imagen">
+            <!-- Botón debajo de todo -->
+            <button mat-button class="custom-button2" (click)="limpiarUnidad()">Cambiar Unidad</button>
+            <br>
+          </div>
+        </div>
+
+        <ng-template #seleccionarUnidad>
+          <button mat-button class="custom-button" (click)="abrirDialogo()">Seleccione una Unidad</button>
+        </ng-template>
+      </mat-form-field>
+
 
       <h3>Seleccione el Punto de Inicio:</h3>
       <div id="mapOrigen" style="height: 220px; width: 100%;"></div>

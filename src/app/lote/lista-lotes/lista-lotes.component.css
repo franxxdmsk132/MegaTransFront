@@ -1,0 +1,29 @@
+.container {
+  max-width: 900px;
+  margin: auto;
+}
+
+mat-table {
+  width: 95%;
+}
+
+button {
+  margin-right: 8px;
+}
+.card-container {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: 16px;
+  margin-top: 20px;
+}
+
+.lote-card {
+  padding: 16px;
+  background-color: #fff;
+}
+.add-btn {
+  position: fixed;
+  bottom: 20px; /* Distancia desde el borde inferior */
+  right: 20px;  /* Distancia desde el borde derecho */
+  z-index: 1000; /* Asegura que el botón esté encima del contenido */
+}

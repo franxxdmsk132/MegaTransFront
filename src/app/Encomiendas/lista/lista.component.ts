@@ -31,7 +31,7 @@ import {
   MatCardSubtitle,
   MatCardTitle
 } from '@angular/material/card';
-import {MatButton, MatIconButton} from '@angular/material/button';
+import {MatButton, MatFabButton, MatIconButton} from '@angular/material/button';
 import {MatIcon} from '@angular/material/icon';
 import {MatToolbar} from '@angular/material/toolbar';
 
@@ -39,38 +39,39 @@ import {MatToolbar} from '@angular/material/toolbar';
   selector: 'app-lista',
   templateUrl: './lista.component.html',
   standalone: true,
-  imports: [
-    MatPaginator,
-    NgIf,
-    MatRow,
-    MatRowDef,
-    MatHeaderRow,
-    MatHeaderRowDef,
-    MatIcon,
-    MatIconButton,
-    MatCell,
-    MatHeaderCell,
-    MatCellDef,
-    MatHeaderCellDef,
-    MatColumnDef,
-    MatCard,
-    MatToolbar,
-    MatProgressSpinner,
-    MatTable,
-    MenuComponent,
-    MatCardActions,
-    MatButton,
-    MatCardHeader,
-    MatCardContent,
-    MatCard,
-    NgForOf,
-    MatSort,
-    MatSortModule,
-    MatCardTitle,
-    MatCardSubtitle,
-    MatTabGroup,
-    MatTab,
-  ],
+    imports: [
+        MatPaginator,
+        NgIf,
+        MatRow,
+        MatRowDef,
+        MatHeaderRow,
+        MatHeaderRowDef,
+        MatIcon,
+        MatIconButton,
+        MatCell,
+        MatHeaderCell,
+        MatCellDef,
+        MatHeaderCellDef,
+        MatColumnDef,
+        MatCard,
+        MatToolbar,
+        MatProgressSpinner,
+        MatTable,
+        MenuComponent,
+        MatCardActions,
+        MatButton,
+        MatCardHeader,
+        MatCardContent,
+        MatCard,
+        NgForOf,
+        MatSort,
+        MatSortModule,
+        MatCardTitle,
+        MatCardSubtitle,
+        MatTabGroup,
+        MatTab,
+        MatFabButton,
+    ],
   styleUrl: './lista.component.css'
 })
 export class ListaComponent implements OnInit{
@@ -80,8 +81,8 @@ export class ListaComponent implements OnInit{
   dataFiltrada: DetalleEncomienda[] = [];
   dataSource = new MatTableDataSource<DetalleEncomienda>();
   displayedColumns: string[] = [
-    'numGuia', 'cliente', 'fecha', 'dirRemitente', 'nombreD', 'apellidoD',
-    'identificacionD', 'telfBeneficiario', 'telfEncargado', 'correoD',
+    'numGuia','numLote','cliente', 'fecha', 'dirRemitente','latitudOrg','longitudOrg', 'nombreD', 'apellidoD',
+    'identificacionD', 'telfBeneficiario', 'telfEncargado', 'correoD','dirDestino','longitudDestino','latitudDestino',
     'referenciaD', 'tipoEntrega', 'ruta', 'estado', 'qrCodePath', 'acciones'
   ];
 

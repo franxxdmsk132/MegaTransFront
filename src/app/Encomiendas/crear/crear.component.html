@@ -1,123 +1,149 @@
 <app-menu>
-<form [formGroup]="detalleEncomienda" (ngSubmit)="onSubmit()">
-  <mat-card>
-    <mat-card-header>
-      <mat-card-title>Detalle de Encomienda</mat-card-title>
-    </mat-card-header>
+  <form [formGroup]="detalleEncomienda" (ngSubmit)="onSubmit()">
+    <mat-card>
+      <mat-card-header>
+        <mat-card-title>Detalle de Encomienda</mat-card-title>
+      </mat-card-header>
 
-    <mat-card-content>
-      <div class="form-group">
-        <mat-form-field appearance="fill" class="full-width">
-          <mat-label>Dirección del remitente</mat-label>
-          <input matInput formControlName="dirRemitente" required />
-          <mat-error *ngIf="detalleEncomienda.get('dirRemitente')?.hasError('required')">
-            Dirección del remitente es obligatoria.
-          </mat-error>
+      <mat-card-content>
+        <div class="form-group">
 
-        </mat-form-field>
-
-        <mat-form-field appearance="fill" class="full-width">
-          <mat-label>Nombre del destinatario</mat-label>
-          <input matInput formControlName="nombreD" required />
-          <mat-error *ngIf="detalleEncomienda.get('nombreD')?.hasError('required')">
-            Nombre del destinatario es obligatorio.
-          </mat-error>
-        </mat-form-field>
-
-        <mat-form-field appearance="fill" class="full-width">
-          <mat-label>Apellido del destinatario</mat-label>
-          <input matInput formControlName="apellidoD" required />
-          <mat-error *ngIf="detalleEncomienda.get('apellidoD')?.hasError('required')">
-            Apellido del destinatario es obligatorio.
-          </mat-error>
-        </mat-form-field>
-
-        <mat-form-field appearance="fill" class="full-width">
-          <mat-label>Identificación del destinatario</mat-label>
-          <input matInput formControlName="identificacionD" required />
-          <mat-error *ngIf="detalleEncomienda.get('identificacionD')?.hasError('required')">
-            Identificación es obligatoria.
-          </mat-error>
-        </mat-form-field>
-
-        <mat-form-field appearance="fill" class="full-width">
-          <mat-label>Teléfono del beneficiario</mat-label>
-          <input matInput formControlName="telfbeneficiario" required />
-          <mat-error *ngIf="detalleEncomienda.get('telfbeneficiario')?.hasError('required')">
-            Teléfono del beneficiario es obligatorio.
-          </mat-error>
-        </mat-form-field>
-
-        <mat-form-field appearance="fill" class="full-width">
-          <mat-label>Teléfono del encargado</mat-label>
-          <input matInput formControlName="telfEncargado" required />
-          <mat-error *ngIf="detalleEncomienda.get('telfEncargado')?.hasError('required')">
-            Teléfono del encargado es obligatorio.
-          </mat-error>
-        </mat-form-field>
-
-        <mat-form-field appearance="fill" class="full-width">
-          <mat-label>Correo del destinatario</mat-label>
-          <input matInput formControlName="correoD" required />
-          <mat-error *ngIf="detalleEncomienda.get('correoD')?.hasError('required')">
-            Correo del destinatario es obligatorio.
-          </mat-error>
-        </mat-form-field>
-
-        <mat-form-field appearance="fill" class="full-width">
-          <mat-label>Referencia del destinatario</mat-label>
-          <input matInput formControlName="referenciaD" required />
-          <mat-error *ngIf="detalleEncomienda.get('referenciaD')?.hasError('required')">
-            Referencia es obligatoria.
-          </mat-error>
-        </mat-form-field>
-
-        <mat-form-field appearance="fill" class="full-width">
-          <mat-label>Tipo de Entrega</mat-label>
-          <input matInput formControlName="tipoEntrega" required />
-          <mat-error *ngIf="detalleEncomienda.get('tipoEntrega')?.hasError('required')">
-            Tipo de entrega es obligatorio.
-          </mat-error>
-        </mat-form-field>
-
-        <mat-form-field appearance="fill" class="full-width">
-          <mat-label>Ruta</mat-label>
-          <input matInput formControlName="ruta" required />
-          <mat-error *ngIf="detalleEncomienda.get('ruta')?.hasError('required')">
-            Ruta es obligatoria.
-          </mat-error>
-        </mat-form-field>
-
-
-        <div formArrayName="productosDto">
-          <div *ngFor="let producto of productos.controls; let i = index" [formGroupName]="i">
-            <mat-form-field>
-              <input matInput placeholder="Tipo de Producto" formControlName="tipoProducto" required />
-            </mat-form-field>
-            <mat-form-field>
-              <input matInput placeholder="Alto" formControlName="alto" required />
-            </mat-form-field>
-            <mat-form-field>
-              <input matInput placeholder="Ancho" formControlName="ancho" required />
-            </mat-form-field>
-            <mat-form-field>
-              <input matInput placeholder="Largo" formControlName="largo" required />
-            </mat-form-field>
-            <mat-form-field>
-              <input matInput placeholder="Peso" formControlName="peso" required />
-            </mat-form-field>
-            <mat-checkbox formControlName="fragil">Frágil</mat-checkbox>
-            <button mat-button (click)="removeProducto(i)">Eliminar Producto</button>
+          <h3>Seleccione el Punto de Inicio:</h3>
+          <div id="mapOrigen" style="height: 220px; width: 100%;"></div>
+          <!-- Dirección de Origen -->
+          <div>
+            <br>
+            <input id="latitudOrg" formControlName="latitudOrg" type="hidden">
+            <input id="longitudOrg" formControlName="longitudOrg" type="hidden">
           </div>
+          <mat-form-field appearance="fill" class="full-width">
+            <mat-label>Dirección del remitente</mat-label>
+            <input matInput formControlName="dirRemitente" required/>
+            <mat-error *ngIf="detalleEncomienda.get('dirRemitente')?.hasError('required')">
+              Dirección del remitente es obligatoria.
+            </mat-error>
+          </mat-form-field>
+
+          <mat-form-field appearance="fill" class="full-width">
+            <mat-label>Nombre del destinatario</mat-label>
+            <input matInput formControlName="nombreD" required/>
+            <mat-error *ngIf="detalleEncomienda.get('nombreD')?.hasError('required')">
+              Nombre del destinatario es obligatorio.
+            </mat-error>
+          </mat-form-field>
+
+          <mat-form-field appearance="fill" class="full-width">
+            <mat-label>Apellido del destinatario</mat-label>
+            <input matInput formControlName="apellidoD" required/>
+            <mat-error *ngIf="detalleEncomienda.get('apellidoD')?.hasError('required')">
+              Apellido del destinatario es obligatorio.
+            </mat-error>
+          </mat-form-field>
+
+          <mat-form-field appearance="fill" class="full-width">
+            <mat-label>Identificación del destinatario</mat-label>
+            <input matInput formControlName="identificacionD" required/>
+            <mat-error *ngIf="detalleEncomienda.get('identificacionD')?.hasError('required')">
+              Identificación es obligatoria.
+            </mat-error>
+          </mat-form-field>
+
+          <mat-form-field appearance="fill" class="full-width">
+            <mat-label>Teléfono del beneficiario</mat-label>
+            <input matInput formControlName="telfbeneficiario" required/>
+            <mat-error *ngIf="detalleEncomienda.get('telfbeneficiario')?.hasError('required')">
+              Teléfono del beneficiario es obligatorio.
+            </mat-error>
+          </mat-form-field>
+
+          <mat-form-field appearance="fill" class="full-width">
+            <mat-label>Teléfono del encargado</mat-label>
+            <input matInput formControlName="telfEncargado" required/>
+            <mat-error *ngIf="detalleEncomienda.get('telfEncargado')?.hasError('required')">
+              Teléfono del encargado es obligatorio.
+            </mat-error>
+          </mat-form-field>
+
+          <mat-form-field appearance="fill" class="full-width">
+            <mat-label>Correo del destinatario</mat-label>
+            <input matInput formControlName="correoD" required/>
+            <mat-error *ngIf="detalleEncomienda.get('correoD')?.hasError('required')">
+              Correo del destinatario es obligatorio.
+            </mat-error>
+          </mat-form-field>
+
+
+          <h3>Seleccione el Lugar de Destino</h3>
+          <div id="mapDestino" style="height: 220px; width: 100%;"></div>
+          <div>
+            <input id="latitudDestino" formControlName="latitudDestino" type="hidden" >
+            <input id="longitudDestino" formControlName="longitudDestino" type="hidden" >
+            <br>
+          </div>
+
+          <mat-form-field appearance="fill" class="full-width">
+            <mat-label>Direccion del destinatario</mat-label>
+            <input matInput formControlName="dirDestino" required/>
+            <mat-error *ngIf="detalleEncomienda.get('dirDestino')?.hasError('required')">
+              Direccion es obligatoria.
+            </mat-error>
+          </mat-form-field>
+
+          <mat-form-field appearance="fill" class="full-width">
+            <mat-label>Referencia del destinatario</mat-label>
+            <input matInput formControlName="referenciaD" required/>
+            <mat-error *ngIf="detalleEncomienda.get('referenciaD')?.hasError('required')">
+              Referencia es obligatoria.
+            </mat-error>
+          </mat-form-field>
+
+          <mat-form-field appearance="fill" class="full-width">
+            <mat-label>Tipo de Entrega</mat-label>
+            <input matInput formControlName="tipoEntrega" required/>
+            <mat-error *ngIf="detalleEncomienda.get('tipoEntrega')?.hasError('required')">
+              Tipo de entrega es obligatorio.
+            </mat-error>
+          </mat-form-field>
+
+          <mat-form-field appearance="fill" class="full-width">
+            <mat-label>Ruta</mat-label>
+            <input matInput formControlName="ruta" required/>
+            <mat-error *ngIf="detalleEncomienda.get('ruta')?.hasError('required')">
+              Ruta es obligatoria.
+            </mat-error>
+          </mat-form-field>
+
+
+          <div formArrayName="productosDto">
+            <div *ngFor="let producto of productos.controls; let i = index" [formGroupName]="i">
+              <mat-form-field>
+                <input matInput placeholder="Tipo de Producto" formControlName="tipoProducto" required/>
+              </mat-form-field>
+              <mat-form-field>
+                <input matInput placeholder="Alto" formControlName="alto" required/>
+              </mat-form-field>
+              <mat-form-field>
+                <input matInput placeholder="Ancho" formControlName="ancho" required/>
+              </mat-form-field>
+              <mat-form-field>
+                <input matInput placeholder="Largo" formControlName="largo" required/>
+              </mat-form-field>
+              <mat-form-field>
+                <input matInput placeholder="Peso" formControlName="peso" required/>
+              </mat-form-field>
+              <mat-checkbox formControlName="fragil">Frágil</mat-checkbox>
+              <button mat-button (click)="removeProducto(i)">Eliminar Producto</button>
+            </div>
+          </div>
+
+          <button mat-button (click)="addProducto()">Añadir Producto</button>
+
+
+          <button mat-raised-button color="primary" type="submit" [disabled]="!detalleEncomienda.valid">Crear
+            Encomienda
+          </button>
         </div>
-
-        <button mat-button (click)="addProducto()">Añadir Producto</button>
-
-
-
-        <button mat-raised-button color="primary" type="submit" [disabled]="!detalleEncomienda.valid">Crear Encomienda</button>
-      </div>
-    </mat-card-content>
-  </mat-card>
-</form>
+      </mat-card-content>
+    </mat-card>
+  </form>
 </app-menu>

@@ -4,7 +4,7 @@ import {DetalleEncomiendaService} from '../../service/detalle-encomienda.service
 import {ActivatedRoute, Router} from '@angular/router';
 import {MatSnackBar} from '@angular/material/snack-bar';
 import {DatePipe, NgForOf, NgIf} from '@angular/common';
-import {MatButton} from '@angular/material/button';
+import {MatButton, MatFabButton} from '@angular/material/button';
 import {
   MatCard,
   MatCardActions,
@@ -16,6 +16,7 @@ import {
 import {MatDivider} from '@angular/material/divider';
 import {MatProgressSpinner} from '@angular/material/progress-spinner';
 import {MAT_DIALOG_DATA} from '@angular/material/dialog';
+import {MatIcon} from '@angular/material/icon';
 
 @Component({
   selector: 'app-detalle',
@@ -32,7 +33,9 @@ import {MAT_DIALOG_DATA} from '@angular/material/dialog';
     MatDivider,
     MatProgressSpinner,
     NgIf,
-    NgForOf
+    NgForOf,
+    MatFabButton,
+    MatIcon
   ],
   templateUrl: './detalle.component.html',
   standalone: true,

@@ -1,0 +1,29 @@
+.detalle-lote-card {
+  max-width: 600px;
+  margin: auto;
+  padding: 20px;
+}
+
+.mat-elevation-z8 {
+  width: 100%;
+  margin-bottom: 20px;
+}
+
+.scroll-box {
+  max-height: 150px;
+  overflow-y: auto;
+  border: 1px solid #ccc;
+  padding: 10px;
+  border-radius: 5px;
+}
+
+mat-chip-list {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+mat-chip {
+  margin: 5px;
+  background-color: #3f51b5;
+  color: white;
+}

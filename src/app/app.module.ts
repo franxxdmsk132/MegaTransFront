@@ -39,6 +39,13 @@ import {DetalleEncomiendaService} from './service/detalle-encomienda.service';
 import {MatNativeDateModule} from '@angular/material/core';
 import {MatDatepickerModule} from '@angular/material/datepicker';
 import {MatButtonToggle, MatButtonToggleModule} from '@angular/material/button-toggle';
+import {ListarLotesComponent} from './lote/lista-lotes/lista-lotes.component';
+import {CrearLotesComponent} from './lote/crear-lotes/crear-lotes.component';
+import {DetalleLotesComponent} from './lote/detalle-lotes/detalle-lotes.component';
+import {MatChipsModule} from '@angular/material/chips';
+import {ListaRutasComponent} from './Rutas/lista-rutas/lista-rutas.component';
+import {ActualizarRutasComponent} from './Rutas/actualizar-rutas/actualizar-rutas.component';
+import {CrearRutasComponent} from './Rutas/crear-rutas/crear-rutas.component';
 
 @NgModule({
   declarations: [  ],
@@ -84,6 +91,12 @@ import {MatButtonToggle, MatButtonToggleModule} from '@angular/material/button-t
     MatNativeDateModule,
     MatButtonToggleModule,
     MatButtonToggle,
+    ListarLotesComponent,
+    DetalleLotesComponent,
+    MatChipsModule,
+    ListaRutasComponent,
+    ActualizarRutasComponent,
+    CrearRutasComponent
 
   ],
   providers: [],

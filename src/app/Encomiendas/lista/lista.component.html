@@ -19,6 +19,16 @@
         <mat-card-header>
           <mat-card-title>{{ element.cliente?.nombre }} {{ element.cliente?.apellido }}</mat-card-title>
           <mat-card-subtitle>Número de Guía: {{ element.numGuia }}</mat-card-subtitle>
+          <!-- Condición para mostrar el número de lote o un texto alternativo -->
+          <mat-card-subtitle>
+            #Lote:
+            <span *ngIf="element.lote?.numLote; else noLote">
+                {{ element.lote.numLote }}</span>
+            <ng-template #noLote>
+              -----
+            </ng-template>
+          </mat-card-subtitle>
+
         </mat-card-header>
 
         <mat-card-content>
@@ -41,7 +51,10 @@
           <button mat-flat-button color="primary" (click)="abrirDialogoEstado(element)">Cambiar Estado</button>
         </mat-card-actions>
       </mat-card>
-
+      <!-- Botón de añadir unidad -->
+      <button mat-fab color="primary" class="add-btn" (click)="obtenerDetallesEncomienda()">
+        <mat-icon>autorenew</mat-icon>
+      </button>
     </div>
 
 

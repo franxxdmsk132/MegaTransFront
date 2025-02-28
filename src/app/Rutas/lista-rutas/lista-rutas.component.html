@@ -1,0 +1,19 @@
+<app-menu>
+  <div class="rutas-container">
+    <h2>Lista de Rutas</h2>
+    <ul>
+      <li *ngFor="let ruta of rutas">
+        {{ ruta.origen }} - {{ ruta.destino }}
+
+        <!-- Botón de Editar -->
+        <button (click)="editarRuta(ruta)">Editar</button>
+
+        <!-- Botón de Eliminar -->
+        <button (click)="eliminarRuta(ruta.id)">Eliminar</button>
+      </li>
+    </ul>
+    <button mat-fab color="primary" class="add-btn" (click)="crearRuta()">
+      <mat-icon>add</mat-icon>
+    </button>
+  </div>
+</app-menu>

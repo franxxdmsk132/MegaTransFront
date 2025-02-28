@@ -64,21 +64,21 @@ export class CrearDetalleTransporteComponent implements OnInit {
       direccionOrigen: this.fb.group({
         barrio: ['', Validators.required],
         callePrincipal: ['', Validators.required],
-        calleSecundaria: [''],
+        calleSecundaria: ['', Validators.required],
         ciudad: ['', Validators.required],
         latitud: ['', Validators.required],
         longitud: ['', Validators.required],
-        referencia: [''],
+        referencia: ['', Validators.required],
         telefono: ['', Validators.required]
       }),
       direccionDestino: this.fb.group({
         barrio: ['', Validators.required],
         callePrincipal: ['', Validators.required],
-        calleSecundaria: [''],
+        calleSecundaria: ['',Validators.required],
         ciudad: ['', Validators.required],
         latitud: ['', Validators.required],
         longitud: ['', Validators.required],
-        referencia: [''],
+        referencia: ['', Validators.required],
         telefono: ['', Validators.required]
       }),
       unidadId: ['', Validators.required],
@@ -88,6 +88,7 @@ export class CrearDetalleTransporteComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.abrirDialogo();
     const nombreComercial = this.token.getNombreComercial() || 'Nombre Comercial no disponible';
     const nombreCompleto = this.token.getFullName() || 'Nombre Completo no disponible';
 
@@ -126,18 +127,6 @@ export class CrearDetalleTransporteComponent implements OnInit {
 
     marker.setIcon(customIcon);
 
-    // Función que mantiene el marcador en el centro del mapa
-    map.on('move', () => {
-      const center = map.getCenter();  // Obtén las coordenadas del centro
-      marker.setLatLng(center);        // Mueve el marcador al centro
-      this.detalleForm.patchValue({
-        [direccionControl]: {
-          latitud: center.lat.toFixed(6),
-          longitud: center.lng.toFixed(6)
-        }
-      });
-      this.getLocationDetails(center.lat, center.lng, direccionControl);  // Obtén detalles de la nueva ubicación
-    });
 
     marker.on('dragend', async () => {
       const position = marker.getLatLng();

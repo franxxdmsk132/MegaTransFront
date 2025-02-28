@@ -1,11 +1,11 @@
 /* Estilos para el contenedor principal de la sección */
-app-menu {
-  font-family: 'Poppins', sans-serif; /* Fuente más moderna */
-  text-align: center; /* Centra los textos */
-  padding: 40px 20px; /* Da más espacio a los elementos */
-  display: block;
-  margin: 0 auto;
-}
+/*app-menu {*/
+/*  font-family: 'Poppins', sans-serif; !* Fuente más moderna *!*/
+/*  text-align: center; !* Centra los textos *!*/
+/*  !*padding: 40px 20px; !* Da más espacio a los elementos *!*!*/
+/*  display: block;*/
+/*  margin: 0 auto;*/
+/*}*/
 
 /* Estilo de la imagen principal */
 app-menu img {

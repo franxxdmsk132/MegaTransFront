@@ -8,7 +8,7 @@ import {TokenService} from './token.service';
   providedIn: 'root',
 })
 export class DetalleTransporteService {
-  apiUrl = 'http://104.196.131.87:8080/detalle-transporte';
+  apiUrl = 'http://104.196.61.204:8080/detalle-transporte';
 
   constructor(private http: HttpClient, private tokenService: TokenService) {
   }

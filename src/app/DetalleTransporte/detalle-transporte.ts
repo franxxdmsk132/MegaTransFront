@@ -1,5 +1,6 @@
 import {Unidades} from '../unidades/unidades';
 import {JwtDTO} from '../models/jwt-dto';
+import {Lote} from '../lote/Lote';
 
 export interface Direccion {
   id?:number;
@@ -27,4 +28,5 @@ export interface DetalleTransporte {
   dirDestino: Direccion;
   unidad: Unidades;
   cliente: JwtDTO;
+  lote:Lote;
 }

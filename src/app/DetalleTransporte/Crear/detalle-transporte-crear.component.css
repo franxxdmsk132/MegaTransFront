@@ -161,3 +161,17 @@ button {
 }
 
 
+::ng-deep .mudanza-chip {
+  background-color: rgba(189, 124, 124, 0.62) !important; /* Rojo translúcido */
+  color: #616161 !important; /* Texto blanco */}
+
+
+::ng-deep .desalojo-chip {
+  background-color: rgba(189, 124, 124, 0.62) !important; /* Rojo translúcido */
+  color: #616161 !important; /* Texto blanco */
+}
+
+::ng-deep .distribucion-chip {
+  background-color: rgba(189, 124, 124, 0.62) !important; /* Rojo translúcido */
+  color: #616161 !important; /* Texto blanco */
+}

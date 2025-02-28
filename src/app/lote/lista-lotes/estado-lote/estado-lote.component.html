@@ -1,0 +1,17 @@
+<h2 mat-dialog-title>Cambiar Estado</h2>
+<mat-dialog-content>
+  <mat-form-field appearance="fill">
+    <mat-label>Estado</mat-label>
+    <mat-select [(value)]="nuevoEstado">
+      <mat-option value="PROCESANDO">Pendiente</mat-option>
+      <mat-option value="TRANSPORTANDO">Transportando</mat-option>
+      <mat-option value="BODEGA">Bodega</mat-option>
+      <mat-option value="FINALIZADO">Finalizado</mat-option>
+
+    </mat-select>
+  </mat-form-field>
+</mat-dialog-content>
+<mat-dialog-actions>
+  <button mat-button (click)="cancelar()" class="custom-button">Cancelar</button>
+  <button mat-button class="custom-button" (click)="cambiarEstado()">Actualizar</button>
+</mat-dialog-actions>

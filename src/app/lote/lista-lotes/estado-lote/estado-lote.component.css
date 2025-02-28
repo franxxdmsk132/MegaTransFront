@@ -1,0 +1,36 @@
+.custom-button {
+  background-color: black !important;
+  color: white !important;
+  border: 2px solid red !important;
+  width: 7.5em; /* Ancho de los botones */
+  height: 2.9em; /* Altura de los botones */
+  font-size: 1rem; /* Tamaño de texto */
+  padding: 0.5em 1em; /* Espaciado interno */
+}
+
+.custom-button:hover {
+  background-color: darkgray !important;
+  border: 2px solid red !important;
+}
+.mat-dialog-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.mat-dialog-title {
+  text-align: center; /* Centra el título */
+}
+
+.mat-dialog-content {
+  display: flex;
+  flex-direction: column;
+  align-items: center; /* Centra el contenido dentro del dialog */
+}
+
+.mat-dialog-actions {
+  display: flex;
+  justify-content: center; /* Centra los botones */
+  gap: 10px; /* Ajusta el espacio entre los botones */
+}

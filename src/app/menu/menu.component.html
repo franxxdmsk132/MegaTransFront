@@ -1,8 +1,8 @@
 <mat-toolbar color="primary" class="sticky-menu">
-  <button mat-icon-button (click)="sidenav.toggle()">
+  <button mat-icon-button class="red-icon" (click)="sidenav.toggle()">
     <mat-icon>menu</mat-icon>
   </button>
-  <span class="center-span" >CAMIONESMEGATRANS</span>
+  <span class="center-span" >MEGATRANSAPP</span>
 </mat-toolbar>
 
 <mat-sidenav-container class="sidenav-container">
@@ -31,6 +31,12 @@
       </a>
       <a mat-list-item *ngIf="isAdmin" routerLink="/unidades" (click)="sidenav.close()">
         <mat-icon class="red-icon">directions_bus</mat-icon> <b>  Unidades</b>
+      </a>
+      <a mat-list-item *ngIf="isAdmin" routerLink="/lotes" (click)="sidenav.close()">
+        <mat-icon class="red-icon">commute</mat-icon> <b>  Lotes</b>
+      </a>
+      <a mat-list-item *ngIf="isAdmin" routerLink="/rutas" (click)="sidenav.close()">
+        <mat-icon class="red-icon">commute</mat-icon> <b>  Rutas</b>
       </a>
       <a mat-list-item *ngIf="isAdmin" routerLink="/registroEmpleado" (click)="sidenav.close()">
         <mat-icon class="red-icon">person_outline</mat-icon> <b>  Empleados</b>

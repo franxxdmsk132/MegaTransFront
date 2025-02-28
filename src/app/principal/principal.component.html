@@ -4,48 +4,48 @@
   <!-- Contenido principal -->
   <div class="container text-center">
     <mat-card class="welcome-card">
-      <mat-card-header>
-        <mat-card-title>
-          <h3 style="font-family: 'TERMINATOR', sans-serif"><b>BIENVENIDO!</b></h3>
-        </mat-card-title>
-      </mat-card-header>
+      <!--      <mat-card-header>-->
+      <!--        <mat-card-title>-->
+      <!--          <h3 style="font-family: 'TERMINATOR', sans-serif"><b>BIENVENIDO!</b></h3>-->
+      <!--        </mat-card-title>-->
+      <!--      </mat-card-header>-->
       <img src="assets/images/MegaTrans.png" alt="Descripción de la imagen" class="welcome-image">
 
       <mat-card-content>
 
         <div *ngIf="isLogged; else loggedOut">
           <!-- Verificamos si nombreComercial existe -->
-          <h2 *ngIf="nombreComercial && nombreComercial.trim() !== ''" class="nombre-comercial">
-            ¡Hola, {{ nombreComercial }}!
-            <h6>{{ nombreCompleto }}</h6>
-          </h2>
+          <div style="text-align: center">
+            <h2 *ngIf="nombreComercial && nombreComercial.trim() !== ''" class="nombre-comercial">
+              ¡Bienvenido {{ nombreComercial }}!
+              <h6>{{ nombreCompleto }}</h6>
+            </h2>
 
-          <!-- Si no tiene nombreComercial, mostramos solo nombreCompleto -->
-          <h2 *ngIf="!nombreComercial || nombreComercial.trim() === ''" class="nombre-completo">
-            ¡Hola, {{ nombreCompleto }}!
-          </h2>
+            <!-- Si no tiene nombreComercial, mostramos solo nombreCompleto -->
+            <h2 *ngIf="!nombreComercial || nombreComercial.trim() === ''" class="nombre-completo">
+              ¡Hola, {{ nombreCompleto }}!
+            </h2>
+          </div>
 
 
+          <p style="text-align: center"><i>"Soluciones de carga y mudanza al alcance de tus manos."</i></p>
 
-          <p style="align-items: center">Bienvenido! ,aquí puedes gestionar tu transporte en </p>
-          <p style="font-family: 'TERMINATOR', sans-serif ; text-align: center">CAMIONESMEGATRANS.</p>
-          <br>
-          <h3>Selecciona un servicio a continuacion: </h3>
+          <h3>Selecciona el servicio que nesecitas: </h3>
 
           <div class="button-grid">
-            <button mat-raised-button class="custom-button" routerLink="/crearDetalleTransporte">
-              Transporte
-            </button>
             <button mat-raised-button class="custom-button" routerLink="/crearEncomienda">
               Encomiendas
             </button>
-<!--            <button mat-raised-button class="custom-button" routerLink="/detalleEncomienda">-->
-<!--              Facturación-->
-<!--            </button>-->
+            <button mat-raised-button class="custom-button" routerLink="/crearDetalleTransporte">
+              Transporte
+            </button>
+            <!--            <button mat-raised-button class="custom-button" routerLink="/detalleEncomienda">-->
+            <!--              Facturación-->
+            <!--            </button>-->
             <button mat-raised-button class="custom-button" (click)="openSearchDialog()">
               Búsqueda
             </button>
-            <button mat-raised-button class="custom-button" (click)="openQrScanner()">
+            <button mat-raised-button class="custom-button" *ngIf="isAdmin" (click)="openQrScanner()">
               QR
             </button>
 
@@ -53,7 +53,12 @@
           </div>
 
         </div>
-        <h6 *ngIf="isAdmin" >Conteo de usuarios: {{ usuarioCount }}</h6>
+        <h6 *ngIf="isAdmin">Conteo de usuarios: {{ usuarioCount }}</h6>
+        <div style="text-align: center"><a  href="https://www.camionesmegatrans.com" target="_blank" rel="noopener noreferrer"
+                style="text-align: center; font-size: 12px">
+          www.camionesmegatrans.com
+        </a></div>
+
 
         <ng-template #loggedOut>
           <h2>No has iniciado sesión</h2>
