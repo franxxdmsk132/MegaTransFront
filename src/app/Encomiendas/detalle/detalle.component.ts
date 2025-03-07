@@ -33,9 +33,7 @@ import {MatIcon} from '@angular/material/icon';
     MatDivider,
     MatProgressSpinner,
     NgIf,
-    NgForOf,
-    MatFabButton,
-    MatIcon
+    NgForOf
   ],
   templateUrl: './detalle.component.html',
   standalone: true,

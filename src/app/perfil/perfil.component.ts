@@ -34,7 +34,6 @@ import {MatLabel} from '@angular/material/form-field';
     MatDivider,
     MatCardActions,
     MatButton,
-    MatLabel,
     MatCardSubtitle,
     MatCardTitle
   ],

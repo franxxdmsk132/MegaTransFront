@@ -40,7 +40,7 @@ export class EstadoLoteComponent {
   }
 
   cambiarEstado(): void {
-    this.loteService.actualizarEstadoLote(this.data.id, this.nuevoEstado).subscribe({
+    this.loteService.actualizarEstadoLote2(this.data.id, this.nuevoEstado).subscribe({
       next: (response) => {
         console.log(response);
         this.dialogRef.close(true);

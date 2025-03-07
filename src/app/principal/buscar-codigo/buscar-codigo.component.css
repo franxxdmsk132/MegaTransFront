@@ -26,3 +26,17 @@
   background-color: darkgray !important; /* Fondo al pasar el ratón */
   border: 2px solid red !important;      /* Bordes rojos al pasar el ratón */
 }
+.snackbar-success {
+  background-color: green;
+  color: white;
+}
+
+.snackbar-error {
+  background-color: red;
+  color: white;
+}
+
+.snackbar-warning {
+  background-color: yellow;
+  color: black;
+}

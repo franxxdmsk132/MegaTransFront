@@ -16,7 +16,7 @@
             <p>{{ detalleTransporte.numOrden }}</p>
           </div>
           <div>
-            <mat-card-subtitle><strong>Fecha:</strong></mat-card-subtitle>
+            <mat-card-subtitle><strong>Fecha de Pedido:</strong></mat-card-subtitle>
             <p>{{ detalleTransporte.fecha | date: 'dd/MM/yyyy' }}</p>
           </div>
           <div>
@@ -24,7 +24,7 @@
             <p>{{ detalleTransporte.estado }}</p>
           </div>
           <div>
-            <mat-card-subtitle><strong>Descripción del Producto:</strong></mat-card-subtitle>
+            <mat-card-subtitle><strong>Fecha y Hora:</strong></mat-card-subtitle>
             <p>{{ detalleTransporte.descripcionProducto }}</p>
           </div>
           <div>
@@ -37,7 +37,7 @@
           </div>
           <div>
             <mat-card-subtitle><strong>Estibaje:</strong></mat-card-subtitle>
-            <p>{{ detalleTransporte.estibaje }}</p>
+            <p>{{ detalleTransporte.estibaje ? 'Sí' : 'No' }}</p>
           </div>
           <div>
             <mat-card-subtitle><strong>Pago:</strong></mat-card-subtitle>

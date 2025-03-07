@@ -1,38 +1,111 @@
 <app-menu>
-  <div class="crear-lote">
-    <h2>Crear Lote</h2>
+  <mat-card class="form-container">
+    <h2>Crear Nuevo Lote</h2>
+
     <form [formGroup]="loteForm" (ngSubmit)="crearLote()">
 
-      <mat-form-field appearance="fill">
-        <mat-label>Número de Lote</mat-label>
-        <input matInput formControlName="numLote" required>
-        <mat-error *ngIf="loteForm.get('numLote')?.hasError('required')">Este campo es obligatorio</mat-error>
-      </mat-form-field>
-
-
-      <mat-form-field appearance="fill">
-        <mat-label>Estado</mat-label>
-        <input matInput formControlName="estado" required>
-        <mat-error *ngIf="loteForm.get('estado')?.hasError('required')">Este campo es obligatorio</mat-error>
-      </mat-form-field>
-
-      <mat-form-field appearance="fill">
+      <!-- Selección de Ruta -->
+      <mat-form-field appearance="outline">
         <mat-label>Ruta</mat-label>
-        <input matInput formControlName="ruta" required>
-        <mat-error *ngIf="loteForm.get('ruta')?.hasError('required')">Este campo es obligatorio</mat-error>
+        <mat-select formControlName="ruta" required>
+          <mat-option *ngFor="let ruta of rutasDisponibles" [value]="ruta.origen + ' - ' + ruta.destino">
+            {{ ruta.origen }} - {{ ruta.destino }}
+          </mat-option>
+        </mat-select>
       </mat-form-field>
 
-      <mat-form-field appearance="fill">
+
+
+
+
+      <!-- Campo Unidad -->
+      <mat-form-field appearance="outline">
         <mat-label>Unidad</mat-label>
-        <input matInput formControlName="unidad" required>
-        <mat-error *ngIf="loteForm.get('unidad')?.hasError('required')">Este campo es obligatorio</mat-error>
+        <mat-select formControlName="unidad" required>
+          <mat-option *ngFor="let unidad of unidadesDisponibles" [value]="unidad">
+            {{ unidad.tipo }}
+          </mat-option>
+        </mat-select>
       </mat-form-field>
 
-      <!-- Si tienes campos adicionales, como los de las encomiendas y números de guía, agrégales sus campos respectivos aquí -->
 
-      <div class="actions">
-        <button mat-raised-button color="primary" type="submit" [disabled]="loteForm.invalid">Crear Lote</button>
+      <!-- 🔴 QUITAMOS mat-form-field de aquí -->
+      <div>
+        <label>Encomiendas en Estado Recolectado</label>
+        <mat-chip-listbox>
+          <mat-chip *ngFor="let encomienda of encomiendasProcesando"
+                    (click)="agregarEncomienda(encomienda)">
+            {{ encomienda.numGuia }} / {{ encomienda.ruta }}
+          </mat-chip>
+        </mat-chip-listbox>
+      </div><div>
+      <label>Encomiendas en Estado Recolectado</label>
+      <table mat-table [dataSource]="encomiendasProcesando" class="mat-elevation-z8">
+
+        <!-- Número de Guía -->
+        <ng-container matColumnDef="numGuia">
+          <th mat-header-cell *matHeaderCellDef> N° Guía </th>
+          <td mat-cell *matCellDef="let encomienda"> {{ encomienda.numGuia }} </td>
+        </ng-container>
+
+        <!-- Ruta -->
+        <ng-container matColumnDef="ruta">
+          <th mat-header-cell *matHeaderCellDef> Ruta </th>
+          <td mat-cell *matCellDef="let encomienda"> {{ encomienda.ruta }} </td>
+        </ng-container>
+
+        <!-- Remitente -->
+        <ng-container matColumnDef="remitente">
+          <th mat-header-cell *matHeaderCellDef> Remitente </th>
+          <td mat-cell *matCellDef="let encomienda"> {{ encomienda.remitente }} </td>
+        </ng-container>
+
+        <!-- Destinatario -->
+        <ng-container matColumnDef="destinatario">
+          <th mat-header-cell *matHeaderCellDef> Destinatario </th>
+          <td mat-cell *matCellDef="let encomienda"> {{ encomienda.destinatario }} </td>
+        </ng-container>
+
+        <!-- Peso -->
+        <ng-container matColumnDef="peso">
+          <th mat-header-cell *matHeaderCellDef> Peso (kg) </th>
+          <td mat-cell *matCellDef="let encomienda"> {{ encomienda.peso }} </td>
+        </ng-container>
+
+        <!-- Botón para seleccionar la encomienda -->
+        <ng-container matColumnDef="acciones">
+          <th mat-header-cell *matHeaderCellDef> Acciones </th>
+          <td mat-cell *matCellDef="let encomienda">
+            <button mat-button color="primary" *ngFor="let encomienda of encomiendasProcesando"
+                    (click)="agregarEncomienda(encomienda)">Seleccionar</button>
+          </td>
+        </ng-container>
+
+        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+        <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+      </table>
+    </div>
+
+
+      <!-- 🔴 QUITAMOS mat-form-field de aquí -->
+      <div>
+        <label>Encomiendas Seleccionadas</label>
+        <mat-chip-listbox>
+          <mat-chip *ngFor="let encomienda of encomiendasSeleccionadas"
+                    (removed)="eliminarEncomienda(encomienda)">
+            {{ encomienda.numGuia }}
+            <mat-icon matChipRemove>cancel</mat-icon>
+          </mat-chip>
+        </mat-chip-listbox>
       </div>
+
+
+      <!-- Botón de Enviar -->
+      <button mat-raised-button color="primary" type="submit" [disabled]="loteForm.invalid">
+        Crear Lote
+      </button>
+
     </form>
-  </div>
+  </mat-card>
+
 </app-menu>

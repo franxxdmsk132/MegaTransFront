@@ -23,13 +23,8 @@ import {MatIcon} from '@angular/material/icon';
   imports: [
     MenuComponent,
     FormsModule,
-    RouterLink,
     NgIf,
     MatCard,
-    MatCardHeader,
-    MatTabGroup,
-    MatTab,
-    MatAnchor,
     MatCardContent,
     MatFormField,
     MatInput,

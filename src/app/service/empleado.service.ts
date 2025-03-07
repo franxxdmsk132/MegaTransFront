@@ -7,7 +7,8 @@ import {NuevoUsuario} from '../models/nuevo-usuario';
   providedIn: 'root'
 })
 export class EmpleadoService {
-  empleadoUrl = 'http://104.196.61.204:8080/auth/';
+  empleadoUrl2 = 'http://104.196.61.204:8080/auth/';
+  empleadoUrl = 'http://192.168.0.103:8080/auth/';
 
 constructor(private http: HttpClient) {}
   public listar():Observable<NuevoUsuario[]> {

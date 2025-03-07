@@ -13,14 +13,16 @@
         <mat-card-content>
           <p><strong>Fecha:</strong> {{ lote.fecha }}</p>
           <p><strong>Estado:</strong> {{ lote.estado }}</p>
-          <p><strong>Unidad:</strong> {{ lote.unidad?.id }}</p>
+          <p><strong>Unidad:</strong> {{ lote.unidad?.tipo }}</p> <!-- Muestra el tipo de unidad -->
           <p><strong>Números de Guía:</strong> {{ lote.numerosGuia }}</p>
           <p><strong>Ruta:</strong> {{ lote.ruta }}</p>
         </mat-card-content>
 
         <mat-card-actions>
-          <button mat-flat-button color="primary"   (click)="abrirDialogoEstado(lote)">Editar</button>
+          <button mat-flat-button color="primary"   (click)="abrirDialogoEstado(lote)">Estado</button>
           <button mat-flat-button color="warn" (click)="verDetalles(lote)" >Detalles</button>
+          <button mat-flat-button color="warn" (click)="editarDetalles(lote)" >Actualizar</button>
+
         </mat-card-actions>
       </mat-card>
       <button mat-fab color="primary" class="add-btn" (click)="crearLote()">

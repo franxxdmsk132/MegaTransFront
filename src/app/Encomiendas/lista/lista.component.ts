@@ -34,29 +34,19 @@ import {
 import {MatButton, MatFabButton, MatIconButton} from '@angular/material/button';
 import {MatIcon} from '@angular/material/icon';
 import {MatToolbar} from '@angular/material/toolbar';
+import {MatFormField, MatLabel} from '@angular/material/form-field';
+import {MatOption, MatSelect} from '@angular/material/select';
 
 @Component({
   selector: 'app-lista',
   templateUrl: './lista.component.html',
   standalone: true,
   imports: [
-    MatPaginator,
     NgIf,
-    MatRow,
-    MatRowDef,
-    MatHeaderRow,
-    MatHeaderRowDef,
+    MatCardTitle,
     MatIcon,
-    MatIconButton,
-    MatCell,
-    MatHeaderCell,
-    MatCellDef,
-    MatHeaderCellDef,
-    MatColumnDef,
     MatCard,
-    MatToolbar,
     MatProgressSpinner,
-    MatTable,
     MenuComponent,
     MatCardActions,
     MatButton,
@@ -64,14 +54,13 @@ import {MatToolbar} from '@angular/material/toolbar';
     MatCardContent,
     MatCard,
     NgForOf,
-    MatSort,
     MatSortModule,
-    MatCardTitle,
     MatCardSubtitle,
-    MatTabGroup,
-    MatTab,
     MatFabButton,
-    MatTabLabel,
+    MatFormField,
+    MatLabel,
+    MatSelect,
+    MatOption,
   ],
   styleUrl: './lista.component.css'
 })
@@ -80,13 +69,26 @@ export class ListaComponent implements OnInit{
   isLoading = true;
   errorMessage: string | undefined;
   dataFiltrada: DetalleEncomienda[] = [];
+  // Lista de estados disponibles
+  estados: string[] = ['RECOLECCION', 'RECOLECTADO', 'TRASLADO', 'BODEGA', 'ENTREGADO', 'CANCELADO'];
+
+  // Estado seleccionado en el select
+  selectedEstado: string = this.estados[0];
   dataSource = new MatTableDataSource<DetalleEncomienda>();
   displayedColumns: string[] = [
     'numGuia','numLote','cliente', 'fecha', 'dirRemitente','latitudOrg','longitudOrg', 'nombreD', 'apellidoD',
     'identificacionD', 'telfBeneficiario', 'telfEncargado', 'correoD','dirDestino','longitudDestino','latitudDestino',
     'referenciaD', 'tipoEntrega', 'ruta', 'estado', 'qrCodePath', 'acciones'
   ];
-
+  // Diccionario de íconos para cada estado
+  iconosEstados: { [key: string]: string } = {
+    'RECOLECCION': 'watch_later',
+    'TRASLADO': 'local_shipping',
+    'ENTREGADO': 'check_circle',
+    'BODEGA': 'inventory',
+    'RECOLECTADO': 'assignment_turned_in',
+    'CANCELADO': 'cancel'
+  };
   @ViewChild(MatPaginator) paginator!: MatPaginator;
   @ViewChild(MatSort) sort!: MatSort;
   constructor(
@@ -103,12 +105,14 @@ export class ListaComponent implements OnInit{
     this.detalleEncomiendaService.getAllDetalleEncomiendas().subscribe({
       next: (detalles) => {
         console.log('Detalles de Encomienda recibidos:', detalles);
+        detalles.sort((a, b) => this.extraerNumeroGuia(b.numGuia) - this.extraerNumeroGuia(a.numGuia)); // Orden descendente
         this.dataSource.data = detalles;
         this.dataSource.paginator = this.paginator;
         this.isLoading = false;
         this.filtrarPorEstado();  // Aplicar filtro después de cargar los datos
       },
       error: (error) => {
+        this.errorMessage = 'No se pudo obtener las solicitudes';
         this.errorMessage = 'No se pudo obtener las solicitudes';
         console.error('Error al obtener detalles de Encomienda', error);
         this.isLoading = false;
@@ -130,6 +134,15 @@ export class ListaComponent implements OnInit{
         break;
       case 2:
         this.dataFiltrada = this.dataSource.data.filter(detalle => detalle.estado === 'ENTREGADO');
+        break;
+      case 3:
+        this.dataFiltrada = this.dataSource.data.filter(detalle => detalle.estado === 'BODEGA');
+        break;
+      case 4:
+        this.dataFiltrada = this.dataSource.data.filter(detalle => detalle.estado === 'RECOLECTADO');
+        break;
+      case 5:
+        this.dataFiltrada = this.dataSource.data.filter(detalle => detalle.estado === 'CANCELADO');
         break;
 
       default:
@@ -156,5 +169,14 @@ export class ListaComponent implements OnInit{
         }
       }
     });
+  }
+  filtrarPorEstado2(): void {
+    this.dataFiltrada = this.dataSource.data.filter(
+      (element) => element.estado === this.selectedEstado
+    );
+  }
+  extraerNumeroGuia(guia: string): number {
+    const numero = guia.replace(/[^\d]/g, ''); // Elimina los caracteres no numéricos
+    return Number(numero); // Convierte la parte numérica a número
   }
 }

@@ -22,6 +22,7 @@ import {CrearLotesComponent} from './lote/crear-lotes/crear-lotes.component';
 import {ListaRutasComponent} from './Rutas/lista-rutas/lista-rutas.component';
 import {ActualizarRutasComponent} from './Rutas/actualizar-rutas/actualizar-rutas.component';
 import {CrearRutasComponent} from './Rutas/crear-rutas/crear-rutas.component';
+import {ActualizarLotesComponent} from './lote/actualizar-lotes/actualizar-lotes.component';
 
 export const routes: Routes = [
   {path: '', component: PrincipalComponent},
@@ -42,6 +43,7 @@ export const routes: Routes = [
 
   {path: 'crearLote', component: CrearLotesComponent},
   {path: 'detalleLotes/:id', component: DetalleLotesComponent},
+  {path: 'actualizarLotes/:id', component: ActualizarLotesComponent},
   {path: 'soporte', component: SoporteComponent},
   {path: 'acercaDe', component: AcercaComponent},
   {path: 'perfil', component: PerfilComponent},

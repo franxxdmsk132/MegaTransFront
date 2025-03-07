@@ -6,8 +6,8 @@ const config: CapacitorConfig = {
   webDir: 'dist/mega-trans-front',
   server: {
     cleartext: true,
-    // allowNavigation: ['192.168.0.107'],
-    allowNavigation: ['104.196.61.204'],
+    allowNavigation: ['192.168.0.103'],
+    //allowNavigation: ['104.196.61.204'],
     androidScheme: 'http'
   }
   // },

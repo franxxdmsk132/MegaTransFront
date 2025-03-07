@@ -9,8 +9,8 @@ import { MatSnackBar } from '@angular/material/snack-bar';
   providedIn: 'root',
 })
 export class RutaService {
-  rutasUrl = 'http://104.196.61.204:8080/rutas';
-  rutasUrl2 = 'http://192.168.0.107:8080/rutas';
+  rutasUrl2 = 'http://104.196.61.204:8080/rutas';
+  rutasUrl = 'http://192.168.0.103:8080/rutas';
 
 
   constructor(

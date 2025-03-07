@@ -17,6 +17,7 @@ import {TokenService} from '../../service/token.service';
 import {MatSlideToggle} from '@angular/material/slide-toggle';
 import {MatChipListbox, MatChipOption} from '@angular/material/chips';
 import {MatDivider} from '@angular/material/divider';
+import {MatSnackBar} from '@angular/material/snack-bar';
 
 @Component({
   selector: 'app-Detalle-transporte-crear',
@@ -29,9 +30,6 @@ import {MatDivider} from '@angular/material/divider';
     MatButton,
     MatLabel,
     MenuComponent,
-    MatRadioGroup,
-    MatRadioButton,
-    MatCheckbox,
     NgIf,
     MatSlideToggle,
     MatChipListbox,
@@ -46,6 +44,7 @@ export class CrearDetalleTransporteComponent implements OnInit {
   nombreCompleto: string = '';  // Almacenar el nombre completo
   nombreComercial: string = '';  // Almacenar el nombre comercial  private map!: L.Map;
   private marker!: L.Marker;
+  isSubmitting =false;
 
   constructor(
     private fb: FormBuilder,
@@ -53,9 +52,10 @@ export class CrearDetalleTransporteComponent implements OnInit {
     private router: Router,
     private dialog: MatDialog,
     private token: TokenService,
+    private snackbar: MatSnackBar
   ) {
     this.detalleForm = this.fb.group({
-      numOrden:[''],
+      numOrden: [''],
       cantidadEstibaje: [0, Validators.required],
       descripcionProducto: ['', Validators.required],
       tipoServicio: ['', Validators.required],
@@ -70,16 +70,18 @@ export class CrearDetalleTransporteComponent implements OnInit {
         longitud: ['', Validators.required],
         referencia: ['', Validators.required],
         telefono: ['', Validators.required]
+
       }),
       direccionDestino: this.fb.group({
         barrio: ['', Validators.required],
         callePrincipal: ['', Validators.required],
-        calleSecundaria: ['',Validators.required],
+        calleSecundaria: ['', Validators.required],
         ciudad: ['', Validators.required],
         latitud: ['', Validators.required],
         longitud: ['', Validators.required],
         referencia: ['', Validators.required],
         telefono: ['', Validators.required]
+
       }),
       unidadId: ['', Validators.required],
       unidadTipo: [''],
@@ -88,7 +90,6 @@ export class CrearDetalleTransporteComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.abrirDialogo();
     const nombreComercial = this.token.getNombreComercial() || 'Nombre Comercial no disponible';
     const nombreCompleto = this.token.getFullName() || 'Nombre Completo no disponible';
 
@@ -141,7 +142,6 @@ export class CrearDetalleTransporteComponent implements OnInit {
   }
 
 
-
   async getLocationDetails(lat: number, lng: number, direccionControl: string) {
     const url = `https://nominatim.openstreetmap.org/reverse?format=json&lat=${lat}&lon=${lng}`;
 
@@ -182,17 +182,52 @@ export class CrearDetalleTransporteComponent implements OnInit {
 
   onSubmit(): void {
     if (this.detalleForm.valid) {
+      // Deshabilitar el botón mientras se procesa el envío
+      this.isSubmitting = true;
+
       console.log('Datos a enviar:', this.detalleForm.value);
+
       this.detalleTransporteService.crearDetalleTransporte(this.detalleForm.value).subscribe({
         next: (response) => {
-          this.router.navigate(['']);
+          // Mostrar mensaje de éxito
+          this.snackbar.open('Detalle de transporte creado con éxito', 'Cerrar', {
+            duration: 3000, // Duración en milisegundos (3 segundos)
+            horizontalPosition: 'center',
+            verticalPosition: 'top',
+          });
+
+          // Redirigir a la lista de detalles
+
+          this.router.navigate(['/listarDetalleTransporte']);
+          this.enviarAWhatsapp()
+
         },
         error: (err) => {
-          console.error('Error al crear el Detalle de transporte', err);
+          // Mostrar mensaje de error
+          console.error('Error al crear el detalle de transporte', err);
+
+          // Mostrar un snackbar con mensaje de error
+          this.snackbar.open('Ocurrió un error al crear el detalle de transporte. Intenta de nuevo.', 'Cerrar', {
+            duration: 3000, // Duración en milisegundos (3 segundos)
+            horizontalPosition: 'center',
+            verticalPosition: 'top',
+          });
+        },
+        complete: () => {
+          // Volver a habilitar el botón después de procesar la respuesta
+          this.isSubmitting = false;
         }
+      });
+    } else {
+      // Si el formulario no es válido, mostrar un mensaje de error
+      this.snackbar.open('Por favor, complete todos los campos obligatorios', 'Cerrar', {
+        duration: 3000,
+        horizontalPosition: 'center',
+        verticalPosition: 'top',
       });
     }
   }
+
 
   abrirDialogo(): void {
     const dialogRef = this.dialog.open(SelecUnidadComponent, {
@@ -230,7 +265,7 @@ export class CrearDetalleTransporteComponent implements OnInit {
     // Construir el mensaje de texto
     const mensaje = `
   Detalles de la solicitud de transporte:
-  Nombre Cliente/Comercial: ${nombreCompleto} , ${ nombreComercial}
+  Nombre Cliente/Comercial: ${nombreCompleto} , ${nombreComercial}
   Unidad: ${detalles.unidadTipo}
   Fecha y Hora : ${detalles.descripcionProducto}
   Tipo de Servicio: ${detalles.tipoServicio}

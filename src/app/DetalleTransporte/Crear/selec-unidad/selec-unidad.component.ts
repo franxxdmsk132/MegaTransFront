@@ -29,27 +29,12 @@ import {MatProgressSpinner} from '@angular/material/progress-spinner';
   styleUrl: './selec-unidad.component.css',
   standalone: true,
   imports: [
-    MatDialogTitle,
-    MatDialogContent,
-    MatList,
-    MatListItem,
     NgForOf,
-    MatDialogActions,
     MatButton,
     NgIf,
     MatCard,
-    MatCardHeader,
     MatCardImage,
     MatCardContent,
-    MatCardSubtitle,
-    MatCardTitle,
-    MatCell,
-    MatCellDef,
-    MatColumnDef,
-    MatHeaderCell,
-    MatHeaderCellDef,
-    MatGridList,
-    MatGridTile,
     MatProgressSpinner
   ]
 })

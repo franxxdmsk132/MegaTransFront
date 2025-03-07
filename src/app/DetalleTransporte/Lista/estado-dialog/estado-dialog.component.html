@@ -3,9 +3,10 @@
   <mat-form-field appearance="fill">
     <mat-label>Estado</mat-label>
     <mat-select [(value)]="nuevoEstado">
-      <mat-option value="PENDIENTE">Pendiente</mat-option>
       <mat-option value="PROCESANDO">Procesando</mat-option>
+      <mat-option value="MOVIMIENTO">Movimiento</mat-option>
       <mat-option value="FINALIZADO">Finalizado</mat-option>
+      <mat-option value="CANCELADO">Cancelado</mat-option>
     </mat-select>
   </mat-form-field>
 </mat-dialog-content>

@@ -42,10 +42,11 @@ import {MatButtonToggle, MatButtonToggleModule} from '@angular/material/button-t
 import {ListarLotesComponent} from './lote/lista-lotes/lista-lotes.component';
 import {CrearLotesComponent} from './lote/crear-lotes/crear-lotes.component';
 import {DetalleLotesComponent} from './lote/detalle-lotes/detalle-lotes.component';
-import {MatChipsModule} from '@angular/material/chips';
+import {MatChip, MatChipListbox, MatChipsModule} from '@angular/material/chips';
 import {ListaRutasComponent} from './Rutas/lista-rutas/lista-rutas.component';
 import {ActualizarRutasComponent} from './Rutas/actualizar-rutas/actualizar-rutas.component';
 import {CrearRutasComponent} from './Rutas/crear-rutas/crear-rutas.component';
+import {ActualizarLotesComponent} from './lote/actualizar-lotes/actualizar-lotes.component';
 
 @NgModule({
   declarations: [  ],
@@ -96,7 +97,9 @@ import {CrearRutasComponent} from './Rutas/crear-rutas/crear-rutas.component';
     MatChipsModule,
     ListaRutasComponent,
     ActualizarRutasComponent,
-    CrearRutasComponent
+    CrearRutasComponent,
+    CrearLotesComponent,
+    ActualizarLotesComponent
 
   ],
   providers: [],

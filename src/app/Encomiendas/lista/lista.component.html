@@ -8,31 +8,61 @@
     <div *ngIf="!isLoading && dataSource">
 
       <!-- Tabs para filtrar por estado -->
-      <mat-tab-group [(selectedIndex)]="selectedTabIndex" (selectedTabChange)="filtrarPorEstado()" class="sticky-tabs">
-        <mat-tab>
-          <ng-template mat-tab-label>
-            <mat-icon class="mat-icon">watch_later</mat-icon>
-            <b>Recolectar</b>
-          </ng-template>
-        </mat-tab>
-        <mat-tab>
-          <ng-template mat-tab-label>
-            <mat-icon>local_shipping</mat-icon>
-            <b>Transporte</b>
-          </ng-template>
-        </mat-tab>
-        <mat-tab>
-          <ng-template mat-tab-label>
-            <mat-icon>check_circle</mat-icon>
-            <b>Entregado</b>
-          </ng-template>
-        </mat-tab>
-      </mat-tab-group>
+<!--      <mat-tab-group [(selectedIndex)]="selectedTabIndex" (selectedTabChange)="filtrarPorEstado()" class="sticky-tabs">-->
+<!--        <mat-tab>-->
+<!--          <ng-template mat-tab-label>-->
+<!--            <mat-icon class="mat-icon">watch_later</mat-icon>-->
+<!--            <b>Recolectar</b>-->
+<!--          </ng-template>-->
+<!--        </mat-tab>-->
+<!--        <mat-tab>-->
+<!--          <ng-template mat-tab-label>-->
+<!--            <mat-icon>local_shipping</mat-icon>-->
+<!--            <b>Transporte</b>-->
+<!--          </ng-template>-->
+<!--        </mat-tab>-->
+<!--        <mat-tab>-->
+<!--          <ng-template mat-tab-label>-->
+<!--            <mat-icon>check_circle</mat-icon>-->
+<!--            <b>Entregado</b>-->
+<!--          </ng-template>-->
+<!--        </mat-tab>-->
+<!--        <mat-tab>-->
+<!--          <ng-template mat-tab-label>-->
+<!--            <mat-icon>check_circle</mat-icon>-->
+<!--            <b>Bodega</b>-->
+<!--          </ng-template>-->
+<!--        </mat-tab>-->
+<!--        <mat-tab>-->
+<!--          <ng-template mat-tab-label>-->
+<!--            <mat-icon>check_circle</mat-icon>-->
+<!--            <b>Recolectado</b>-->
+<!--          </ng-template>-->
+<!--        </mat-tab>-->
+<!--        <mat-tab>-->
+<!--          <ng-template mat-tab-label>-->
+<!--            <mat-icon>check_circle</mat-icon>-->
+<!--            <b>Cancelado</b>-->
+<!--          </ng-template>-->
+<!--        </mat-tab>-->
+<!--      </mat-tab-group>-->
 
+      <!-- Filtro por estado con mat-select -->
+      <mat-label><strong><b><h2>Encomiendas</h2></b></strong></mat-label>
+      <br>
+      <mat-form-field appearance="fill" class="select-filter">
+        <mat-label>Filtrar por estado</mat-label>
+        <mat-select [(value)]="selectedEstado" (selectionChange)="filtrarPorEstado2()">
+          <mat-option *ngFor="let estado of estados" [value]="estado">
+            <mat-icon *ngIf="iconosEstados[estado]">{{ iconosEstados[estado] }}</mat-icon>
+            {{ estado }}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
       <!-- Tarjetas para cada detalle de encomienda -->
       <mat-card *ngFor="let element of dataFiltrada" class="detalle-card">
         <mat-card-header>
-          <mat-card-title>{{ element.cliente?.nombre }} {{ element.cliente?.apellido }}</mat-card-title>
+          <mat-card-title>{{ element.usuario.nombre}} {{ element.usuario.apellido}}</mat-card-title>
           <mat-card-subtitle>Número de Guía: {{ element.numGuia }}</mat-card-subtitle>
           <!-- Condición para mostrar el número de lote o un texto alternativo -->
           <mat-card-subtitle>

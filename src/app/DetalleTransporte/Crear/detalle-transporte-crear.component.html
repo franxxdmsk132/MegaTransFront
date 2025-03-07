@@ -110,7 +110,8 @@
 
         <mat-form-field appearance="fill">
           <mat-label>Teléfono:</mat-label>
-          <input matInput id="telefonoOrigen" formControlName="telefono" type="text">
+          <input matInput id="telefonoOrigen" formControlName="telefono"
+                 type="text" maxlength="10" pattern="^[0-9]{10}$" inputmode="numeric">
         </mat-form-field>
       </div>
       <mat-divider></mat-divider>
@@ -151,11 +152,12 @@
             <mat-label>Referencia:</mat-label>
             <input matInput id="referenciaDestino" formControlName="referencia" type="text">
           </mat-form-field>
-
           <mat-form-field appearance="fill" class="full-width">
             <mat-label>Teléfono:</mat-label>
-            <input matInput id="telefonoDestino" formControlName="telefono" type="text">
+            <input matInput id="telefonoDestino" formControlName="telefono"
+                   type="text" maxlength="10" pattern="^[0-9]{10}$" inputmode="numeric">
           </mat-form-field>
+
 
 
         </div>
@@ -182,9 +184,10 @@
       <!-- Botón de Submit -->
       <div style="text-align: center">
         <!--        <button mat-raised-button type="submit" class="custom-button3" [disabled]="detalleForm.invalid">Crear Solicitud de Transporte</button>-->
-        <button mat-raised-button class="custom-button3" (click)="enviarAWhatsapp()" [disabled]="detalleForm.invalid">
+        <button mat-raised-button type="submit" class="custom-button3" [disabled]="isSubmitting">
           Enviar Solicitud
         </button>
+
       </div>
       <br>
     </form>

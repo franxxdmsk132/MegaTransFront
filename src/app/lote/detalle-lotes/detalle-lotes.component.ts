@@ -27,7 +27,6 @@ import {MatSnackBar} from '@angular/material/snack-bar';
     MatCard,
     MatCardHeader,
     MatCardContent,
-    MatDivider,
     MatCardTitle,
     MatChipsModule,
     MatCardActions,

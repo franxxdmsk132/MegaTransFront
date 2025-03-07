@@ -26,8 +26,6 @@ import {MatButton} from '@angular/material/button';
     MatLabel,
     MatError,
     RouterLink,
-    MatHint
-
   ],
   styleUrls: ['./unidades.registro.component.css']
 })

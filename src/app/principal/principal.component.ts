@@ -32,7 +32,6 @@ import {AuthService} from '../service/auth.service';
     MatButtonModule,
     MatToolbarModule,
     MatCard,
-    MatCardHeader,
     MatCardContent,
     MatCardModule,
     MatDividerModule

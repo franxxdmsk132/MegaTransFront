@@ -13,7 +13,7 @@ import {DetalleTransporte} from '../detalle-transporte';
 import {DetalleTransporteService} from '../../service/detalle-transporte.service';
 import {NgForOf, NgIf} from '@angular/common';
 import {MatIcon} from '@angular/material/icon';
-import {MatButton, MatIconButton} from '@angular/material/button';
+import {MatButton, MatFabButton, MatIconButton} from '@angular/material/button';
 import {
   MatCard,
   MatCardActions,
@@ -40,23 +40,9 @@ import {ReactiveFormsModule} from '@angular/forms';
   templateUrl: './detalle-transporte-listar.html',
   standalone: true,
   imports: [
-    MatPaginator,
     NgIf,
-    MatRow,
-    MatRowDef,
-    MatHeaderRow,
-    MatHeaderRowDef,
     MatIcon,
-    MatIconButton,
-    MatCell,
-    MatHeaderCell,
-    MatCellDef,
-    MatHeaderCellDef,
-    MatColumnDef,
     MatCard,
-    MatToolbar,
-    MatProgressSpinner,
-    MatTable,
     MenuComponent,
     MatCardActions,
     MatButton,
@@ -64,20 +50,19 @@ import {ReactiveFormsModule} from '@angular/forms';
     MatCardContent,
     MatCard,
     NgForOf,
-    MatSort,
     MatSortModule,
     MatCardTitle,
-    MatCardSubtitle,
     MatTabGroup,
     MatTab,
     ReactiveFormsModule,
     MatTabLabel,
+    MatFabButton,
 
   ],
   styleUrls: ['./detalle-transporte-listar.css']
 })
 export class DetalleTransporteListarComponent implements OnInit {
-  isAdmin =false;
+  isAdmin = false;
   isEmpl = false
   isLogged = false;
   isLoading = true;
@@ -97,7 +82,7 @@ export class DetalleTransporteListarComponent implements OnInit {
     private detalleTransporteService: DetalleTransporteService,
     private tokenService: TokenService,
     private router: Router,
-    private dialog : MatDialog) {
+    private dialog: MatDialog) {
   }
 
   ngOnInit(): void {
@@ -107,6 +92,7 @@ export class DetalleTransporteListarComponent implements OnInit {
     this.isEmpl = this.isLogged && this.tokenService.isEmpl();
 
   }
+
   //
   // ngAfterViewInit(): void {
   //   this.dataSource.sort = this.sort;
@@ -118,6 +104,8 @@ export class DetalleTransporteListarComponent implements OnInit {
     this.detalleTransporteService.obtenerDetallesTransporte().subscribe({
       next: (detalles) => {
         console.log('Detalles de transporte recibidos:', detalles);
+        // Ordenar los detalles por numOrden de forma descendente
+        detalles.sort((a, b) => this.extraerNumeroOrden(b.numOrden) - this.extraerNumeroOrden(a.numOrden)); // Orden descendente
         this.dataSource.data = detalles;
         this.dataSource.paginator = this.paginator;
         this.isLoading = false;
@@ -130,6 +118,7 @@ export class DetalleTransporteListarComponent implements OnInit {
       }
     });
   }
+
 
   // Método para filtrar por estado según la pestaña seleccionada
   filtrarPorEstado(): void {
@@ -157,7 +146,6 @@ export class DetalleTransporteListarComponent implements OnInit {
   }
 
 
-
   eliminarDetalle(id: number): void {
     if (confirm('¿Estás seguro de eliminar este Detalle de transporte?')) {
       this.detalleTransporteService.eliminarDetalleTransporte(id).subscribe({
@@ -180,7 +168,7 @@ export class DetalleTransporteListarComponent implements OnInit {
   abrirDialogoEstado(detalle: DetalleTransporte): void {
     const dialogRef = this.dialog.open(EstadoDialogComponent, {
       width: '300px',
-      data: { id: detalle.id, estado: detalle.estado } // Enviar el ID y el estado actual
+      data: {id: detalle.id, estado: detalle.estado} // Enviar el ID y el estado actual
     });
 
     dialogRef.afterClosed().subscribe(result => {
@@ -203,4 +191,9 @@ export class DetalleTransporteListarComponent implements OnInit {
     }
   }
 
+  extraerNumeroOrden(orden: string): number {
+    const numero = orden.replace(/[^\d]/g, ''); // Elimina los caracteres no numéricos
+    return Number(numero); // Convierte la parte numérica a número
+  }
 }
+

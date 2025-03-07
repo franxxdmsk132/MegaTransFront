@@ -18,7 +18,7 @@
           <form #f="ngForm" (ngSubmit)="onLogin()" novalidate>
             <!-- Nombre de Usuario -->
             <mat-form-field class="full-width" appearance="fill"
-                            [ngClass]="{'mat-form-field-invalid': f.submitted && !nombreUsuario || errMsj?.includes('Usuario') }">
+                            [ngClass]="{'mat-form-field-invalid': f.submitted && !nombreUsuario || errMsj.includes('Usuario') }">
               <mat-label>Correo</mat-label>
               <input matInput type="text" name="nombreUsuario" id="nombreUsuario" [(ngModel)]="nombreUsuario" required>
               <mat-error *ngIf="f.submitted && !nombreUsuario">El correo es obligatorio</mat-error>
@@ -27,7 +27,7 @@
 
             <!-- Contraseña -->
             <mat-form-field class="full-width" appearance="fill"
-                            [ngClass]="{'mat-form-field-invalid': f.submitted && !password || errMsj?.includes('Contraseña') }">
+                            [ngClass]="{'mat-form-field-invalid': f.submitted && !password || errMsj.includes('Contraseña') }">
               <mat-label>Contraseña</mat-label>
               <input matInput [type]="hidePassword ? 'password' : 'text'"
                      name="password"

@@ -4,7 +4,7 @@ import {Lote} from '../lote/Lote';
 export interface DetalleEncomienda{
   id?:number;
   numGuia:string;
-  cliente:JwtDTO
+  usuario:JwtDTO
   fecha:string;
   dirRemitente:string;
   latitudOrg:number;

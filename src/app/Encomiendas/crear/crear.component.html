@@ -10,11 +10,12 @@
 
           <h3>Seleccione el Punto de Inicio:</h3>
           <div id="mapOrigen" style="height: 220px; width: 100%;"></div>
+
           <!-- Dirección de Origen -->
           <div>
             <br>
-            <input id="latitudOrg" formControlName="latitudOrg" type="hidden">
-            <input id="longitudOrg" formControlName="longitudOrg" type="hidden">
+            <input id="latitudOrg" formControlName="latitudOrg" hidden="hidden">
+            <input id="longitudOrg" formControlName="longitudOrg" hidden="hidden">
           </div>
           <mat-form-field appearance="fill" class="full-width">
             <mat-label>Dirección del remitente</mat-label>
@@ -50,8 +51,8 @@
 
           <mat-form-field appearance="fill" class="full-width">
             <mat-label>Teléfono del beneficiario</mat-label>
-            <input matInput formControlName="telfbeneficiario" required/>
-            <mat-error *ngIf="detalleEncomienda.get('telfbeneficiario')?.hasError('required')">
+            <input matInput formControlName="telfBeneficiario" required/>
+            <mat-error *ngIf="detalleEncomienda.get('telfBeneficiario')?.hasError('required')">
               Teléfono del beneficiario es obligatorio.
             </mat-error>
           </mat-form-field>
@@ -76,8 +77,8 @@
           <h3>Seleccione el Lugar de Destino</h3>
           <div id="mapDestino" style="height: 220px; width: 100%;"></div>
           <div>
-            <input id="latitudDestino" formControlName="latitudDestino" type="hidden">
-            <input id="longitudDestino" formControlName="longitudDestino" type="hidden">
+            <input id="latitudDestino" formControlName="latitudDestino" hidden="hidden">
+            <input id="longitudDestino" formControlName="longitudDestino" hidden="hidden">
             <br>
           </div>
 

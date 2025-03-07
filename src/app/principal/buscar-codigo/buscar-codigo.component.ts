@@ -7,6 +7,8 @@ import {MatButton} from '@angular/material/button';
 import {NgIf} from '@angular/common';
 import {DetalleTransporteService} from '../../service/detalle-transporte.service';
 import {catchError, of} from 'rxjs';
+import {MatOption, MatSelect} from '@angular/material/select';
+import {MatSnackBar} from '@angular/material/snack-bar';
 
 @Component({
   selector: 'app-buscar-codigo',
@@ -22,7 +24,9 @@ import {catchError, of} from 'rxjs';
     MatButton,
     MatLabel,
     MatError,
-    NgIf
+    NgIf,
+    MatSelect,
+    MatOption
   ],
   styleUrl: './buscar-codigo.component.css'
 })
@@ -31,9 +35,11 @@ export class BuscarCodigoComponent {
   numOrden: string = '';
   errorMessage = ''
   transporteDetalle: any = null;  // Para almacenar los detalles del transporte encontrado
+  nuevoEstado: string = '';
 
   constructor(public dialogRef: MatDialogRef<BuscarCodigoComponent>,
-              private detalleTransporteService: DetalleTransporteService) {
+              private detalleTransporteService: DetalleTransporteService,
+              private snackBar: MatSnackBar) {
   }
 
   // Método para cerrar el diálogo
@@ -67,13 +73,36 @@ export class BuscarCodigoComponent {
             this.transporteDetalle = response.detalle;
           } else {
             // Si no se obtiene Detalle, mostramos el mensaje de error
-            this.errorMessage = `No se encontró el número de orden.
-            Código Incorrecto`;
-
+            this.errorMessage = 'No se encontró el número de orden. Código Incorrecto';
             this.transporteDetalle = null;
           }
         }
       );
     }
   }
+
+  // Método para actualizar el estado del transporte
+  actualizarEstado(): void {
+    if (this.transporteDetalle && this.nuevoEstado) {
+      this.detalleTransporteService.actualizarEstado(this.transporteDetalle.id, this.nuevoEstado).subscribe(
+        (response) => {
+          if (response) {
+            // Actualiza el estado localmente si la actualización fue exitosa
+            this.transporteDetalle.estado = this.nuevoEstado;
+
+            // Mostrar mensaje de éxito usando SnackBar
+            this.snackBar.open('Estado actualizado con éxito', 'Cerrar', {
+              duration: 3000,
+              panelClass: ['snackbar-success']
+            });
+
+            // Cerrar el diálogo
+            this.dialogRef.close();
+          }
+        }
+      );
+    }
+  }
+
+
 }

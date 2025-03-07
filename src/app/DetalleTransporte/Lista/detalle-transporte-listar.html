@@ -14,7 +14,7 @@
           <mat-tab>
             <ng-template mat-tab-label>
               <mat-icon>local_shipping</mat-icon>
-              <b>Proceso</b>
+              <b>Procesando</b>
             </ng-template>
           </mat-tab>
           <mat-tab>
@@ -53,6 +53,9 @@
           </mat-card-actions>
         </mat-card>
       </div>
+      <button mat-fab color="primary" class="add-btn transporte-label2 " (click)="obtenerDetallesTransporte()">
+        <mat-icon class="mat-icon1">autorenew</mat-icon>
+      </button>
       <mat-card *ngIf="!isLoading && dataFiltrada.length === 0" class="error-card">
         <mat-card-content>
           <p>No se encontraron detalles de Transporte.</p>

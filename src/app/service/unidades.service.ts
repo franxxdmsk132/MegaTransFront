@@ -9,9 +9,10 @@ import {Unidades} from '../unidades/unidades';
 })
 
 export class UnidadesService {
-  unidadesUrl = 'http://104.196.61.204:8080/unidad/';
-  imgUrl = 'http://104.196.61.204:8080';
-
+  // unidadesUrl = 'http://104.196.61.204:8080/unidad/';
+  // imgUrl = 'http://104.196.61.204:8080';
+  unidadesUrl = 'http://192.168.0.103:8080/unidad/';
+  imgUrl = 'http://192.168.0.103:8080';
   constructor(
     private httpClient: HttpClient,
     private tokenService: TokenService,

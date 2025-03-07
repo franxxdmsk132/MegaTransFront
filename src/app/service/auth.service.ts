@@ -14,8 +14,10 @@ import {environment} from '../../environments/environment';
 export class AuthService {
 
   //authURL = 'http://192.168.0.107:8080/auth/';
-  authURL = 'http://104.196.61.204:8080/auth/';
-  authURL2 = environment.apiUrl + '/auth'
+  authURL2 = 'http://104.196.61.204:8080/auth/';
+  authURL = 'http://192.168.0.103:8080/auth/';
+
+  authURL3 = environment.apiUrl + '/auth'
 
 
 

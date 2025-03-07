@@ -1,1 +1,111 @@
-<p>actualizar-lotes works!</p>
+<app-menu>
+  <mat-card class="form-container">
+    <h2>Acualizar Lote</h2>
+
+    <form [formGroup]="loteForm" (ngSubmit)="actualizarLote()">
+
+      <!-- Selección de Ruta -->
+      <mat-form-field appearance="outline">
+        <mat-label>Ruta</mat-label>
+        <mat-select formControlName="ruta" required>
+          <mat-option *ngFor="let ruta of rutasDisponibles" [value]="ruta.origen + ' - ' + ruta.destino">
+            {{ ruta.origen }} - {{ ruta.destino }}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+
+
+
+
+
+      <!-- Campo Unidad -->
+      <mat-form-field appearance="outline">
+        <mat-label>Unidad</mat-label>
+        <mat-select formControlName="unidad" required>
+          <mat-option *ngFor="let unidad of unidadesDisponibles" [value]="unidad">
+            {{ unidad.tipo }}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+
+
+      <!-- 🔴 QUITAMOS mat-form-field de aquí -->
+      <div>
+        <label>Encomiendas en Estado Recolectado</label>
+        <mat-chip-listbox>
+          <mat-chip *ngFor="let encomienda of encomiendasProcesando"
+                    (click)="agregarEncomienda(encomienda)">
+            {{ encomienda.numGuia }} / {{ encomienda.ruta }}
+          </mat-chip>
+        </mat-chip-listbox>
+      </div><div>
+      <label>Encomiendas en Estado Recolectado</label>
+      <table mat-table [dataSource]="encomiendasProcesando" class="mat-elevation-z8">
+
+        <!-- Número de Guía -->
+        <ng-container matColumnDef="numGuia">
+          <th mat-header-cell *matHeaderCellDef> N° Guía </th>
+          <td mat-cell *matCellDef="let encomienda"> {{ encomienda.numGuia }} </td>
+        </ng-container>
+
+        <!-- Ruta -->
+        <ng-container matColumnDef="ruta">
+          <th mat-header-cell *matHeaderCellDef> Ruta </th>
+          <td mat-cell *matCellDef="let encomienda"> {{ encomienda.ruta }} </td>
+        </ng-container>
+
+        <!-- Remitente -->
+        <ng-container matColumnDef="remitente">
+          <th mat-header-cell *matHeaderCellDef> Remitente </th>
+          <td mat-cell *matCellDef="let encomienda"> {{ encomienda.usuario.nombre}} {{encomienda.usuario.apellido}} </td>
+        </ng-container>
+
+        <!-- Destinatario -->
+        <ng-container matColumnDef="destinatario">
+          <th mat-header-cell *matHeaderCellDef> Destinatario </th>
+          <td mat-cell *matCellDef="let encomienda"> {{ encomienda.nombreD }} {{encomienda.apellidoD}} </td>
+        </ng-container>
+
+        <!-- Peso -->
+<!--        <ng-container matColumnDef="peso">-->
+<!--          <th mat-header-cell *matHeaderCellDef> Peso (kg) </th>-->
+<!--          <td mat-cell *matCellDef="let encomienda"> {{ encomienda.peso }} </td>-->
+<!--        </ng-container>-->
+
+        <!-- Botón para seleccionar la encomienda -->
+        <ng-container matColumnDef="acciones">
+          <th mat-header-cell *matHeaderCellDef> Acciones </th>
+          <td mat-cell *matCellDef="let encomienda">
+            <button mat-button color="primary" *ngFor="let encomienda of encomiendasProcesando"
+                    (click)="agregarEncomienda(encomienda)">Seleccionar</button>
+          </td>
+        </ng-container>
+
+        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+        <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+      </table>
+    </div>
+
+
+      <!-- 🔴 QUITAMOS mat-form-field de aquí -->
+      <div>
+        <label>Encomiendas Seleccionadas</label>
+        <mat-chip-listbox>
+          <mat-chip *ngFor="let encomienda of encomiendasSeleccionadas"
+                    (removed)="eliminarEncomienda(encomienda)">
+            {{ encomienda.numGuia }}
+            <mat-icon matChipRemove>cancel</mat-icon>
+          </mat-chip>
+        </mat-chip-listbox>
+      </div>
+
+
+      <!-- Botón de Enviar -->
+      <button mat-raised-button color="primary" type="submit" [disabled]="loteForm.invalid">
+        Actualizar Lote
+      </button>
+
+    </form>
+  </mat-card>
+
+</app-menu>

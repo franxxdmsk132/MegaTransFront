@@ -8,7 +8,8 @@ import {DetalleEncomienda} from '../Encomiendas/detalle-encomienda';
   providedIn: 'root'
 })
 export class DetalleEncomiendaService {
-  apiUrl = 'http://104.196.61.204:8080/detalle-encomienda';
+  apiUrl2 = 'http://104.196.61.204:8080/detalle-encomienda';
+  apiUrl = 'http://192.168.0.103:8080/detalle-encomienda';
 
   constructor(private http: HttpClient, private tokenService: TokenService) {
   }
@@ -25,6 +26,15 @@ export class DetalleEncomiendaService {
   getAllDetalleEncomiendas(): Observable<DetalleEncomienda[]> {
     const headers = this.getAuthHeaders();
     return this.http.get<DetalleEncomienda[]>(`${this.apiUrl}/filtrados`, {headers});
+  }
+  // Obtener todos los detalles de encomienda
+  getAllDetalleEncomiendasRecoleccion(): Observable<DetalleEncomienda[]> {
+    const headers = this.getAuthHeaders();
+    return this.http.get<DetalleEncomienda[]>(`${this.apiUrl}/Recoleccion`, {headers});
+  }
+  getAllDetalleEncomiendasRecolectadas(): Observable<DetalleEncomienda[]> {
+    const headers = this.getAuthHeaders();
+    return this.http.get<DetalleEncomienda[]>(`${this.apiUrl}/recolectados`, {headers});
   }
 
   // Crear una nueva encomienda

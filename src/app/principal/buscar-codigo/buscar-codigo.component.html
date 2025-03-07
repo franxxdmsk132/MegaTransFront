@@ -15,6 +15,21 @@
     <p><strong>Fecha:</strong> {{ transporteDetalle.fecha }}</p>
     <p><strong>Descripción del Producto:</strong> {{ transporteDetalle.descripcionProducto }}</p>
     <!-- Agrega más detalles según lo necesites -->
+    <!-- Select para cambiar el estado -->
+    <mat-form-field appearance="fill" style="width: 100%;">
+      <mat-label>Seleccionar Nuevo Estado</mat-label>
+      <mat-select [(value)]="nuevoEstado" placeholder="Elige un estado">
+        <mat-option value="PROCESANDO">En Proceso</mat-option>
+        <mat-option value="MOVIMIENTO">Movimiento</mat-option>
+        <mat-option value="FINALIZADO">Finalizado</mat-option>
+        <mat-option value="CANCELADO">Cancelado</mat-option>
+
+      </mat-select>
+
+    </mat-form-field>
+
+    <!-- Botón para actualizar el estado -->
+    <button mat-flat-button (click)="actualizarEstado()">Actualizar Estado</button>
   </div>
 
   <!-- Si no se encuentra el transporte, mostrar el mensaje de error -->

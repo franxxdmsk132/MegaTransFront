@@ -8,7 +8,8 @@ import {Observable} from 'rxjs';
   providedIn: 'root'
 })
 export class LoteService {
-  apiUrl = 'http://104.196.61.204:8080/lote';
+  apiUrl2 = 'http://104.196.61.204:8080/lote';
+  apiUrl = 'http://192.168.0.103:8080/lote';
 
   constructor(private http: HttpClient,
               private tokenService: TokenService) {
@@ -51,5 +52,11 @@ export class LoteService {
       { headers: this.getAuthHeaders(), params: { nuevoEstado } }
     );
   }
-
+  actualizarEstadoLote2(id: number, nuevoEstado: string): Observable<Lote> {
+    return this.http.put<Lote>(
+      `${this.apiUrl}/${id}/estado2`, // ✅ Cambiado a PUT
+      null,
+      { headers: this.getAuthHeaders(), params: { nuevoEstado } }
+    );
+  }
 }

@@ -34,17 +34,7 @@ import {MatIcon} from "@angular/material/icon";
   standalone: true,
     imports: [
         MenuComponent,
-        MatTable,
-        MatHeaderCell,
-        MatCell,
-        MatCellDef,
-        MatHeaderCellDef,
-        MatColumnDef,
         MatButton,
-        MatHeaderRow,
-        MatRow,
-        MatHeaderRowDef,
-        MatRowDef,
         MatCardActions,
         MatCardContent,
         MatCardTitle,
@@ -85,6 +75,7 @@ export class ListarLotesComponent implements OnInit {
   cargarLotes(): void {
     this.loteService.listarLotes().subscribe(
       (lotes) => {
+        console.log(lotes)
         this.dataSource.data = lotes;
       },
       (error) => {
@@ -96,6 +87,10 @@ export class ListarLotesComponent implements OnInit {
   verDetalles(lote: Lote) {
     console.log("Detalles Lote", lote);
     this.router.navigate(['detalleLotes/', lote.id]);
+  }
+  editarDetalles(lote: Lote) {
+    console.log("Detalles Lote", lote);
+    this.router.navigate(['actualizarLotes/', lote.id]);
   }
 
   abrirDialogoEstado(lote: Lote) {
