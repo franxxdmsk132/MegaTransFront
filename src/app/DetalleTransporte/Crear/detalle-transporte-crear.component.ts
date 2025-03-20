@@ -1,4 +1,4 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, OnInit, ViewEncapsulation} from '@angular/core';
 import {FormBuilder, FormGroup, ReactiveFormsModule, Validators} from '@angular/forms';
 import {Router} from '@angular/router';
 import {DetalleTransporteService} from '../../service/detalle-transporte.service';
@@ -6,8 +6,6 @@ import {MatFormField, MatLabel} from '@angular/material/form-field';
 import {MatInput} from '@angular/material/input';
 import {MatButton} from '@angular/material/button';
 import {MenuComponent} from '../../menu/menu.component';
-import {MatRadioButton, MatRadioGroup} from '@angular/material/radio';
-import {MatCheckbox} from '@angular/material/checkbox';
 import * as L from 'leaflet';
 import {LatLngExpression} from 'leaflet';
 import {MatDialog} from '@angular/material/dialog';
@@ -23,6 +21,7 @@ import {MatSnackBar} from '@angular/material/snack-bar';
   selector: 'app-Detalle-transporte-crear',
   templateUrl: './detalle-transporte-crear.component.html',
   styleUrls: ['./detalle-transporte-crear.component.css'],
+
   imports: [
     ReactiveFormsModule,
     MatFormField,
@@ -40,11 +39,14 @@ import {MatSnackBar} from '@angular/material/snack-bar';
 })
 export class CrearDetalleTransporteComponent implements OnInit {
   detalleForm: FormGroup;
+  selectedOption: string | null = null;
+  selectedOptionP: string | null = null;
+
   estibajeChecked: boolean = false;
   nombreCompleto: string = '';  // Almacenar el nombre completo
   nombreComercial: string = '';  // Almacenar el nombre comercial  private map!: L.Map;
   private marker!: L.Marker;
-  isSubmitting =false;
+  isSubmitting = false;
 
   constructor(
     private fb: FormBuilder,
@@ -58,6 +60,7 @@ export class CrearDetalleTransporteComponent implements OnInit {
       numOrden: [''],
       cantidadEstibaje: [0, Validators.required],
       descripcionProducto: ['', Validators.required],
+      fecha: [''],
       tipoServicio: ['', Validators.required],
       estibaje: [false],
       pago: ['', Validators.required],
@@ -228,6 +231,59 @@ export class CrearDetalleTransporteComponent implements OnInit {
     }
   }
 
+  onSubmit2(): void {
+    if (this.detalleForm.valid) {
+      // Deshabilitar el botón mientras se procesa el envío
+      this.isSubmitting = true;
+
+      console.log('Datos a enviar:', this.detalleForm.value);
+
+      this.detalleTransporteService.crearDetalleTransporte(this.detalleForm.value).subscribe({
+        next: (response) => {
+          // Supongamos que la respuesta tiene los campos numGuia y fecha
+          const {numOrden, fecha} = response;
+
+          // Actualizar el formulario con los valores recibidos
+          this.detalleForm.patchValue({
+            numOrden: numOrden,
+            fecha: fecha
+          });
+
+          // Mostrar mensaje de éxito
+          this.snackbar.open('Detalle de transporte creado con éxito', 'Cerrar', {
+            duration: 3000, // Duración en milisegundos (3 segundos)
+            horizontalPosition: 'center',
+            verticalPosition: 'top',
+          });
+
+          // Redirigir a la lista de detalles
+          this.router.navigate(['/listarDetalleTransporte']);
+          this.enviarAWhatsapp();
+        },
+        error: (err) => {
+          // Mostrar mensaje de error
+          console.error('Error al crear el detalle de transporte', err);
+          this.snackbar.open('Ocurrió un error al crear el detalle de transporte. Intenta de nuevo.', 'Cerrar', {
+            duration: 3000, // Duración en milisegundos (3 segundos)
+            horizontalPosition: 'center',
+            verticalPosition: 'top',
+          });
+        },
+        complete: () => {
+          // Volver a habilitar el botón después de procesar la respuesta
+          this.isSubmitting = false;
+        }
+      });
+    } else {
+      // Si el formulario no es válido, mostrar un mensaje de error
+      this.snackbar.open('Por favor, complete todos los campos obligatorios', 'Cerrar', {
+        duration: 3000,
+        horizontalPosition: 'center',
+        verticalPosition: 'top',
+      });
+    }
+  }
+
 
   abrirDialogo(): void {
     const dialogRef = this.dialog.open(SelecUnidadComponent, {
@@ -260,26 +316,25 @@ export class CrearDetalleTransporteComponent implements OnInit {
     const detalles = this.detalleForm.value;
 
     const nombreCompleto = this.token.getFullName() || 'Nombre completo no disponible';
-    const nombreComercial = this.token.getNombreComercial() || 'Nombre comercial no disponible';
+    const nombreComercial = this.token.getNombreComercial() || 'Sin Comercial ';
 
     // Construir el mensaje de texto
     const mensaje = `
-  Detalles de la solicitud de transporte:
-  Nombre Cliente/Comercial: ${nombreCompleto} , ${nombreComercial}
-  Unidad: ${detalles.unidadTipo}
-  Fecha y Hora : ${detalles.descripcionProducto}
-  Tipo de Servicio: ${detalles.tipoServicio}
-  Estibaje: ${detalles.estibaje ? 'Sí' : 'No'} (Cantidad: ${detalles.cantidadEstibaje})
-  Dirección de Origen: ${detalles.direccionOrigen.barrio}, ${detalles.direccionOrigen.callePrincipal}, ${detalles.direccionOrigen.ciudad}
-  Dirección de Destino: ${detalles.direccionDestino.barrio}, ${detalles.direccionDestino.callePrincipal}, ${detalles.direccionDestino.ciudad}
-  Tipo de Pago: ${detalles.pago}
-  Enlace de Google Maps (Origen): https://www.google.com/maps?q=${detalles.direccionOrigen.latitud},${detalles.direccionOrigen.longitud}
-  Enlace de Google Maps (Destino): https://www.google.com/maps?q=${detalles.direccionDestino.latitud},${detalles.direccionDestino.longitud}
-  `;
+  *📄 Nueva Solicitud de Transporte creada:* _${detalles.numOrden}_ \n
+  *📄 Cliente/Comercial:* ${nombreCompleto || 'No disponible'}, ${nombreComercial || 'No disponible'}\n
+  *🚚 Unidad:* ${detalles.unidadTipo || 'No disponible'} ||  *Servicio:* ${detalles.tipoServicio || 'No disponible'}\n
+  *📅 Fecha creacion:* ${detalles.fecha || 'No disponible'}\n
+  *📅 Fecha solicitada:* ${detalles.descripcionProducto || 'No disponible'}\n
+  *📦 Estibaje:* ${detalles.estibaje ? 'SI' : 'NO'}, Cantidad:  ${detalles.cantidadEstibaje || '---'}\n
+  *💰 Pago:* ${detalles.pago || 'No disponible'}\n
+  *📍 Mapa (Origen):*    _https://www.google.com/maps?q=${detalles.direccionOrigen.latitud},${detalles.direccionOrigen.longitud}_
+  *📍 Mapa (Destino):*   _https://www.google.com/maps?q=${detalles.direccionDestino.latitud},${detalles.direccionDestino.longitud}_
+  📲 *¡Consulta más detalles en la app!*`;
+
 
     // Codificar el mensaje para URL y crear el enlace
     const mensajeCodificado = encodeURIComponent(mensaje);
-    const telefono = '593983724721';  // Asegúrate de cambiarlo con el número correcto
+    const telefono = '593997559093';  // Asegúrate de cambiarlo con el número correcto
     const url = `https://wa.me/${telefono}?text=${mensajeCodificado}`;
 
     // Abrir el enlace en WhatsApp

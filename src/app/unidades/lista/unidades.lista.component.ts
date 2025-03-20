@@ -25,7 +25,9 @@ import {MatButton, MatFabButton, MatIconButton} from '@angular/material/button';
 import {MatIcon} from '@angular/material/icon';
 import {MenuComponent} from '../../menu/menu.component';
 import {Router, RouterLink} from '@angular/router';
-import {NgForOf} from '@angular/common';
+import {NgForOf, NgIf} from '@angular/common';
+import {forkJoin, map, of} from 'rxjs';
+import {MatProgressSpinner} from '@angular/material/progress-spinner';
 
 @Component({
   selector: 'app-lista-unidad',
@@ -42,12 +44,15 @@ import {NgForOf} from '@angular/common';
     MatCardContent,
     MatCardActions,
     MatButton,
-    MatCardSubtitle
+    MatCardSubtitle,
+    MatProgressSpinner,
+    NgIf
   ],
   standalone: true
 })
 export class ListaUnidadComponent implements OnInit {
-
+  loading: boolean = true;
+  errorMessage: string | undefined;
   unidades: Unidades[] = [];
   unidadesFiltradas: Unidades[] = [];
   columnas: string[] = ['id', 'imagen', 'dimensiones', 'tipo', 'tipo_cajon', 'acciones'];
@@ -59,7 +64,7 @@ export class ListaUnidadComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
-    this.cargarUnidades();
+    this.cargarUnidades2();
     // this.agregarUnidad();
   }
 
@@ -76,6 +81,52 @@ export class ListaUnidadComponent implements OnInit {
       err => console.log(err)
     );
   }
+
+
+  cargarUnidades2(): void {
+    this.unidadesService.lista().subscribe(
+      data => {
+        console.log('Unidades recibidas:', data);
+
+        // Crear un array de observables para obtener las imágenes
+        const imageRequests = data.map((unidad) => {
+          return unidad.imagenUrl
+            ? this.unidadesService.getImage(unidad.imagenUrl).pipe(
+              // Convertir el blob en una URL de objeto
+              map((blob) => ({
+                unidad,
+                imagenUrl: URL.createObjectURL(blob),
+              }))
+            )
+            : of({ unidad, imagenUrl: '/assets/default-default-img.png' });
+        });
+
+        // Usar forkJoin para esperar a que todas las imágenes se carguen
+        forkJoin(imageRequests).subscribe(
+          (result) => {
+            // Asignar las URLs de las imágenes a cada unidad
+            this.unidades = result.map(({ unidad, imagenUrl }) => ({
+              ...unidad,
+              imagenUrl,
+            }));
+            this.unidadesFiltradas = [...this.unidades];
+            this.loading = false; // Establecer loading a false cuando los datos se reciban
+          },
+          (err) => {
+            console.error(err);
+            this.errorMessage = 'Error al cargar las unidades'; // Mostrar el mensaje de error
+            this.loading = false; // Establecer loading a false en caso de error
+          }
+        );
+      },
+      (err) => {
+        console.error(err);
+        this.errorMessage = 'Error al cargar las unidades'; // Mostrar el mensaje de error
+        this.loading = false; // Establecer loading a false en caso de error
+      }
+    );
+  }
+
 
   aplicarFiltro(event: Event): void {
     const filtro = (event.target as HTMLInputElement).value.toLowerCase();

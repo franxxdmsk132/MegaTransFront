@@ -19,7 +19,7 @@ import {
   MatCardSubtitle,
   MatCardTitle
 } from '@angular/material/card';
-import {NgForOf} from '@angular/common';
+import {NgForOf, NgIf} from '@angular/common';
 import {Router} from '@angular/router';
 import {EstadoLoteComponent} from './estado-lote/estado-lote.component';
 import {MatPaginator} from '@angular/material/paginator';
@@ -27,28 +27,34 @@ import {MatSort} from '@angular/material/sort';
 import {MatDialog} from '@angular/material/dialog';
 import {TokenService} from '../../service/token.service';
 import {MatIcon} from "@angular/material/icon";
+import {saveAs} from 'file-saver';
+import { Filesystem, Directory, Encoding } from '@capacitor/filesystem';
 
 @Component({
   selector: 'app-lista-lotes',
   templateUrl: './lista-lotes.component.html',
   standalone: true,
-    imports: [
-        MenuComponent,
-        MatButton,
-        MatCardActions,
-        MatCardContent,
-        MatCardTitle,
-        MatCardSubtitle,
-        MatCard,
-        MatCardHeader,
-        NgForOf,
-        MatFabButton,
-        MatIcon
-    ],
+  imports: [
+    MenuComponent,
+    MatButton,
+    MatCardActions,
+    MatCardContent,
+    MatCardTitle,
+    MatCardSubtitle,
+    MatCard,
+    MatCardHeader,
+    NgForOf,
+    MatFabButton,
+    MatIcon,
+    NgIf
+  ],
   styleUrls: ['./lista-lotes.component.css']
 })
 export class ListarLotesComponent implements OnInit {
-  displayedColumns: string[] = ['id', 'numLote', 'fecha', 'estado', 'unidad', 'numerosGuia', 'ruta', 'acciones'];
+
+
+
+  displayedColumns: string[] = ['id', 'numLote', 'encargado','fecha', 'estado', 'unidad', 'numerosGuia', 'ruta', 'acciones'];
   dataSource = new MatTableDataSource<Lote>([]);
   isAdmin = false;
   isLoggedIn = false;
@@ -111,6 +117,29 @@ export class ListarLotesComponent implements OnInit {
   crearLote() {
     console.log('navengando a /crearLote')
     this.router.navigate(['/crearLote'])
+  }
+
+  obtenerExcel() {
+    this.loteService.obtenerDetallesTransporteExcel().subscribe(
+      (response) => {
+        const blob = new Blob([response], { type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' });
+        saveAs(blob, 'Reporte-Lote.xlsx');
+      },
+      (error) => {
+        console.error('Error al descargar el Excel:', error);
+      }
+    );
+  }
+  obtenerPDF(loteId: number) {
+    this.loteService.obtenerDetallesEncomiendaPDF(loteId).subscribe(
+      (response) => {
+        const blob = new Blob([response], { type: 'application/pdf' });
+        saveAs(blob, 'DetallesEncomienda.pdf');
+      },
+      (error) => {
+        console.error('Error al descargar el PDF:', error);
+      }
+    );
   }
 
 

@@ -31,6 +31,8 @@ import {
   MatTable
 } from '@angular/material/table';
 import {MatIcon} from '@angular/material/icon';
+import {MatChipListbox, MatChipOption} from "@angular/material/chips";
+import {MatDivider} from '@angular/material/divider';
 
 @Component({
   selector: 'app-crear',
@@ -55,17 +57,21 @@ import {MatIcon} from '@angular/material/icon';
     MatAutocomplete,
     MatAutocompleteTrigger,
     AsyncPipe,
+    MatChipListbox,
+    MatChipOption,
+    MatDivider,
 
   ],
   styleUrl: './crear.component.css'
 })
 export class CrearComponent implements OnInit {
   displayedColumns: string[] = ['tipoProducto', 'alto', 'ancho', 'largo', 'peso', 'fragil', 'acciones'];
-
+  selectedOption: string | null = null;
   detalleEncomienda: FormGroup;
   fragilChecked: boolean = false;
   currentDate: string
   rutas: Rutas[] = [];
+  isSubmitting = false;
   filteredRutas?: Observable<Rutas[]> = new Observable();  // Rutas filtradas
 // Lista para almacenar las rutas
   private marker!: L.Marker;
@@ -83,15 +89,16 @@ export class CrearComponent implements OnInit {
     const today = new Date();
     this.currentDate = today.toISOString().split('T')[0];
     this.detalleEncomienda = this.fb.group({
+      numGuia: [''],
       latitudOrg: ['', Validators.required],
       longitudOrg: ['', Validators.required],
       dirRemitente: ['', Validators.required],
       nombreD: ['', Validators.required],
       apellidoD: ['', Validators.required],
-      identificacionD: ['', Validators.required],
-      telfBeneficiario: ['', Validators.required],
-      telfEncargado: ['', Validators.required],
-      correoD: ['', Validators.required],
+      identificacionD: ['', [Validators.required, Validators.pattern("^[0-9]*$"), Validators.maxLength(13)]],
+      telfBeneficiario: ['', [Validators.required, Validators.pattern("^[0-9]*$"), Validators.maxLength(10)]],
+      telfEncargado: ['', [Validators.required, Validators.pattern("^[0-9]*$"), Validators.maxLength(10)]],
+      correoD: ['', [Validators.required, Validators.email]],
       latitudDestino: ['', Validators.required],
       longitudDestino: ['', Validators.required],
       dirDestino: ['', Validators.required],
@@ -115,18 +122,20 @@ export class CrearComponent implements OnInit {
   createProducto(): FormGroup {
     return this.fb.group({
       tipoProducto: ['', Validators.required],
-      alto: ['', Validators.required],
-      ancho: ['', Validators.required],
-      largo: ['', Validators.required],
-      peso: ['', Validators.required],
+      alto: ['', [Validators.required, Validators.pattern("^[0-9]*$")]],
+      ancho: ['', [Validators.required, Validators.pattern("^[0-9]*$")]],
+      largo: ['', [Validators.required, Validators.pattern("^[0-9]*$")]],
+      peso: ['', [Validators.required, Validators.pattern("^[0-9]*$")]],
       fragil: [false]
     });
   }
+
 
   // Obtener el FormArray de productos
   get productos() {
     return (this.detalleEncomienda.get('productosDto') as FormArray);
   }
+
 // Método que verifica si la ruta ingresada es válida
   validateRuta(value: string): void {
     const matchingRutas = this.filterRutas(value); // Obtén las rutas que coinciden con el valor ingresado
@@ -156,7 +165,7 @@ export class CrearComponent implements OnInit {
       console.log('Datos a enviar:', this.detalleEncomienda.value);  // Verifica aquí los valores antes de enviarlos
       this.detalleEncomiendaService.crearDetalleEncomienda(this.detalleEncomienda.value).subscribe({
         next: (response) => {
-          this.router.navigate(['']);
+          this.router.navigate(['/listEncomienda']);
         },
         error: (err) => {
           console.error('Error al crear el Detalle de transporte', err);
@@ -166,6 +175,52 @@ export class CrearComponent implements OnInit {
       console.error('Formulario inválido', this.detalleEncomienda.errors);
     }
   }
+  onSubmit2(): void {
+    if (this.detalleEncomienda.valid) {
+      this.isSubmitting = true;
+
+      console.log('Datos a enviar:', this.detalleEncomienda.value);
+
+      this.detalleEncomiendaService.crearDetalleEncomienda(this.detalleEncomienda.value).subscribe({
+        next: (response) => {
+
+          const {numGuia, fecha} = response;
+          this.detalleEncomienda.patchValue({
+            numGuia: numGuia,
+            fecha: fecha
+          });
+          this.snackBar.open('Encomienda creada con éxito', 'Cerrar', {
+            duration: 3000,
+            horizontalPosition: 'center',
+            verticalPosition: 'top',
+          });
+
+          this.router.navigate(['/listaEncomienda']);
+
+          // Enviar mensaje a WhatsApp
+          this.enviarAWhatsapp();
+        },
+        error: (err) => {
+          console.error('Error al crear la encomienda', err);
+          this.snackBar.open('Ocurrió un error al crear la encomienda. Intenta de nuevo.', 'Cerrar', {
+            duration: 3000,
+            horizontalPosition: 'center',
+            verticalPosition: 'top',
+          });
+        },
+        complete: () => {
+          this.isSubmitting = false;
+        }
+      });
+    } else {
+      this.snackBar.open('Por favor, complete todos los campos obligatorios', 'Cerrar', {
+        duration: 3000,
+        horizontalPosition: 'center',
+        verticalPosition: 'top',
+      });
+    }
+  }
+
 
 
   ngOnInit(): void {
@@ -263,6 +318,51 @@ export class CrearComponent implements OnInit {
       console.error('Error obteniendo datos de ubicación:', error);
     }
   }
+  enviarAWhatsapp(): void {
+    const productos = this.detalleEncomienda.value.productosDto;
+
+    let mensaje = `📦 Nueva Encomienda creada 🚛\n`; // Inicializamos mensaje
+
+    const detalles = this.detalleEncomienda.value;
+    const nombreCompleto = this.token.getFullName() || 'Nombre completo no disponible';
+    const nombreComercial = this.token.getNombreComercial() || 'Sin Comercial ';
+    const telefonoDestino = '593997559093'; // Reemplaza con el número de WhatsApp de destino
+
+    mensaje += `
+  - 📄 *Número de Guia:* _${detalles.numGuia}_
+  - 📄 *Ruta:* ${detalles.ruta}
+  - 📄 *Cliente/Comercial:* ${nombreCompleto || 'No disponible'}, ${nombreComercial || 'No disponible'}\n
+  - 📍 *Mapa (Recoleccion):*    _[Ver Mapa de Recolección](https://www.google.com/maps?q=${detalles.latitudOrg},${detalles.longitudOrg})_
+  - 📍 *Mapa (Entrega):*   _[Ver Mapa de Entrega](https://www.google.com/maps?q=${detalles.latitudDestino},${detalles.longitudDestino})_
+
+  - 💰 *Tipo Entrega:* ${detalles.tipoEntrega}
+`;
+
+
+    // Añadir detalles de productos al mensaje
+    productos.forEach((producto: any) => {
+      mensaje += `
+      *Productos:*
+      *Tipo:* ${producto.tipoProducto},
+      *Alto:* ${producto.alto},
+      *Ancho:* ${producto.ancho},
+      *Largo:* ${producto.largo},
+      *Peso:* ${producto.peso},
+      *Fragil:* ${producto.fragil ? 'Sí' : 'No'}\n`;
+    });
+
+    // Añadir mensaje final
+    mensaje += `📲 *¡Su solictud a sido recibida!  En minutos le indicamos el valor de su envio*`;
+
+    // Codificar el mensaje para la URL de WhatsApp
+    const mensajeCodificado = encodeURIComponent(mensaje);
+    const urlWhatsApp = `https://api.whatsapp.com/send?phone=${telefonoDestino}&text=${mensajeCodificado}`;
+
+    // Abrir el enlace en una nueva ventana
+    window.open(urlWhatsApp, '_blank');
+  }
+
+
 
 
 

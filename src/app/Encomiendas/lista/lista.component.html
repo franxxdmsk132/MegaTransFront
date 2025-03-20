@@ -93,12 +93,15 @@
           <button mat-flat-button class="transporte-label" (click)="visualizarDetalle(element)">Ver más</button>
 
           <!-- Botón para cambiar el estado -->
-          <button mat-flat-button class="transporte-label1" (click)="abrirDialogoEstado(element)">Cambiar Estado</button>
+          <button mat-flat-button class="transporte-label1" *ngIf="isAdmin || isEmpl"  (click)="abrirDialogoEstado(element)">Cambiar Estado</button>
         </mat-card-actions>
       </mat-card>
       <!-- Botón de añadir unidad -->
       <button mat-fab color="primary" class="add-btn transporte-label2 " (click)="obtenerDetallesEncomienda()">
         <mat-icon class="mat-icon1">autorenew</mat-icon>
+      </button>
+      <button mat-fab color="primary" class="add-btn2 transporte-label2 " *ngIf="isAdmin  || isEmpl "  (click)="obtenerExcel()">
+        <mat-icon class="mat-icon1">description</mat-icon>
       </button>
     </div>
 

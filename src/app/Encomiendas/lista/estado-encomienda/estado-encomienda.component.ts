@@ -12,6 +12,7 @@ import {MatButton} from '@angular/material/button';
 import {MatFormField, MatLabel} from '@angular/material/form-field';
 import {MatOption} from '@angular/material/core';
 import {MatSelect} from '@angular/material/select';
+import {Router} from '@angular/router';
 
 @Component({
   selector: 'app-estado-encomienda',
@@ -36,7 +37,8 @@ export class EstadoEncomiendaComponent {
   constructor(
     public dialogRef: MatDialogRef<EstadoEncomiendaComponent>,
     @Inject(MAT_DIALOG_DATA) public data: { id: number, estado: string },
-    private detalleEncomiendaService: DetalleEncomiendaService
+    private detalleEncomiendaService: DetalleEncomiendaService,
+    private router :Router
   ) {
     this.nuevoEstado = data.estado;  // Establecer el estado actual
   }
@@ -45,6 +47,7 @@ export class EstadoEncomiendaComponent {
     this.detalleEncomiendaService.actualizarEstado(this.data.id, this.nuevoEstado).subscribe({
       next: (response) => {
         console.log(response);
+        this.router.navigate(['/listaEncomienda']);
         this.dialogRef.close(true); // Cerrar el dialog con éxito
       },
       error: (error) => {

@@ -26,7 +26,7 @@ import {MatToolbar} from '@angular/material/toolbar';
 import {MatProgressSpinner} from '@angular/material/progress-spinner';
 import {MenuComponent} from '../../menu/menu.component';
 import {AuthService} from '../../service/auth.service';
-import {JwtDTO} from '../../models/jwt-dto';
+import {JwtDTO} from '../../Seguridad/models/jwt-dto';
 import {MatSort, MatSortModule} from '@angular/material/sort';
 import {Router} from '@angular/router';
 import {TokenService} from '../../service/token.service';
@@ -34,6 +34,7 @@ import {MatTab, MatTabGroup, MatTabLabel} from '@angular/material/tabs';
 import {EstadoDialogComponent} from './estado-dialog/estado-dialog.component';
 import {MatDialog} from '@angular/material/dialog';
 import {ReactiveFormsModule} from '@angular/forms';
+import { saveAs } from 'file-saver';
 
 @Component({
   selector: 'app-Detalle-transporte-listar',
@@ -119,6 +120,17 @@ export class DetalleTransporteListarComponent implements OnInit {
     });
   }
 
+  obtenerExcel() {
+    this.detalleTransporteService.obtenerDetallesTransporteExcel().subscribe(
+      (response) => {
+        const blob = new Blob([response], { type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' });
+        saveAs(blob, 'Reporte-Transporte.xlsx');
+      },
+      (error) => {
+        console.error('Error al descargar el Excel:', error);
+      }
+    );
+  }
 
   // Método para filtrar por estado según la pestaña seleccionada
   filtrarPorEstado(): void {

@@ -94,6 +94,12 @@
   padding: 20px;
   text-align: left;
 }
+.add-btn2 {
+  position: fixed;
+  bottom: 85px; /* Distancia desde el borde inferior */
+  right: 20px;  /* Distancia desde el borde derecho */
+  z-index: 1000; /* Asegura que el botón esté encima del contenido */
+}
 
 .error-message {
   color: red;

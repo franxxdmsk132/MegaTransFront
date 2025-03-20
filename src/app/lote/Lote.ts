@@ -5,6 +5,7 @@ export interface Lote {
   numLote?: string;
   fecha?: string;
   estado?: string;
+  encargado?:string;
   unidad?: Unidades;  // ✅ Se mantiene como objeto Unidades
   encomiendaIds?: number[]; // ✅ Lista de IDs de encomiendas
   numerosGuia?: string[]; // ✅ Lista de números de guía

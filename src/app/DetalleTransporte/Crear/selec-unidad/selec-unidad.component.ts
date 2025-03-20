@@ -22,6 +22,7 @@ import {Unidades} from '../../../unidades/unidades';
 import {MatCell, MatCellDef, MatColumnDef, MatHeaderCell, MatHeaderCellDef} from '@angular/material/table';
 import {MatGridList, MatGridTile} from '@angular/material/grid-list';
 import {MatProgressSpinner} from '@angular/material/progress-spinner';
+import {forkJoin, map, of} from 'rxjs';
 
 @Component({
   selector: 'app-selec-unidad',
@@ -64,14 +65,39 @@ export class SelecUnidadComponent implements OnInit{
     this.unidadService.lista().subscribe(
       data => {
         console.log('Unidades recibidas:', data);
-        this.unidades = data.map(unidad => ({
-          ...unidad,
-          imagenUrl: unidad.imagenUrl ? `${this.unidadService.imgUrl}${unidad.imagenUrl}` : '/assets/default-img.png'
-        }));
-        this.unidadesFiltradas = [...this.unidades];
-        this.loading = false; // Establecer loading a false cuando los datos se reciban
+
+        // Crear un array de observables para obtener las imágenes
+        const imageRequests = data.map((unidad) => {
+          return unidad.imagenUrl
+            ? this.unidadService.getImage(unidad.imagenUrl).pipe(
+              // Convertir el blob en una URL de objeto
+              map((blob) => ({
+                unidad,
+                imagenUrl: URL.createObjectURL(blob),
+              }))
+            )
+            : of({ unidad, imagenUrl: '/assets/default-default-img.png' });
+        });
+
+        // Usar forkJoin para esperar a que todas las imágenes se carguen
+        forkJoin(imageRequests).subscribe(
+          (result) => {
+            // Asignar las URLs de las imágenes a cada unidad
+            this.unidades = result.map(({ unidad, imagenUrl }) => ({
+              ...unidad,
+              imagenUrl,
+            }));
+            this.unidadesFiltradas = [...this.unidades];
+            this.loading = false; // Establecer loading a false cuando los datos se reciban
+          },
+          (err) => {
+            console.error(err);
+            this.errorMessage = 'Error al cargar las unidades'; // Mostrar el mensaje de error
+            this.loading = false; // Establecer loading a false en caso de error
+          }
+        );
       },
-      err => {
+      (err) => {
         console.error(err);
         this.errorMessage = 'Error al cargar las unidades'; // Mostrar el mensaje de error
         this.loading = false; // Establecer loading a false en caso de error

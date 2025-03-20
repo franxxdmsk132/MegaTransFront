@@ -17,6 +17,8 @@ import {BuscarQrComponent} from './buscar-qr/buscar-qr.component';
 import {DetalleEncomiendaService} from '../service/detalle-encomienda.service';
 import {DetalleComponent} from '../Encomiendas/detalle/detalle.component';
 import {AuthService} from '../service/auth.service';
+import {VersionService} from '../service/version-service';
+import {UpdateDialogComponentComponent} from './update-dialog-component/update-dialog-component.component';
 
 @Component({
   selector: 'app-principal',
@@ -39,7 +41,7 @@ import {AuthService} from '../service/auth.service';
   styleUrls: ['./principal.component.css']
 })
 export class PrincipalComponent implements OnInit {
-
+  currentVersion: string = '1.0.0' ; // Versión actual de la app (configura esto dinámicamente si es necesario)
   isLogged = false;
   isAdmin =false;
   nombreUsuario = '';
@@ -53,9 +55,11 @@ export class PrincipalComponent implements OnInit {
               private router: Router,
               private detalleTransporteService: DetalleTransporteService,
               private detalleEncomiendaService: DetalleEncomiendaService,
-              private authService: AuthService,) { }
+              private authService: AuthService,
+              private versionService: VersionService,) { }
 
   ngOnInit(): void {
+    this.checkAppVersion(); // Verificamos la versión al iniciar
     this.authService.getCountUsuarios().subscribe(
       countUsuarios => {
         this.usuarioCount = countUsuarios;
@@ -77,6 +81,34 @@ export class PrincipalComponent implements OnInit {
     }
     this.isAdmin = this.isLogged && this.tokenService.isAdmin();
   }
+
+  // Método para verificar la versión de la aplicación
+  checkAppVersion(): void {
+    this.versionService.getVersion().subscribe(
+      async (response: any) => {
+        const serverVersion = response.version; // Accede a la propiedad 'version'
+        if (serverVersion !== this.currentVersion) {
+          const dialogRef = await this.dialog.open(UpdateDialogComponentComponent, {
+            width: '300px',
+            data: { message: 'Tu aplicación está desactualizada. Por favor, actualiza a la última versión.' }
+          });
+
+          dialogRef.afterClosed().subscribe(result => {
+            if (result) {
+              // Si el usuario acepta, redirige a la tienda de aplicaciones
+              window.open('https://camionesmegatrans.com/', '_system');
+            }
+          });
+        }
+      },
+      error => {
+        console.error('Error al verificar la versión:', error);
+      }
+    );
+  }
+
+
+
   openSearchDialog(): void {
     const dialogRef = this.dialog.open(BuscarCodigoComponent);
 

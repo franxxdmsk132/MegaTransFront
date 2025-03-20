@@ -1,7 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 import {Router, RouterLink} from '@angular/router';
 import {ToastrService} from 'ngx-toastr';
-import {NuevoUsuario} from '../../models/nuevo-usuario';
+import {NuevoUsuario} from '../../Seguridad/models/nuevo-usuario';
 import {TokenService} from '../../service/token.service';
 import {AuthService} from '../../service/auth.service';
 import {identifierName} from '@angular/compiler';

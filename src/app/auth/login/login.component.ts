@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import {Router, RouterLink} from '@angular/router';
-import {LoginUsuario} from '../../models/login-usuario';
+import {LoginUsuario} from '../../Seguridad/models/login-usuario';
 import {TokenService} from '../../service/token.service';
 import {AuthService} from '../../service/auth.service';
 import {ToastrService} from 'ngx-toastr';
@@ -12,7 +12,7 @@ import {MatTab, MatTabGroup} from '@angular/material/tabs';
 import {MatAnchor, MatButton, MatIconButton} from '@angular/material/button';
 import {MatError, MatFormField, MatLabel, MatSuffix} from '@angular/material/form-field';
 import {MatInput} from '@angular/material/input';
-import {Mensaje} from '../../models/mensaje';
+import {Mensaje} from '../../Seguridad/models/mensaje';
 import {MatSnackBar} from '@angular/material/snack-bar';
 import {MatIcon, MatIconModule} from '@angular/material/icon';
 

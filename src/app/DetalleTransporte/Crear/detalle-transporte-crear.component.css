@@ -159,27 +159,56 @@ button {
   flex-wrap: wrap;
   width: 100%;
 }
-
-
-::ng-deep .mudanza-chip {
-  background-color: rgba(189, 124, 124, 0.62) !important; /* Rojo translúcido */
-  color: #616161 !important; /* Texto blanco */}
-
-
-::ng-deep .desalojo-chip {
-  background-color: rgba(189, 124, 124, 0.62) !important; /* Rojo translúcido */
-  color: #616161 !important; /* Texto blanco */
+/* Estilo personalizado para el chip */
+/* Estilo para los chips */
+.mudanza-chip,
+.desalojo-chip,
+.distribucion-chip,
+.transferencia-chip,
+.efectivo-chip{
+  background-color: rgb(0, 0, 0) !important; /* Fondo negro */
+  color: rgba(0, 0, 0, 0.62) !important; /* Texto gris */
+  border: 2px solid #ff0000;
 }
 
-::ng-deep .distribucion-chip {
-  background-color: rgba(189, 124, 124, 0.62) !important; /* Rojo translúcido */
-  color: #616161 !important; /* Texto blanco */
+/* Cambiar color del check cuando el chip está seleccionado */
+.mudanza-chip.mat-chip-checked .mat-chip-checkmark,
+.desalojo-chip.mat-chip-checked .mat-chip-checkmark,
+.distribucion-chip.mat-chip-checked .mat-chip-checkmark {
+  color: #ffffff !important; /* Color blanco para el check */
 }
-::ng-deep .efectivo-chip {
-  background-color: rgba(189, 124, 124, 0.62) !important; /* Rojo translúcido */
-  color: #616161 !important; /* Texto blanco */
+
+
+
+/* Asegurar que el icono del check también esté en blanco */
+.mudanza-chip.mat-chip-checked .mat-chip-checkmark .mat-icon,
+.desalojo-chip.mat-chip-checked .mat-chip-checkmark .mat-icon,
+.distribucion-chip.mat-chip-checked .mat-chip-checkmark .mat-icon {
+  color: #ffffff !important; /* Color blanco para el icono del check */
 }
-::ng-deep .transferencia-chip {
-  background-color: rgba(189, 124, 124, 0.62) !important; /* Rojo translúcido */
-  color: #616161 !important; /* Texto blanco */
+
+
+/* Cambiar color del check cuando está seleccionado */
+.mudanza-chip.mat-chip-checked .mat-chip-checkmark {
+  color: #ffffff !important; /* Color blanco para el check */
 }
+
+/* Asegurarse de que el icono de check se vea correctamente */
+.mudanza-chip .mat-chip-checkmark {
+  font-size: 18px !important; /* Tamaño del icono de check */
+  color: #ffffff !important; /* Color del check en blanco */
+}
+
+
+
+/* Estilo para cambiar el color del checkmark a blanco cuando el chip está seleccionado */
+.mat-mdc-chip-option.mat-mdc-chip-checked .mdc-evolution-chip__checkmark svg path {
+  stroke: #ffffff !important; /* Cambiar el color del check a blanco */
+}
+
+/* Asegurarse de que el checkmark se muestre como blanco incluso cuando el chip está seleccionando */
+.mat-mdc-chip-option.mdc-evolution-chip--selecting .mdc-evolution-chip__checkmark svg path {
+  stroke: #ffffff !important; /* Cambiar el color del check a blanco */
+}
+
+

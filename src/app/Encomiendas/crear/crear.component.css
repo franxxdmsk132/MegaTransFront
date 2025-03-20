@@ -9,11 +9,15 @@ button {
   height: 200px;
   border-radius: 10px;
 }
-@media (max-width: 600px) {
+@media (max-width: 767px) {
   .mat-column-alto,
   .mat-column-ancho,
   .mat-column-largo,
+  .form-container {
+    flex-direction: column; /* Pasa a una sola columna en pantallas pequeñas */
+  }
   .mat-column-peso {
+
     display: none; /* Oculta columnas en pantallas pequeñas */
   }
 
@@ -25,4 +29,56 @@ button {
   .mat-form-field {
     width: 60px !important; /* Hace que los campos sean más pequeños */
   }
+}
+.form-container {
+  display: flex;
+  gap: 16px; /* Espacio entre columnas */
+}
+
+.column {
+  flex: 1; /* Ambas columnas ocupan el mismo espacio */
+  display: flex;
+  flex-direction: column;
+  gap: 16px; /* Espaciado entre los campos */
+}
+.custom-button {
+  background-color: black !important;
+  color: white !important;
+  border: 2px solid red !important;
+  width: 12em;         /* Ancho en unidades relativas */
+  height: 2.9em;         /* Altura en unidades relativas */
+  font-size: 1rem;
+  text-align: center;/* Tamaño de texto relativo */
+  padding: 0.5em 1em;  /* Espaciado interno relativo */
+}
+
+
+
+.custom-button:hover {
+  background-color: darkgray !important; /* Fondo al pasar el ratón */
+  border: 2px solid red !important;      /* Bordes rojos al pasar el ratón */
+}
+.custom-button2 {
+  background-color: black !important;
+  color: white !important;
+  border: 2px solid red !important;
+  width: 12em;         /* Ancho en unidades relativas */
+  height: 2.9em;         /* Altura en unidades relativas */
+  font-size: 1rem;
+  text-align: center;/* Tamaño de texto relativo */
+  padding: 0.5em 1em;  /* Espaciado interno relativo */
+}
+
+
+
+.custom-button2:hover {
+  background-color: darkgray !important; /* Fondo al pasar el ratón */
+  border: 2px solid red !important;      /* Bordes rojos al pasar el ratón */
+}
+.mudanza-chip,
+.desalojo-chip,
+.efectivo-chip{
+  background-color: rgb(0, 0, 0) !important; /* Fondo negro */
+  color: rgba(0, 0, 0, 0.62) !important; /* Texto gris */
+  border: 2px solid #ff0000;
 }

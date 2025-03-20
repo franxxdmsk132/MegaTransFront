@@ -1,7 +1,7 @@
 .detalle-card {
   width: 95%;
   max-width: 95%; /* Limita el ancho máximo de la tarjeta */
-  margin: 0; /* Elimina el margen para que esté perfectamente centrado */
+  margin: 10px ; /* Elimina el margen para que esté perfectamente centrado */
   padding: 15px;
   border-radius: 8px;
   box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.39);
@@ -31,6 +31,12 @@
 .add-btn {
   position: fixed;
   bottom: 20px; /* Distancia desde el borde inferior */
+  right: 20px;  /* Distancia desde el borde derecho */
+  z-index: 1000; /* Asegura que el botón esté encima del contenido */
+}
+.add-btn2 {
+  position: fixed;
+  bottom: 85px; /* Distancia desde el borde inferior */
   right: 20px;  /* Distancia desde el borde derecho */
   z-index: 1000; /* Asegura que el botón esté encima del contenido */
 }

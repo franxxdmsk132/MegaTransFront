@@ -1,7 +1,7 @@
 <app-menu>
   <mat-card class="detalle-lote-card">
     <mat-card-header>
-      <mat-card-title>Detalles del Lote</mat-card-title>
+      <mat-card-title><h4>Detalles del Lote</h4></mat-card-title>
     </mat-card-header>
 
     <mat-card-content>
@@ -14,6 +14,10 @@
         <ng-container matColumnDef="fecha">
           <th mat-header-cell *matHeaderCellDef> Fecha </th>
           <td mat-cell *matCellDef="let element"> {{ element.fecha }} </td>
+        </ng-container>
+        <ng-container matColumnDef="encargado">
+          <th mat-header-cell *matHeaderCellDef> Encargado </th>
+          <td mat-cell *matCellDef="let element"> {{ element.encargado }} </td>
         </ng-container>
 
         <ng-container matColumnDef="estado">
@@ -35,12 +39,37 @@
         <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
       </table>
 
-      <h3 class="mt-4">Números de Guía</h3>
-      <div class="scroll-box">
-        <mat-chip-listbox>
-          <mat-chip *ngFor="let numero of lote.numerosGuia">{{ numero }}</mat-chip>
-        </mat-chip-listbox>
-      </div>
+<!--      <h3 class="mt-4">Números de Guía</h3>-->
+<!--      <div class="scroll-box">-->
+<!--        <mat-chip-listbox>-->
+<!--          <mat-chip *ngFor="let numero of lote.numerosGuia">{{ numero }}</mat-chip>-->
+<!--        </mat-chip-listbox>-->
+<!--      </div>-->
+      <h3 class="mt-4">Detalles de las Encomiendas</h3>
+      <table mat-table [dataSource]="encomiendas" class="mat-elevation-z8">
+        <ng-container matColumnDef="numGuia">
+          <th mat-header-cell *matHeaderCellDef> Guía </th>
+          <td mat-cell *matCellDef="let encomienda"> {{ encomienda.numGuia }} </td>
+        </ng-container>
+
+        <ng-container matColumnDef="estado">
+          <th mat-header-cell *matHeaderCellDef> Estado </th>
+          <td mat-cell *matCellDef="let encomienda"> {{ encomienda.estado }} </td>
+        </ng-container>
+
+        <ng-container matColumnDef="ruta">
+          <th mat-header-cell *matHeaderCellDef> Ruta </th>
+          <td mat-cell *matCellDef="let encomienda"> {{ encomienda.ruta }} </td>
+        </ng-container>
+
+        <ng-container matColumnDef="destinatario">
+          <th mat-header-cell *matHeaderCellDef> Destinatario </th>
+          <td mat-cell *matCellDef="let encomienda"> {{ encomienda.nombreD }} {{encomienda.apellidoD}} - {{encomienda.identificacionD}} </td>
+        </ng-container>
+
+        <tr mat-header-row *matHeaderRowDef="displayedColumnsEncomiendas"></tr>
+        <tr mat-row *matRowDef="let row; columns: displayedColumnsEncomiendas;"></tr>
+      </table>
     </mat-card-content>
 
     <mat-card-actions>

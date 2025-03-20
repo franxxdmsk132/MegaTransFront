@@ -2,7 +2,7 @@ import {Component, OnInit} from '@angular/core';
 import {MenuComponent} from '../menu/menu.component';
 import {MatProgressSpinner} from '@angular/material/progress-spinner';
 import {NgIf} from '@angular/common';
-import {JwtDTO} from '../models/jwt-dto';
+import {JwtDTO} from '../Seguridad/models/jwt-dto';
 import {ActivatedRoute} from '@angular/router';
 import {AuthService} from '../service/auth.service';
 import {TokenService} from '../service/token.service';

@@ -23,6 +23,7 @@ import {UnidadesService} from '../../service/unidades.service';
 import {DetalleEncomiendaService} from '../../service/detalle-encomienda.service';
 import {MatChip, MatChipListbox, MatChipRemove} from '@angular/material/chips';
 import {MatIcon} from '@angular/material/icon';
+import {MatInput} from '@angular/material/input';
 
 @Component({
   selector: 'app-actualizar-lotes',
@@ -51,7 +52,8 @@ import {MatIcon} from '@angular/material/icon';
     MatChip,
     MatChipListbox,
     MatChipRemove,
-    MatIcon
+    MatIcon,
+    MatInput
   ],
   styleUrl: './actualizar-lotes.component.css'
 })
@@ -75,6 +77,7 @@ export class ActualizarLotesComponent implements OnInit {
     private detalleEncomiendaService:DetalleEncomiendaService
   ) {
     this.loteForm = this.fb.group({
+      encargado: ['', Validators.required],
       ruta: ['', Validators.required], // Guardamos el ID de la ruta
       unidad: ['', Validators.required],
       encomiendaIds: [[]], // Se enviarán los IDs de las encomiendas seleccionadas
@@ -97,13 +100,14 @@ export class ActualizarLotesComponent implements OnInit {
     this.loteService.obtenerLotePorId(this.idLote).subscribe(
       (lote) => {
         this.lote = lote;
-        console.log(this.lote);
+        console.log(this.lote, "Lote Recibido");
 
         this.loteForm.patchValue({
           numLote: lote.numLote,
           fecha: lote.fecha,
           estado: lote.estado,
-          unidad: lote.unidad,
+          unidad: lote.unidad?.id,
+          encargado: lote.encargado,
           encomiendaIds: lote.encomiendaIds,
           numerosGuia: lote.numerosGuia,
           ruta: lote.ruta,

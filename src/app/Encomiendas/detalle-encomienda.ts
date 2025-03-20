@@ -1,4 +1,4 @@
-import {JwtDTO} from '../models/jwt-dto';
+import {JwtDTO} from '../Seguridad/models/jwt-dto';
 import {Lote} from '../lote/Lote';
 
 export interface DetalleEncomienda{

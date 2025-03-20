@@ -9,11 +9,9 @@ import {CommonModule} from '@angular/common';
   imports: [
     RouterOutlet,
     CommonModule,
-
-
   ],
   styleUrls: ['./app.component.css']  // Corregir de styleUrl a styleUrls
 })
 export class AppComponent {
-  title = 'MegaTransFront';
+  title = 'MegaTrans';
 }

@@ -10,13 +10,24 @@ mat-table {
 button {
   margin-right: 8px;
 }
+.add-btn2 {
+  position: fixed;
+  bottom: 85px; /* Distancia desde el borde inferior */
+  right: 20px;  /* Distancia desde el borde derecho */
+  z-index: 1000; /* Asegura que el botón esté encima del contenido */
+}
 .card-container {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  grid-template-columns: repeat(auto-fill, minmax(400px, 1fr));
   gap: 16px;
   margin-top: 20px;
 }
-
+.transporte-label2 {
+  background-color: black !important;
+  color: white !important;
+  border: 2px solid red !important;
+  min-width: 5px;
+}
 .lote-card {
   padding: 16px;
   background-color: #fff;
@@ -24,6 +35,12 @@ button {
 .add-btn {
   position: fixed;
   bottom: 20px; /* Distancia desde el borde inferior */
+  right: 20px;  /* Distancia desde el borde derecho */
+  z-index: 1000; /* Asegura que el botón esté encima del contenido */
+}
+.add-btn2 {
+  position: fixed;
+  bottom: 85px; /* Distancia desde el borde inferior */
   right: 20px;  /* Distancia desde el borde derecho */
   z-index: 1000; /* Asegura que el botón esté encima del contenido */
 }

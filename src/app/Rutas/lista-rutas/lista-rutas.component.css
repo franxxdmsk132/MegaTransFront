@@ -1,6 +1,68 @@
+/* Estilo para los botones */
+.custom-button{
+  background-color: black !important;
+  color: white !important;
+  border: 2px solid red !important;
+  font-size: 1rem;
+  text-align: center;
+  padding: 0.5em 1em; /* Espaciado interno relativo */
+  border-radius: 8px;  /* Redondear las esquinas */
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+  min-width: 4.5em;       /* Tamaño mínimo del botón */
+  min-height: 2.9em;
+}
+.custom-button-crear {
+  background-color: black !important;
+  color: white !important;
+  border: 2px solid red !important;
+  font-size: 1rem;
+  text-align: center;
+  padding: 0.5em 1em; /* Espaciado interno relativo */
+  border-radius: 8px;  /* Redondear las esquinas */
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+  min-width: 4em;       /* Tamaño mínimo del botón */
+  min-height: 2.9em;    /* Tamaño mínimo del botón */
+}
+
+.custom-button:hover,
+.custom-button-crear:hover {
+  background-color: darkgray !important; /* Fondo al pasar el ratón */
+  border: 2px solid red !important;      /* Bordes rojos al pasar el ratón */
+}
+
+/* Estilo de la lista de rutas */
 .rutas-container {
   padding: 20px;
   background-color: #f9f9f9;
+  border-radius: 8px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  margin: 20px 0;
+}
+
+.rutas-list {
+  list-style-type: none;
+  padding-left: 0;
+}
+
+.ruta-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 10px;
+  border-bottom: 1px solid #ddd;
+}
+
+.ruta-item:last-child {
+  border-bottom: none;
+}
+
+.ruta {
+  font-size: 1rem;
+  font-weight: bold;
 }
 
 ul {
@@ -8,6 +70,7 @@ ul {
   padding: 0;
 }
 
+/* Estilo de los elementos de la lista */
 li {
   padding: 10px;
   margin-bottom: 10px;
@@ -15,6 +78,8 @@ li {
   border-radius: 4px;
   font-size: 1.2em;
 }
+
+/* Estilo del botón de agregar flotante */
 .add-btn {
   position: fixed;
   bottom: 20px; /* Distancia desde el borde inferior */

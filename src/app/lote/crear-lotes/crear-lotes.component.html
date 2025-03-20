@@ -7,19 +7,22 @@
       <!-- Selección de Ruta -->
       <mat-form-field appearance="outline">
         <mat-label>Ruta</mat-label>
-        <mat-select formControlName="ruta" required>
+        <mat-select formControlName="ruta">
           <mat-option *ngFor="let ruta of rutasDisponibles" [value]="ruta.origen + ' - ' + ruta.destino">
             {{ ruta.origen }} - {{ ruta.destino }}
           </mat-option>
         </mat-select>
       </mat-form-field>
 
-
-
+      <!-- Campo Encargado-->
+      <mat-form-field appearance="outline" style="padding-left: 14px">
+        <mat-label>Encargado</mat-label>
+        <input matInput formControlName="encargado" required placeholder="Nombre del encargado">
+      </mat-form-field>
 
 
       <!-- Campo Unidad -->
-      <mat-form-field appearance="outline">
+      <mat-form-field appearance="outline" style="padding-left: 14px">
         <mat-label>Unidad</mat-label>
         <mat-select formControlName="unidad" required>
           <mat-option *ngFor="let unidad of unidadesDisponibles" [value]="unidad">
@@ -28,80 +31,133 @@
         </mat-select>
       </mat-form-field>
 
-
-      <!-- 🔴 QUITAMOS mat-form-field de aquí -->
+      <mat-divider></mat-divider>
       <div>
-        <label>Encomiendas en Estado Recolectado</label>
-        <mat-chip-listbox>
-          <mat-chip *ngFor="let encomienda of encomiendasProcesando"
-                    (click)="agregarEncomienda(encomienda)">
-            {{ encomienda.numGuia }} / {{ encomienda.ruta }}
-          </mat-chip>
-        </mat-chip-listbox>
-      </div><div>
-      <label>Encomiendas en Estado Recolectado</label>
-      <table mat-table [dataSource]="encomiendasProcesando" class="mat-elevation-z8">
+        <h3>Encomiendas Recolectadas</h3>
+        <div class="scrollable-table-container">
+          <table mat-table [dataSource]="encomiendasProcesando" class="mat-elevation-z8">
+            <!-- Id Guia -->
+            <ng-container matColumnDef="id">
+              <th mat-header-cell *matHeaderCellDef> Id Guia</th>
+              <td mat-cell *matCellDef="let encomienda"> {{ encomienda.id }}</td>
+            </ng-container>
+            <!-- Número de Guía -->
+            <ng-container matColumnDef="numGuia">
+              <th mat-header-cell *matHeaderCellDef> N° Guía</th>
+              <td mat-cell *matCellDef="let encomienda"> {{ encomienda.numGuia }}</td>
+            </ng-container>
 
-        <!-- Número de Guía -->
-        <ng-container matColumnDef="numGuia">
-          <th mat-header-cell *matHeaderCellDef> N° Guía </th>
-          <td mat-cell *matCellDef="let encomienda"> {{ encomienda.numGuia }} </td>
-        </ng-container>
+            <!-- Ruta -->
+            <ng-container matColumnDef="ruta">
+              <th mat-header-cell *matHeaderCellDef>Ruta</th>
+              <td mat-cell *matCellDef="let encomienda"> {{ encomienda.ruta }}</td>
+            </ng-container>
 
-        <!-- Ruta -->
-        <ng-container matColumnDef="ruta">
-          <th mat-header-cell *matHeaderCellDef> Ruta </th>
-          <td mat-cell *matCellDef="let encomienda"> {{ encomienda.ruta }} </td>
-        </ng-container>
+            <!-- Remitente -->
+            <ng-container matColumnDef="remitente">
+              <th mat-header-cell *matHeaderCellDef>
+                Remitente
+              </th>
+              <td mat-cell
+                  *matCellDef="let encomienda"> {{ encomienda.usuario.nombre }} {{ encomienda.usuario.apellido }}
+              </td>
+            </ng-container>
 
-        <!-- Remitente -->
-        <ng-container matColumnDef="remitente">
-          <th mat-header-cell *matHeaderCellDef> Remitente </th>
-          <td mat-cell *matCellDef="let encomienda"> {{ encomienda.remitente }} </td>
-        </ng-container>
+            <!-- Destinatario -->
+            <ng-container matColumnDef="destinatario">
+              <th mat-header-cell *matHeaderCellDef> Destinatario</th>
+              <td mat-cell *matCellDef="let encomienda"> {{ encomienda.nombreD }} {{ encomienda.apellidoD }}</td>
+            </ng-container>
 
-        <!-- Destinatario -->
-        <ng-container matColumnDef="destinatario">
-          <th mat-header-cell *matHeaderCellDef> Destinatario </th>
-          <td mat-cell *matCellDef="let encomienda"> {{ encomienda.destinatario }} </td>
-        </ng-container>
-
-        <!-- Peso -->
-        <ng-container matColumnDef="peso">
-          <th mat-header-cell *matHeaderCellDef> Peso (kg) </th>
-          <td mat-cell *matCellDef="let encomienda"> {{ encomienda.peso }} </td>
-        </ng-container>
-
-        <!-- Botón para seleccionar la encomienda -->
-        <ng-container matColumnDef="acciones">
-          <th mat-header-cell *matHeaderCellDef> Acciones </th>
-          <td mat-cell *matCellDef="let encomienda">
-            <button mat-button color="primary" *ngFor="let encomienda of encomiendasProcesando"
-                    (click)="agregarEncomienda(encomienda)">Seleccionar</button>
-          </td>
-        </ng-container>
-
-        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-        <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
-      </table>
-    </div>
+            <!-- Fecha -->
+            <ng-container matColumnDef="fecha">
+              <th mat-header-cell *matHeaderCellDef> Fecha</th>
+              <td mat-cell *matCellDef="let encomienda"> {{ encomienda.fecha }}</td>
+            </ng-container>
 
 
-      <!-- 🔴 QUITAMOS mat-form-field de aquí -->
-      <div>
-        <label>Encomiendas Seleccionadas</label>
-        <mat-chip-listbox>
-          <mat-chip *ngFor="let encomienda of encomiendasSeleccionadas"
-                    (removed)="eliminarEncomienda(encomienda)">
-            {{ encomienda.numGuia }}
-            <mat-icon matChipRemove>cancel</mat-icon>
-          </mat-chip>
-        </mat-chip-listbox>
+            <!-- Botón para seleccionar la encomienda -->
+            <ng-container matColumnDef="acciones">
+              <th mat-header-cell *matHeaderCellDef> Acciones</th>
+              <td mat-cell *matCellDef="let encomienda">
+                <button mat-icon-button (click)="agregarEncomienda3(encomienda)">
+                  <mat-icon color="primary">add_circle</mat-icon>
+                </button>
+              </td>
+            </ng-container>
+
+
+            <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+            <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+          </table>
+        </div>
       </div>
+      <br>
+      <mat-divider></mat-divider>
 
 
+      <!--      &lt;!&ndash; 🔴 QUITAMOS mat-form-field de aquí &ndash;&gt;-->
+      <!--      <div>-->
+      <!--        <label>Encomiendas Seleccionadas</label>-->
+      <!--        <mat-chip-listbox>-->
+      <!--          <mat-chip *ngFor="let encomienda of encomiendasSeleccionadas"-->
+      <!--                    (removed)="eliminarEncomienda(encomienda)">-->
+      <!--            {{ encomienda.numGuia }}-->
+      <!--            <mat-icon matChipRemove>cancel</mat-icon>-->
+      <!--          </mat-chip>-->
+      <!--        </mat-chip-listbox>-->
+      <!--      </div>-->
+
+      <!-- Tabla de Encomiendas Seleccionadas -->
+      <h3>Encomiendas Seleccionadas</h3>
+      <div class="scrollable-table-container">
+
+        <table mat-table [dataSource]="encomiendasSeleccionadas" class="mat-elevation-z8">
+          <ng-container matColumnDef="id">
+            <th mat-header-cell *matHeaderCellDef> Id Guia</th>
+            <td mat-cell *matCellDef="let encomienda"> {{ encomienda.id }}</td>
+          </ng-container>
+          <ng-container matColumnDef="numGuia">
+            <th mat-header-cell *matHeaderCellDef> N° Guía</th>
+            <td mat-cell *matCellDef="let encomienda"> {{ encomienda.numGuia }}</td>
+          </ng-container>
+          <ng-container matColumnDef="ruta">
+            <th mat-header-cell *matHeaderCellDef> Ruta</th>
+            <td mat-cell *matCellDef="let encomienda"> {{ encomienda.ruta }}</td>
+          </ng-container>
+          <ng-container matColumnDef="remitente">
+            <th mat-header-cell *matHeaderCellDef> Remitente</th>
+            <td mat-cell
+                *matCellDef="let encomienda"> {{ encomienda.usuario.nombre }} {{ encomienda.usuario.apellido }}  {{ encomienda.usuario.nombreComercial ? encomienda.usuario.nombreComercial : "--" }}
+            </td>
+          </ng-container>
+          <ng-container matColumnDef="destinatario">
+            <th mat-header-cell *matHeaderCellDef> Destinatario</th>
+            <td mat-cell *matCellDef="let encomienda"> {{ encomienda.nombreD }} {{ encomienda.apellidoD }}</td>
+          </ng-container>
+
+          <ng-container matColumnDef="fecha">
+            <th mat-header-cell *matHeaderCellDef> Fecha)</th>
+            <td mat-cell *matCellDef="let encomienda"> {{ encomienda.fecha }}</td>
+          </ng-container>
+
+          <!-- Botón para eliminar encomienda -->
+          <ng-container matColumnDef="acciones">
+            <th mat-header-cell *matHeaderCellDef> Acciones</th>
+            <td mat-cell *matCellDef="let encomienda">
+              <button mat-icon-button (click)="eliminarEncomienda2(encomienda)">
+                <mat-icon class="custom-icon">remove_circle</mat-icon>
+              </button>
+            </td>
+          </ng-container>
+
+          <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+          <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+        </table>
+      </div>
+      <br>
       <!-- Botón de Enviar -->
-      <button mat-raised-button color="primary" type="submit" [disabled]="loteForm.invalid">
+      <button mat-raised-button class="custom-button" type="submit" (click)="crearLote2()">
         Crear Lote
       </button>
 

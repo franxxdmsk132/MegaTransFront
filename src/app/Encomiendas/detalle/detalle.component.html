@@ -81,13 +81,16 @@
         <div *ngIf="detalleEncomienda.qrCodePath" class="qr-section">
           <h3>QR Code</h3>
           <mat-divider></mat-divider>
-          <img [src]="'http://192.168.0.103:8080' + detalleEncomienda.qrCodePath" alt="QR Code">
+          <img [src]="detalleEncomienda.qrCodePath" alt="QR Code">
         </div>
+
       </div>
     </mat-card-content>
 
     <mat-card-actions style="justify-content: center">
       <button mat-button color="primary" (click)="volver()">Volver</button>
+      <button mat-flat-button class="transporte-label1" *ngIf="isAdmin || isEmpl"  (click)="abrirDialogoEstado(detalleEncomienda)">Cambiar Estado</button>
+
     </mat-card-actions>
   </mat-card>
   <mat-progress-spinner *ngIf="isLoading" diameter="50" mode="indeterminate"></mat-progress-spinner>

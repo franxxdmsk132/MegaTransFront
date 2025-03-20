@@ -36,6 +36,7 @@ import {MatIcon} from '@angular/material/icon';
 import {MatToolbar} from '@angular/material/toolbar';
 import {MatFormField, MatLabel} from '@angular/material/form-field';
 import {MatOption, MatSelect} from '@angular/material/select';
+import {saveAs} from 'file-saver';
 
 @Component({
   selector: 'app-lista',
@@ -67,6 +68,9 @@ import {MatOption, MatSelect} from '@angular/material/select';
 export class ListaComponent implements OnInit{
 
   isLoading = true;
+  isLogged = false;
+  isAdmin = false;
+  isEmpl = false;
   errorMessage: string | undefined;
   dataFiltrada: DetalleEncomienda[] = [];
   // Lista de estados disponibles
@@ -95,9 +99,13 @@ export class ListaComponent implements OnInit{
     private detalleEncomiendaService: DetalleEncomiendaService,
     private tokenService: TokenService,
     private router: Router,
-    private dialog : MatDialog) {
+    private dialog : MatDialog,
+    ) {
   }
   ngOnInit(): void {
+    this.isLogged = !!this.tokenService.getToken();
+    this.isAdmin = this.isLogged && this.tokenService.isAdmin();
+    this.isEmpl = this.isLogged && this.tokenService.isEmpl();
     this.obtenerDetallesEncomienda()
   }
   selectedTabIndex = 0;
@@ -178,5 +186,16 @@ export class ListaComponent implements OnInit{
   extraerNumeroGuia(guia: string): number {
     const numero = guia.replace(/[^\d]/g, ''); // Elimina los caracteres no numéricos
     return Number(numero); // Convierte la parte numérica a número
+  }
+  obtenerExcel() {
+    this.detalleEncomiendaService.obtenerDetallesTransporteExcel().subscribe(
+      (response) => {
+        const blob = new Blob([response], { type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' });
+        saveAs(blob, 'Reporte-Encomienda.xlsx');
+      },
+      (error) => {
+        console.error('Error al descargar el Excel:', error);
+      }
+    );
   }
 }

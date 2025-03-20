@@ -12,6 +12,7 @@
 
         <mat-card-content>
           <p><strong>Fecha:</strong> {{ lote.fecha }}</p>
+          <p><strong>Encargado: </strong> {{lote.encargado}} </p>
           <p><strong>Estado:</strong> {{ lote.estado }}</p>
           <p><strong>Unidad:</strong> {{ lote.unidad?.tipo }}</p> <!-- Muestra el tipo de unidad -->
           <p><strong>Números de Guía:</strong> {{ lote.numerosGuia }}</p>
@@ -19,14 +20,17 @@
         </mat-card-content>
 
         <mat-card-actions>
-          <button mat-flat-button color="primary"   (click)="abrirDialogoEstado(lote)">Estado</button>
-          <button mat-flat-button color="warn" (click)="verDetalles(lote)" >Detalles</button>
-          <button mat-flat-button color="warn" (click)="editarDetalles(lote)" >Actualizar</button>
-
+          <button mat-flat-button class="transporte-label2"   (click)="abrirDialogoEstado(lote)">Estado</button>
+          <button mat-flat-button class="transporte-label2" (click)="verDetalles(lote)" >Detalles</button>
+<!--          <button mat-flat-button class="transporte-label2" (click)="editarDetalles(lote)" >Actualizar</button>-->
+          <button mat-flat-button class="transporte-label2" (click)="lote.id ? obtenerPDF(lote.id) : null">Ver PDF</button>
         </mat-card-actions>
       </mat-card>
-      <button mat-fab color="primary" class="add-btn" (click)="crearLote()">
+      <button mat-fab color="primary" class="add-btn transporte-label2" (click)="crearLote()">
         <mat-icon>add</mat-icon>
+      </button>
+      <button mat-fab color="primary" class="add-btn2 transporte-label2 " *ngIf="isAdmin  || isEmpl "  (click)="obtenerExcel()">
+        <mat-icon class="mat-icon1">description</mat-icon>
       </button>
     </div>
 

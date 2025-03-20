@@ -3,22 +3,24 @@ import {HttpClient, HttpErrorResponse, HttpHeaders} from '@angular/common/http';
 import {catchError, Observable, throwError} from 'rxjs';
 import {DetalleTransporte} from '../DetalleTransporte/detalle-transporte';
 import {TokenService} from './token.service';
+import {environment} from '../../environments/environment';
 
 @Injectable({
   providedIn: 'root',
 })
 export class DetalleTransporteService {
-  apiUrl2 = 'http://104.196.61.204:8080/detalle-transporte';
-  apiUrl = 'http://192.168.0.103:8080/detalle-transporte';
+  //apiUrl = 'https://3298-45-236-151-3.ngrok-free.app/detalle-transporte';
+  //apiUrl2 = 'http://192.168.0.103:8080/detalle-transporte';
+  private apiUrl = environment.apiUrl + "/detalle-transporte";
 
   constructor(private http: HttpClient, private tokenService: TokenService) {
   }
 
   private getAuthHeaders(): HttpHeaders {
     const token = this.tokenService.getToken();
-    console.log('Token de Autenticación:', token); // Agrega este log para depuración
     return new HttpHeaders({
       Authorization: `Bearer ${token}`,
+      'ngrok-skip-browser-warning': 'true'  // Agregar este encabezado en cada solicitud
     });
   }
 
@@ -33,6 +35,15 @@ export class DetalleTransporteService {
   obtenerDetallesTransporte(): Observable<DetalleTransporte[]> {
     const headers = this.getAuthHeaders();
     return this.http.get<DetalleTransporte[]>(`${this.apiUrl}/filtrados`, {headers});
+  }
+  // Obtener Excel
+  obtenerDetallesTransporteExcel(): Observable<Blob> {
+    const headers = this.getAuthHeaders();
+
+    return this.http.get(`${this.apiUrl}/excel`, {
+      headers,
+      responseType: 'blob' // Importante para manejar archivos binarios
+    });
   }
 
   // Obtener Detalle de transporte por ID

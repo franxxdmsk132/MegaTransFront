@@ -31,7 +31,6 @@ import {MatSnackBar} from '@angular/material/snack-bar';
     MatChipsModule,
     MatCardActions,
     MatButton,
-    NgForOf,
     MatTable,
     MatHeaderCell,
     MatColumnDef,
@@ -48,8 +47,11 @@ import {MatSnackBar} from '@angular/material/snack-bar';
 export class DetalleLotesComponent implements OnInit {
   lote: any = {}; // Aquí podrías tiparlo mejor con `Lote`
   isLoading = true;
+  encomiendas: any[] = [];
+
   errorMessage: string | undefined;
-  displayedColumns: string[] = ['numLote', 'fecha', 'estado', 'ruta', 'unidad'];
+  displayedColumns: string[] = ['numLote','encargado', 'fecha', 'estado', 'ruta', 'unidad'];
+  displayedColumnsEncomiendas: string[] = ['numGuia', 'estado', 'ruta', 'destinatario'];
 
   constructor(
     private router: Router,
@@ -67,13 +69,32 @@ export class DetalleLotesComponent implements OnInit {
       return;
     }
 
-    this.loteService.obtenerLotePorId(id).subscribe({
+  //   this.loteService.obtenerLotePorId(id).subscribe({
+  //     next: (data) => {
+  //       if (!data) {
+  //         this.mostrarMensaje('Lote no encontrado', 'error-snackbar');
+  //         this.volver();
+  //       } else {
+  //         this.lote = data;
+  //       }
+  //       this.isLoading = false;
+  //     },
+  //     error: (error) => {
+  //       console.error("Error en la API:", error);
+  //       this.errorMessage = 'Error al cargar la solicitud';
+  //       this.isLoading = false;
+  //       this.mostrarMensaje(this.errorMessage, 'error-snackbar');
+  //     }
+  //   });
+  // }
+    this.loteService.obtenerLoteConEncomiendas(id).subscribe({
       next: (data) => {
-        if (!data) {
+        if (!data.lote) {
           this.mostrarMensaje('Lote no encontrado', 'error-snackbar');
           this.volver();
         } else {
-          this.lote = data;
+          this.lote = data.lote;
+          this.encomiendas = data.encomiendas;
         }
         this.isLoading = false;
       },
@@ -85,7 +106,6 @@ export class DetalleLotesComponent implements OnInit {
       }
     });
   }
-
   volver(): void {
     this.router.navigate(['lotes/']);
   }

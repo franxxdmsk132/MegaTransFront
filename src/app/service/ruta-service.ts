@@ -4,13 +4,15 @@ import { TokenService } from './token.service';
 import { catchError, Observable, throwError } from 'rxjs';
 import { Rutas } from '../Rutas/rutas';  // Asegúrate de importar correctamente la interfaz Rutas
 import { MatSnackBar } from '@angular/material/snack-bar';
+import {environment} from '../../environments/environment';
 
 @Injectable({
   providedIn: 'root',
 })
 export class RutaService {
-  rutasUrl2 = 'http://104.196.61.204:8080/rutas';
-  rutasUrl = 'http://192.168.0.103:8080/rutas';
+  //rutasUrl = 'https://8cde-45-236-151-3.ngrok-free.app/rutas';
+  //rutasUrl2 = 'http://192.168.0.103:8080/rutas';
+  private rutasUrl = environment.apiUrl + "/rutas";
 
 
   constructor(
@@ -21,15 +23,16 @@ export class RutaService {
 
   private getAuthHeaders(): HttpHeaders {
     const token = this.tokenService.getToken();
-    console.log('Token de Autenticación:', token); // Agrega este log para depuración
     return new HttpHeaders({
       Authorization: `Bearer ${token}`,
+      'ngrok-skip-browser-warning': 'true'  // Agregar este encabezado en cada solicitud
     });
   }
 
   // Cambiar el tipo de retorno a Observable<Rutas[]>
   getRutas(): Observable<Rutas[]> {
-    return this.httpClient.get<Rutas[]>(this.rutasUrl, { headers: this.getAuthHeaders() }).pipe(
+    const headers = this.getAuthHeaders(); // Combinar headers
+    return this.httpClient.get<Rutas[]>(this.rutasUrl, { headers}).pipe(
       catchError((error) => {
         this.showSnackbar(error.error.message, 'Error');
         return throwError(error);
@@ -39,7 +42,8 @@ export class RutaService {
 
   // Los otros métodos pueden mantenerse igual, ya que no presentan el mismo problema de tipo
   getRuta(id: number): Observable<Rutas> {
-    return this.httpClient.get<Rutas>(`${this.rutasUrl}/${id}`, { headers: this.getAuthHeaders() }).pipe(
+    const headers = this.getAuthHeaders(); // Combinar headers
+    return this.httpClient.get<Rutas>(`${this.rutasUrl}/${id}`, { headers }).pipe(
       catchError((error) => {
         this.showSnackbar(error.error.message, 'Error');
         return throwError(error);
@@ -48,13 +52,23 @@ export class RutaService {
   }
 
   addRuta(ruta: Rutas): Observable<Rutas> {
-    return this.httpClient.post<Rutas>(this.rutasUrl, ruta, { headers: this.getAuthHeaders() }).pipe(
+    const headers = this.getAuthHeaders(); // Combinar headers
+    return this.httpClient.post<Rutas>(this.rutasUrl, ruta, { headers }).pipe(
       catchError((error) => {
         this.showSnackbar(error.error.message, 'Error');
         return throwError(error);
       })
     );
   }
+  // addRuta(ruta: Rutas): Observable<Rutas> {
+  //   const headers = this.getAuthHeaders().set('ngrok-skip-browser-warning', 'true'); // Combinar headers
+  //   return this.httpClient.post<Rutas>(this.rutasUrl, ruta, { headers: this.getAuthHeaders() }).pipe(
+  //     catchError((error) => {
+  //       this.showSnackbar(error.error.message, 'Error');
+  //       return throwError(error);
+  //     })
+  //   );
+  // }
 
   deleteRuta(id: number): Observable<void> {
     return this.httpClient.delete<void>(`${this.rutasUrl}/${id}`, { headers: this.getAuthHeaders() }).pipe(
@@ -66,7 +80,8 @@ export class RutaService {
   }
 
   updateRuta(id: number, ruta: Rutas): Observable<Rutas> {
-    return this.httpClient.put<Rutas>(`${this.rutasUrl}/${id}`, ruta, { headers: this.getAuthHeaders() }).pipe(
+    const headers = this.getAuthHeaders(); // Combinar headers
+    return this.httpClient.put<Rutas>(`${this.rutasUrl}/${id}`, ruta, { headers }).pipe(
       catchError((error) => {
         this.showSnackbar(error.error.message, 'Error');
         return throwError(error);

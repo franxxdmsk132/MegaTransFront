@@ -1,14 +1,16 @@
 import {Injectable} from '@angular/core';
 import {HttpClient} from '@angular/common/http';
 import {Observable} from 'rxjs';
-import {NuevoUsuario} from '../models/nuevo-usuario';
+import {NuevoUsuario} from '../Seguridad/models/nuevo-usuario';
+import {environment} from '../../environments/environment';
 
 @Injectable({
   providedIn: 'root'
 })
 export class EmpleadoService {
-  empleadoUrl2 = 'http://104.196.61.204:8080/auth/';
-  empleadoUrl = 'http://192.168.0.103:8080/auth/';
+  //empleadoUrl = 'https://3298-45-236-151-3.ngrok-free.app/auth/';
+  //empleadoUrl2 = 'http://192.168.0.103:8080/auth/';
+  private empleadoUrl = environment.apiUrl + "/auth/";
 
 constructor(private http: HttpClient) {}
   public listar():Observable<NuevoUsuario[]> {

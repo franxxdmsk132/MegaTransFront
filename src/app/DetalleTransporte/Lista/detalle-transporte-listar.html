@@ -56,6 +56,9 @@
       <button mat-fab color="primary" class="add-btn transporte-label2 " (click)="obtenerDetallesTransporte()">
         <mat-icon class="mat-icon1">autorenew</mat-icon>
       </button>
+      <button mat-fab color="primary" class="add-btn2 transporte-label2 " *ngIf="isAdmin  || isEmpl "  (click)="obtenerExcel()">
+        <mat-icon class="mat-icon1">description</mat-icon>
+      </button>
       <mat-card *ngIf="!isLoading && dataFiltrada.length === 0" class="error-card">
         <mat-card-content>
           <p>No se encontraron detalles de Transporte.</p>

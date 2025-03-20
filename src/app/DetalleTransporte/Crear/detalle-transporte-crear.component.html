@@ -1,15 +1,22 @@
 <app-menu>
   <div style="display: flex; align-items: center;">
-    <form [formGroup]="detalleForm" (ngSubmit)="onSubmit()">
+    <form [formGroup]="detalleForm" (ngSubmit)="onSubmit2()">
 
 
       <mat-label><h3>Tipo de Servicio:</h3></mat-label>
 
-      <mat-chip-listbox formControlName="tipoServicio">
-        <mat-chip-option value="MUDANZA" class="mudanza-chip"><b>Mudanza</b></mat-chip-option>
-        <mat-chip-option value="MERCADERIA" class="desalojo-chip"><b>Desalojo</b></mat-chip-option>
-        <mat-chip-option value="DISTRIBUCION" class="distribucion-chip"><b>Distribución</b></mat-chip-option>
+      <mat-chip-listbox formControlName="tipoServicio" [(ngModel)]="selectedOption">
+        <mat-chip-option value="MUDANZA" class="mudanza-chip">
+          <b style="color: #ffffff;">Mudanza</b>
+        </mat-chip-option>
+        <mat-chip-option value="MERCADERIA" class="desalojo-chip"><b style="color: #ffffff;">Desalojo</b>
+        </mat-chip-option>
+        <mat-chip-option value="DISTRIBUCION" class="distribucion-chip"><b style="color: #ffffff;">Distribución</b>
+        </mat-chip-option>
+        <mat-chip-option value="GRUA" class="distribucion-chip"><b style="color: #ffffff;">Grua</b>
+        </mat-chip-option>
       </mat-chip-listbox>
+      <span *ngIf="selectedOption">Ha solicitado: {{ selectedOption }}</span>
 
 
       <br>
@@ -74,7 +81,7 @@
       </mat-form-field>
 
 
-      <h3>Seleccione el Punto de Inicio:</h3>
+      <h3>Seleccione el Punto de Inicio en el Mapa:</h3>
       <div id="mapOrigen" style="height: 220px; width: 100%;"></div>
       <!-- Dirección de Origen -->
       <br>
@@ -117,7 +124,7 @@
       <mat-divider></mat-divider>
 
       <!-- Mapa para Dirección de Destino -->
-      <h3>Seleccione el Lugar de Destino</h3>
+      <h3>Seleccione en el mapa el Lugar de Entrega</h3>
       <div id="mapDestino" style="height: 220px; width: 100%;"></div>
       <br>
       <!-- Dirección de Destino -->
@@ -153,18 +160,17 @@
             <input matInput id="referenciaDestino" formControlName="referencia" type="text">
           </mat-form-field>
           <mat-form-field appearance="fill" class="full-width">
-            <mat-label>Teléfono:</mat-label>
+            <mat-label>Celular:</mat-label>
             <input matInput id="telefonoDestino" formControlName="telefono"
                    type="text" maxlength="10" pattern="^[0-9]{10}$" inputmode="numeric">
           </mat-form-field>
-
 
 
         </div>
       </div>
 
       <mat-form-field appearance="fill" class="full-width">
-        <mat-label>Fecha y Hora para el transporte</mat-label>
+        <mat-label>Indique la Fecha y la Hora</mat-label>
         <input matInput id="descripcionProducto" formControlName="descripcionProducto" type="text">
       </mat-form-field>
 
@@ -174,10 +180,13 @@
       <mat-chip-listbox
         class="chip-container"
         formControlName="pago"
+        [(ngModel)]="selectedOptionP"
         aria-label="Selecciona un tipo de Pago">
-        <mat-chip-option value="EFECTIVO" class="efectivo-chip">Efectivo</mat-chip-option>
-        <mat-chip-option value="TRANSFERENCIA" class="transferencia-chip">Transferencia</mat-chip-option>
+        <mat-chip-option value="EFECTIVO" class="efectivo-chip"><b style="color: #ffffff">Efectivo</b></mat-chip-option>
+        <mat-chip-option value="TRANSFERENCIA" class="transferencia-chip"><b style="color: #ffffff">Transferencia</b>
+        </mat-chip-option>
       </mat-chip-listbox>
+      <span *ngIf="selectedOptionP">Ha seleccionado: {{ selectedOptionP }}</span>
 
 
       <br><br>
@@ -185,7 +194,7 @@
       <div style="text-align: center">
         <!--        <button mat-raised-button type="submit" class="custom-button3" [disabled]="detalleForm.invalid">Crear Solicitud de Transporte</button>-->
         <button mat-raised-button type="submit" class="custom-button3" [disabled]="isSubmitting">
-          Enviar Solicitud
+          Consultar Precio del transporte
         </button>
 
       </div>
