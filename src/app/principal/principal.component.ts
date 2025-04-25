@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, inject, OnInit } from '@angular/core';
 import { TokenService } from '../service/token.service';
 import { MenuComponent } from '../menu/menu.component';
 import { NgIf } from '@angular/common';
@@ -19,6 +19,8 @@ import {DetalleComponent} from '../Encomiendas/detalle/detalle.component';
 import {AuthService} from '../service/auth.service';
 import {VersionService} from '../service/version-service';
 import {UpdateDialogComponentComponent} from './update-dialog-component/update-dialog-component.component';
+import { PushNotificationService } from '../service/push-notification.service';
+import { Platform } from '@angular/cdk/platform';
 
 @Component({
   selector: 'app-principal',
@@ -42,6 +44,8 @@ import {UpdateDialogComponentComponent} from './update-dialog-component/update-d
 })
 export class PrincipalComponent implements OnInit {
   currentVersion: string = '1.0.0' ; // Versión actual de la app (configura esto dinámicamente si es necesario)
+  private readonly _pushNotificationSvc = inject(PushNotificationService);
+  private readonly platform = inject(Platform);
   isLogged = false;
   isAdmin =false;
   nombreUsuario = '';
@@ -72,6 +76,9 @@ export class PrincipalComponent implements OnInit {
       this.isLogged = true;
       this.nombreCompleto = this.tokenService.getFullName();
       this.nombreComercial = this.tokenService.getNombreComercial();
+      if (this.platform.ANDROID) {
+        this._pushNotificationSvc.initPush();
+      }
 
     } else {
       this.isLogged = false;

@@ -1,20 +1,22 @@
 import { Component, OnInit } from '@angular/core';
-import {Router, RouterLink} from '@angular/router';
-import {LoginUsuario} from '../../Seguridad/models/login-usuario';
-import {TokenService} from '../../service/token.service';
-import {AuthService} from '../../service/auth.service';
-import {ToastrService} from 'ngx-toastr';
-import {FormsModule} from '@angular/forms';
-import {MenuComponent} from '../../menu/menu.component';
-import {NgClass, NgIf, NgOptimizedImage} from '@angular/common';
-import {MatCard, MatCardContent, MatCardHeader} from '@angular/material/card';
-import {MatTab, MatTabGroup} from '@angular/material/tabs';
-import {MatAnchor, MatButton, MatIconButton} from '@angular/material/button';
-import {MatError, MatFormField, MatLabel, MatSuffix} from '@angular/material/form-field';
-import {MatInput} from '@angular/material/input';
-import {Mensaje} from '../../Seguridad/models/mensaje';
-import {MatSnackBar} from '@angular/material/snack-bar';
-import {MatIcon, MatIconModule} from '@angular/material/icon';
+import { Router, RouterLink } from '@angular/router';
+import { LoginUsuario } from '../../Seguridad/models/login-usuario';
+import { TokenService } from '../../service/token.service';
+import { AuthService } from '../../service/auth.service';
+import { FormsModule } from '@angular/forms';
+import { MenuComponent } from '../../menu/menu.component';
+import { NgClass, NgIf } from '@angular/common';
+import { MatCard, MatCardContent } from '@angular/material/card';
+import { MatButton, MatIconButton } from '@angular/material/button';
+import {
+  MatError,
+  MatFormField,
+  MatLabel,
+  MatSuffix,
+} from '@angular/material/form-field';
+import { MatInput } from '@angular/material/input';
+import { MatSnackBar } from '@angular/material/snack-bar';
+import { MatIcon, MatIconModule } from '@angular/material/icon';
 
 @Component({
   selector: 'app-login',
@@ -36,19 +38,18 @@ import {MatIcon, MatIconModule} from '@angular/material/icon';
     MatIconButton,
     MatIcon,
     MatIconModule,
-    MatSuffix
+    MatSuffix,
   ],
-  standalone: true
+  standalone: true,
 })
 export class LoginComponent implements OnInit {
-
   isLogged = false;
   isLoginFail = false;
   loginUsuario!: LoginUsuario;
-  nombreUsuario: string ="";
-  password: string ="";
+  nombreUsuario: string = '';
+  password: string = '';
   roles: string[] = [];
-  errMsj: string ="";
+  errMsj: string = '';
   hidePassword = true;
 
   togglePasswordVisibility() {
@@ -59,8 +60,8 @@ export class LoginComponent implements OnInit {
     private tokenService: TokenService,
     private authService: AuthService,
     private router: Router,
-    private snackBar: MatSnackBar,
-  ) { }
+    private snackBar: MatSnackBar
+  ) {}
 
   ngOnInit() {
     if (this.tokenService.getToken()) {
@@ -73,7 +74,7 @@ export class LoginComponent implements OnInit {
   onLogin(): void {
     this.loginUsuario = new LoginUsuario(this.nombreUsuario, this.password);
     this.authService.login(this.loginUsuario).subscribe(
-      data => {
+      (data) => {
         this.isLogged = true;
         this.tokenService.setToken(data.token ?? '');
         this.tokenService.setUserName(data.nombreUsuario ?? '');
@@ -89,13 +90,14 @@ export class LoginComponent implements OnInit {
           duration: 3000, // Duración del snackbar (en milisegundos)
           horizontalPosition: 'center', // Posición horizontal (puedes usar 'start', 'center', 'end')
           verticalPosition: 'top', // Posición vertical (puedes usar 'top' o 'bottom')
-          panelClass: ['snack-success'] // Clase personalizada para darle estilo al snackbar
+          panelClass: ['snack-success'], // Clase personalizada para darle estilo al snackbar
         });
+
 
 
         this.router.navigate(['/']);
       },
-      err => {
+      (err) => {
         this.isLogged = false;
 
         // Mostrar el mensaje de error desde el backend
@@ -106,12 +108,9 @@ export class LoginComponent implements OnInit {
           duration: 3000,
           horizontalPosition: 'center',
           verticalPosition: 'top',
-          panelClass: ['snack-error'] // Clase personalizada para el error
+          panelClass: ['snack-error'], // Clase personalizada para el error
         });
-
       }
     );
   }
-
-
 }
