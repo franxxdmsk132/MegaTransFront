@@ -1,4 +1,4 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, inject, OnInit} from '@angular/core';
 import {MenuComponent} from '../../menu/menu.component';
 import {FormArray, FormBuilder, FormGroup, ReactiveFormsModule, Validators} from '@angular/forms';
 import {MatSnackBar} from '@angular/material/snack-bar';
@@ -20,7 +20,7 @@ import {Rutas} from '../../Rutas/rutas';
 import {RutaService} from '../../service/ruta-service';
 import {MatOption, MatSelect} from '@angular/material/select';
 import {MatAutocomplete, MatAutocompleteTrigger} from '@angular/material/autocomplete';
-import {map, Observable, startWith} from 'rxjs';
+import {map, Observable, startWith, Subscription} from 'rxjs';
 import {
   MatCell, MatCellDef,
   MatColumnDef,
@@ -33,6 +33,8 @@ import {
 import {MatIcon} from '@angular/material/icon';
 import {MatChipListbox, MatChipOption} from "@angular/material/chips";
 import {MatDivider} from '@angular/material/divider';
+import { WebsocketService } from '../../service/websocket.service';
+import { WaitingForApprovalComponent } from '../../blocking-modal/waiting-for-approval.component';
 
 @Component({
   selector: 'app-crear',
@@ -65,6 +67,7 @@ import {MatDivider} from '@angular/material/divider';
   styleUrl: './crear.component.css'
 })
 export class CrearComponent implements OnInit {
+  private readonly _wsSvc: WebsocketService = inject(WebsocketService);
   displayedColumns: string[] = ['tipoProducto', 'alto', 'ancho', 'largo', 'peso', 'fragil', 'acciones'];
   selectedOption: string | null = null;
   detalleEncomienda: FormGroup;
@@ -176,6 +179,7 @@ export class CrearComponent implements OnInit {
     }
   }
   onSubmit2(): void {
+    // Aquí puedes agregar la lógica para enviar el mensaje al WebSocket);
     if (this.detalleEncomienda.valid) {
       this.isSubmitting = true;
 
@@ -184,18 +188,41 @@ export class CrearComponent implements OnInit {
       this.detalleEncomiendaService.crearDetalleEncomienda(this.detalleEncomienda.value).subscribe({
         next: (response) => {
 
-          const {numGuia, fecha} = response;
+          const {id, numGuia, fecha} = response;
           this.detalleEncomienda.patchValue({
             numGuia: numGuia,
             fecha: fecha
           });
-          this.snackBar.open('Encomienda creada con éxito', 'Cerrar', {
-            duration: 3000,
-            horizontalPosition: 'center',
-            verticalPosition: 'top',
+
+          this._wsSvc.sendRequest({
+            encomienda: id,
+            estado: false,
+            username: this.token.getFullName() || 'Usuario no disponible',
+            email: this.token.getUserName() || 'Email no disponible',
           });
 
-          this.router.navigate(['/listaEncomienda']);
+          const dialogRef = this.dialog.open(WaitingForApprovalComponent, {
+            disableClose: true,
+          });
+
+          this._wsSvc.adminMessage$.subscribe((message) => {
+            dialogRef.close();
+            if (message.estado) {
+              this.snackBar.open('Solicitud aceptada', 'Cerrar', {
+                duration: 3000,
+                horizontalPosition: 'center',
+                verticalPosition: 'top',
+              });
+            } else {
+              this.snackBar.open('Solicitud denegada', 'Cerrar', {
+                duration: 3000,
+                horizontalPosition: 'center',
+                verticalPosition: 'top',
+              });
+            }
+          });
+
+           this.router.navigate(['/listaEncomienda']);
 
           // Enviar mensaje a WhatsApp
           this.enviarAWhatsapp();
