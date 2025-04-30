@@ -21,6 +21,7 @@ import {VersionService} from '../service/version-service';
 import {UpdateDialogComponentComponent} from './update-dialog-component/update-dialog-component.component';
 import { PushNotificationService } from '../service/push-notification.service';
 import { Platform } from '@angular/cdk/platform';
+import {MatSnackBar} from '@angular/material/snack-bar';
 
 @Component({
   selector: 'app-principal',
@@ -48,11 +49,14 @@ export class PrincipalComponent implements OnInit {
   private readonly platform = inject(Platform);
   isLogged = false;
   isAdmin =false;
+  isEmpl = false
+  isUser = false
+  isDesp =false
   nombreUsuario = '';
   nombreCompleto = '';
   nombreComercial = '';
   usuarioCount = 0;
-
+  notifications: string = '';
 
   constructor(private tokenService: TokenService,
               private dialog: MatDialog,
@@ -60,9 +64,11 @@ export class PrincipalComponent implements OnInit {
               private detalleTransporteService: DetalleTransporteService,
               private detalleEncomiendaService: DetalleEncomiendaService,
               private authService: AuthService,
-              private versionService: VersionService,) { }
+              private versionService: VersionService,
+              private snackBar : MatSnackBar) { }
 
   ngOnInit(): void {
+
     this.checkAppVersion(); // Verificamos la versión al iniciar
     this.authService.getCountUsuarios().subscribe(
       countUsuarios => {
@@ -76,6 +82,9 @@ export class PrincipalComponent implements OnInit {
       this.isLogged = true;
       this.nombreCompleto = this.tokenService.getFullName();
       this.nombreComercial = this.tokenService.getNombreComercial();
+      this.isEmpl = this.isLogged && this.tokenService.isEmpl();
+      this.isDesp= this.isLogged && this.tokenService.isDesp();
+      this.isUser = this.isLogged && this.tokenService.isUser();
       if (this.platform.ANDROID) {
         this._pushNotificationSvc.initPush();
       }
@@ -87,6 +96,7 @@ export class PrincipalComponent implements OnInit {
 
     }
     this.isAdmin = this.isLogged && this.tokenService.isAdmin();
+
   }
 
   // Método para verificar la versión de la aplicación

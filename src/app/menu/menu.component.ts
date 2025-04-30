@@ -29,6 +29,8 @@ export class MenuComponent implements OnInit {
   isLogged = false;
   isAdmin = false;
   isEmpl = false;
+  isDesp = false;
+  isUser = false
 
   constructor(private tokenService: TokenService) {}
 
@@ -36,6 +38,9 @@ export class MenuComponent implements OnInit {
     this.isLogged = !!this.tokenService.getToken();
     this.isAdmin = this.isLogged && this.tokenService.isAdmin();
     this.isEmpl = this.isLogged && this.tokenService.isEmpl();
+    this.isDesp= this.isLogged && this.tokenService.isDesp();
+    this.isUser = this.isLogged && this.tokenService.isUser();
+
   }
 
   onLogOut(): void {

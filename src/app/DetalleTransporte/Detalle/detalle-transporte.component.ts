@@ -21,6 +21,7 @@ import {DatePipe, NgIf} from '@angular/common';
 import {MatDivider} from '@angular/material/divider';
 import {MatSnackBar} from '@angular/material/snack-bar';
 import {MatProgressSpinner} from '@angular/material/progress-spinner';
+import {TokenService} from '../../service/token.service';
 
 @Component({
   selector: 'app-Detalle',
@@ -46,13 +47,17 @@ import {MatProgressSpinner} from '@angular/material/progress-spinner';
 export class DetalleTransporteComponent implements  OnInit{
 
   detalleTransporte: any = {};  // Inicialización con objeto vacío
-
+  isAdmin = false;
+  isEmpl = false
+  isDesp = false
+  isLogged = false;
   constructor(
     private detalleTransporteService: DetalleTransporteService,
     private router: Router,
     private toastr: ToastrService,
     private activatedRoute: ActivatedRoute,
-    private snackBar:MatSnackBar
+    private snackBar:MatSnackBar,
+    private tokenService: TokenService
   ) {
   }
 
@@ -60,6 +65,11 @@ export class DetalleTransporteComponent implements  OnInit{
   isLoading = true;
   errorMessage: string | undefined;
   ngOnInit(): void {
+    this.isLogged = !!this.tokenService.getToken();
+    this.isAdmin = this.isLogged && this.tokenService.isAdmin();
+    this.isEmpl = this.isLogged && this.tokenService.isEmpl();
+    this.isDesp= this.isLogged && this.tokenService.isDesp();
+
     const id = this.activatedRoute.snapshot.params['id'];
     console.log("ID recibido:", id); // Verifica si el ID es correcto
 

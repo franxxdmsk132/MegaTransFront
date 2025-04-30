@@ -9,6 +9,7 @@
 
 
         <mat-card-content>
+          <h1>Registo de Empleado</h1>
           <form #f="ngForm" (ngSubmit)="onRegister()" novalidate enctype="multipart/form-data">
             <mat-form-field class="full-width">
               <mat-label>Nombre</mat-label>
@@ -22,18 +23,28 @@
 
             <mat-form-field class="full-width">
               <mat-label>Identificación</mat-label>
-              <input matInput type="text" name="identificacion" id="identificacion" [(ngModel)]="identificacion" required>
+              <input matInput type="text" name="identificacion" id="identificacion" maxlength="13" minlength="10" inputmode="numeric" [(ngModel)]="identificacion"
+                     required>
             </mat-form-field>
-
             <mat-form-field class="full-width">
               <mat-label>Teléfono</mat-label>
-              <input matInput type="text" name="telefono" id="telefono" [(ngModel)]="telefono" required>
+              <input matInput type="text" name="telefono" id="telefono" pattern="^[0-9]{10}$"  maxlength="10" inputmode="numeric" [(ngModel)]="telefono" required>
             </mat-form-field>
 
             <mat-form-field class="full-width">
-              <mat-label>Nombre de Usuario</mat-label>
-              <input matInput type="text" name="nombreUsuario" id="nombreUsuario" [(ngModel)]="nombreUsuario" required>
+              <mat-label>Correo</mat-label>
+              <input
+                matInput
+                type="email"
+                name="nombreUsuario"
+                id="nombreUsuario"
+                [(ngModel)]="nombreUsuario"
+                required
+                pattern="^[^@\s]+@[^@\s]+\.[^@\s]+$"
+              >
             </mat-form-field>
+
+
 
             <mat-form-field class="full-width">
               <mat-label>Contraseña</mat-label>
@@ -42,7 +53,8 @@
 
             <div class="button-container">
               <button mat-raised-button color="primary" class="full-width" [disabled]="!f.valid">
-                <mat-icon>person_add</mat-icon> Crear Cuenta
+                <mat-icon>person_add</mat-icon>
+                Crear Cuenta
               </button>
             </div>
           </form>

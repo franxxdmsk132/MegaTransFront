@@ -16,8 +16,9 @@
         <div *ngIf="isLogged; else loggedOut">
           <!-- Verificamos si nombreComercial existe -->
           <div style="text-align: center">
+            <h2>¡Bienvenido!</h2>
             <h2 *ngIf="nombreComercial && nombreComercial.trim() !== ''" class="nombre-comercial">
-              ¡Bienvenido {{ nombreComercial }}!
+               {{ nombreComercial }}
               <h6>{{ nombreCompleto }}</h6>
             </h2>
 
@@ -33,10 +34,10 @@
           <h3>Selecciona el servicio que nesecitas: </h3>
 
           <div class="button-grid">
-            <button mat-raised-button class="custom-button" routerLink="/crearEncomienda">
+            <button mat-raised-button class="custom-button" routerLink="/crearEncomienda" *ngIf=" isAdmin  || isEmpl || isUser" >
               Encomiendas
             </button>
-            <button mat-raised-button class="custom-button" routerLink="/crearDetalleTransporte">
+            <button mat-raised-button class="custom-button" routerLink="/crearDetalleTransporte" *ngIf=" isAdmin  || isEmpl || isUser">
               Transporte
             </button>
             <!--            <button mat-raised-button class="custom-button" routerLink="/detalleEncomienda">-->
@@ -45,7 +46,7 @@
             <button mat-raised-button class="custom-button" (click)="openSearchDialog()">
               Búsqueda
             </button>
-            <button mat-raised-button class="custom-button" *ngIf="isAdmin" (click)="openQrScanner()">
+            <button mat-raised-button class="custom-button" *ngIf="isAdmin || isDesp" (click)="openQrScanner()">
               QR
             </button>
 

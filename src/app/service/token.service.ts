@@ -96,6 +96,13 @@ export class TokenService {
     return this.getAuthorities().includes('ROLE_EMPL');
   }
 
+  public isDesp(): boolean {
+    return this.getAuthorities().includes('ROLE_DESP');
+  }
+  public isUser(): boolean {
+    return this.getAuthorities().includes('ROLE_USER');
+  }
+
   public logOut(): void {
     window.localStorage.clear();
   }

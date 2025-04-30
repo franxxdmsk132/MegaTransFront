@@ -6,26 +6,14 @@ const config: CapacitorConfig = {
   webDir: 'dist/mega-trans-front',
   server: {
     cleartext: true,
-    allowNavigation: ['3f5d-45-236-151-3.ngrok-free.app', 'localhost', 'localhost:8080', '10.0.2.2:8080', '192.168.1.176:8080'],
-    //allowNavigation: ['104.196.61.204'],
+    allowNavigation: ['e494-45-236-151-3.ngrok-free.app'],
     androidScheme: 'http'
   },
-  plugins: {
+  plugins:{
     PushNotifications: {
-      presentationOptions: ['alert', 'badge', 'sound'],
+      presentationOptions: ['badge', 'sound', 'alert']
     }
   }
-  // },
-  // plugins: {
-  //   Camera: {
-  //     permissions: {
-  //       ios: 'camera',
-  //       android: 'CAMERA'
-  //     }
-  //   }
-  // }
 
 };
-
-
 export default config;

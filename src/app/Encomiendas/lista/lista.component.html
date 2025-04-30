@@ -93,7 +93,7 @@
           <button mat-flat-button class="transporte-label" (click)="visualizarDetalle(element)">Ver más</button>
 
           <!-- Botón para cambiar el estado -->
-          <button mat-flat-button class="transporte-label1" *ngIf="isAdmin || isEmpl"  (click)="abrirDialogoEstado(element)">Cambiar Estado</button>
+          <button mat-flat-button class="transporte-label1" *ngIf="isAdmin || isEmpl || isDesp"  (click)="abrirDialogoEstado(element)">Cambiar Estado</button>
         </mat-card-actions>
       </mat-card>
       <!-- Botón de añadir unidad -->

@@ -8,10 +8,11 @@ import {
 import { environment } from '../../environments/environment';
 import { HttpClient } from '@angular/common/http';
 import { TokenService } from './token.service';
-import { AdminRequest, WebsocketService } from './websocket.service';
+import { AdminRequest,AdminRequestTransporte, WebsocketService } from './websocket.service';
 import { MatDialog } from '@angular/material/dialog';
 import { Subscription } from 'rxjs';
 import { BlockingModalComponent } from '../blocking-modal/blocking-modal.component';
+import {BlockingModalTransporteComponent} from '../blocking-modal/blocking-modal-transporte.component';
 
 @Injectable({
   providedIn: 'root',
@@ -50,36 +51,122 @@ export class PushNotificationService {
     );
 
     // 6. Notificación abierta desde background
+    // PushNotifications.addListener(
+    //   'pushNotificationActionPerformed',
+    //   (action: ActionPerformed) => {
+    //     const rawData = action.notification?.data?.data;
+    //
+    //     if (!rawData) {
+    //       alert('Su solicitud ya fue revisada!');
+    //       //alert('No se encontró la data en la notificación');
+    //       return;
+    //     }
+    //
+    //     try {
+    //       const parsedData = typeof rawData === 'string' ? JSON.parse(rawData) : rawData;
+    //
+    //       // Detectar si es encomienda o transporte
+    //       const isTransporte = parsedData.hasOwnProperty('transporte');
+    //       //
+    //       // const dialogRef = this._dialog.open(BlockingModalComponent, {
+    //       //   data: parsedData,
+    //       //   disableClose: true,
+    //       // });
+    //       //
+    //       // dialogRef.afterClosed().subscribe((result: 'accepted' | 'denied') => {
+    //       //   parsedData.estado = result === 'accepted';
+    //       //   if (isTransporte) {
+    //       //     this._wsSvc.sendTransporteResponse(parsedData as AdminRequestTransporte);
+    //       //     console.log('🚚 Solicitud de TRANSPORTE abierta desde notificación');
+    //       //
+    //       //   } else {
+    //       //     this._wsSvc.sendResponse(parsedData as AdminRequest);
+    //       //     console.log('📦 Solicitud de ENCOMIENDA abierta desde notificación');
+    //       //
+    //       //   }
+    //       // });
+    //       if (isTransporte) {
+    //         console.log('🚚 Solicitud de TRANSPORTE abierta desde notificación');
+    //         const dialogRef = this._dialog.open(BlockingModalTransporteComponent, {
+    //           data: parsedData,
+    //           disableClose: true,
+    //         });
+    //
+    //         dialogRef.afterClosed().subscribe((result: 'accepted' | 'denied') => {
+    //           parsedData.estado = result === 'accepted';
+    //           this._wsSvc.sendTransporteResponse(parsedData as AdminRequestTransporte);
+    //         });
+    //
+    //       } else {
+    //         console.log('📦 Solicitud de ENCOMIENDA abierta desde notificación');
+    //         const dialogRef = this._dialog.open(BlockingModalComponent, {
+    //           data: parsedData,
+    //           disableClose: true,
+    //         });
+    //
+    //         dialogRef.afterClosed().subscribe((result: 'accepted' | 'denied') => {
+    //           parsedData.estado = result === 'accepted';
+    //           this._wsSvc.sendResponse(parsedData as AdminRequest);
+    //         });
+    //       }
+    //
+    //
+    //     } catch (error) {
+    //       alert(`Error al parsear la data de la notificación: ${error}`);
+    //     }
+    //
+    //   }
+    // );
+
+    //6.1
     PushNotifications.addListener(
       'pushNotificationActionPerformed',
       (action: ActionPerformed) => {
         const rawData = action.notification?.data?.data;
 
         if (!rawData) {
-          alert('No se encontró la data en la notificación');
+          alert('Su solicitud ya fue revisada o no se encontró la data.');
           return;
         }
-
-        let message: AdminRequest;
 
         try {
-          message = typeof rawData === 'string' ? JSON.parse(rawData) : rawData;
-        } catch (error) {
-          alert(`Error al parsear la data de la notificación ${error}`);
-          return;
-        }
+          const parsedData = typeof rawData === 'string' ? JSON.parse(rawData) : rawData;
+          console.log('📦 Datos parseados:', parsedData);
 
-        const dialogRef = this._dialog.open(BlockingModalComponent, {
-          data: message,
-          disableClose: true,
-        });
-  
-        dialogRef.afterClosed().subscribe((result: 'accepted' | 'denied') => {
-          message.estado = result === 'accepted';
-          this._wsSvc.sendResponse(message);
-        });
+          const isTransporte = 'transporte' in parsedData && parsedData.transporte !== undefined;
+
+          if (isTransporte) {
+            console.log('🚚 Abriendo modal de TRANSPORTE');
+            const dialogRef = this._dialog.open(BlockingModalTransporteComponent, {
+              data: parsedData,
+              disableClose: true,
+            });
+
+            dialogRef.afterClosed().subscribe((result: 'accepted' | 'denied') => {
+              parsedData.estado = result === 'accepted';
+              this._wsSvc.sendTransporteResponse(parsedData as AdminRequestTransporte);
+            });
+
+          } else {
+            console.log('📦 Abriendo modal de ENCOMIENDA');
+            const dialogRef = this._dialog.open(BlockingModalComponent, {
+              data: parsedData,
+              disableClose: true,
+            });
+
+            dialogRef.afterClosed().subscribe((result: 'accepted' | 'denied') => {
+              parsedData.estado = result === 'accepted';
+              this._wsSvc.sendResponse(parsedData as AdminRequest);
+            });
+          }
+        } catch (error) {
+          alert(`Error al parsear la notificación: ${error}`);
+        }
       }
     );
+
+
+
   }
 
   private sendTokenToServer(token: string) {

@@ -17,9 +17,29 @@ import { AdminRequest } from '../service/websocket.service';
     <mat-dialog-content>
       <p>
         El usuario <strong>{{ data.username }}</strong> ha enviado una
-        solicitud.
+        solicitud de encomienda.
       </p>
-      <p>Fecha: {{ data.fechaCreacion | date : 'medium' }}</p>
+      <p>🔢#Guia: {{ data.numGuia }}</p>
+      <p>📅Fecha: {{ data.fechaCreacion | date : 'medium' }}</p>
+      <p>🛣️Ruta: {{ data.ruta }}</p>
+      <p>📍Origen:
+        <a href="https://www.google.com/maps?q={{data.latitudOrg}},{{data.longitudOrg}}" target="_blank">
+          Ver en mapa
+        </a>
+      </p>
+      <p>📍Destino:
+        <a href="https://www.google.com/maps?q={{data.latitudDestino}},{{data.longitudDestino}}" target="_blank">
+          Ver en mapa
+        </a>
+      </p>
+      <p>
+        📞Teléfono:
+        <a [href]="'https://wa.me/593' + data.telf.slice(1)" target="_blank">
+          {{ data.telf }}
+        </a>
+      </p>
+
+
       <p>¿Desea aprobar esta solicitud?</p>
     </mat-dialog-content>
     <mat-dialog-actions align="end">

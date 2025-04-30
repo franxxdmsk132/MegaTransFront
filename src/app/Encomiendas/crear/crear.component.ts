@@ -8,8 +8,8 @@ import {TokenService} from '../../service/token.service';
 import {DetalleEncomiendaService} from '../../service/detalle-encomienda.service';
 import {MatButton, MatIconButton} from '@angular/material/button';
 import {MatCheckbox} from '@angular/material/checkbox';
-import {MatError, MatFormField, MatLabel} from '@angular/material/form-field';
-import {MatInput} from '@angular/material/input';
+import {MatError, MatFormField, MatFormFieldModule, MatLabel} from '@angular/material/form-field';
+import {MatInput, MatInputModule} from '@angular/material/input';
 import {MatRadioButton, MatRadioGroup} from '@angular/material/radio';
 import {AsyncPipe, NgForOf, NgIf} from '@angular/common';
 import {MatCard, MatCardContent, MatCardHeader, MatCardTitle} from '@angular/material/card';
@@ -35,6 +35,8 @@ import {MatChipListbox, MatChipOption} from "@angular/material/chips";
 import {MatDivider} from '@angular/material/divider';
 import { WebsocketService } from '../../service/websocket.service';
 import { WaitingForApprovalComponent } from '../../blocking-modal/waiting-for-approval.component';
+import {HttpClient} from '@angular/common/http';
+import {environment} from '../../../environments/environment';
 
 @Component({
   selector: 'app-crear',
@@ -62,7 +64,8 @@ import { WaitingForApprovalComponent } from '../../blocking-modal/waiting-for-ap
     MatChipListbox,
     MatChipOption,
     MatDivider,
-
+    MatInputModule,
+    MatFormFieldModule,
   ],
   styleUrl: './crear.component.css'
 })
@@ -81,6 +84,7 @@ export class CrearComponent implements OnInit {
 
   constructor(
     private fb: FormBuilder,
+    private http: HttpClient,
     private snackBar: MatSnackBar,
     private router: Router,
     private dialog: MatDialog,
@@ -98,9 +102,9 @@ export class CrearComponent implements OnInit {
       dirRemitente: ['', Validators.required],
       nombreD: ['', Validators.required],
       apellidoD: ['', Validators.required],
-      identificacionD: ['', [Validators.required, Validators.pattern("^[0-9]*$"), Validators.maxLength(13)]],
-      telfBeneficiario: ['', [Validators.required, Validators.pattern("^[0-9]*$"), Validators.maxLength(10)]],
-      telfEncargado: ['', [Validators.required, Validators.pattern("^[0-9]*$"), Validators.maxLength(10)]],
+      identificacionD: ['', [Validators.required, Validators.pattern("^[0-9]*$"), Validators.maxLength(13),Validators.minLength(10)]],
+      telfBeneficiario: ['', [Validators.required, Validators.pattern("^[0-9]*$"), Validators.maxLength(10),Validators.minLength(10)]],
+      telfEncargado: ['', [Validators.required, Validators.pattern("^[0-9]*$"), Validators.maxLength(10),Validators.minLength(10)]],
       correoD: ['', [Validators.required, Validators.email]],
       latitudDestino: ['', Validators.required],
       longitudDestino: ['', Validators.required],
@@ -188,17 +192,38 @@ export class CrearComponent implements OnInit {
       this.detalleEncomiendaService.crearDetalleEncomienda(this.detalleEncomienda.value).subscribe({
         next: (response) => {
 
-          const {id, numGuia, fecha} = response;
+          const {
+            id,
+            numGuia,
+            fecha,
+            ruta,
+            latitudOrg,
+            longitudOrg,
+            latitudDestino,
+            longitudDestino} = response;
           this.detalleEncomienda.patchValue({
             numGuia: numGuia,
-            fecha: fecha
+            fecha: fecha,
+            ruta : ruta,
+            latitudOrg: latitudOrg,
+            longitudOrg: longitudOrg,
+            latitudDestino: latitudDestino,
+            longitudDestino: longitudDestino
           });
 
           this._wsSvc.sendRequest({
             encomienda: id,
             estado: false,
+            ruta: ruta,
+            longitudOrg: longitudOrg,
+            latitudOrg: latitudOrg,
+            latitudDestino: latitudDestino,
+            longitudDestino: longitudDestino,
+            numGuia: numGuia,
             username: this.token.getFullName() || 'Usuario no disponible',
             email: this.token.getUserName() || 'Email no disponible',
+            telf: this.token.getTelefono() || 'Telefono no disponible',
+
           });
 
           const dialogRef = this.dialog.open(WaitingForApprovalComponent, {
@@ -356,11 +381,12 @@ export class CrearComponent implements OnInit {
     const telefonoDestino = '593997559093'; // Reemplaza con el número de WhatsApp de destino
 
     mensaje += `
+  - 📅 *Fecha:* _${detalles.fecha}_
   - 📄 *Número de Guia:* _${detalles.numGuia}_
   - 📄 *Ruta:* ${detalles.ruta}
   - 📄 *Cliente/Comercial:* ${nombreCompleto || 'No disponible'}, ${nombreComercial || 'No disponible'}\n
-  - 📍 *Mapa (Recoleccion):*    _[Ver Mapa de Recolección](https://www.google.com/maps?q=${detalles.latitudOrg},${detalles.longitudOrg})_
-  - 📍 *Mapa (Entrega):*   _[Ver Mapa de Entrega](https://www.google.com/maps?q=${detalles.latitudDestino},${detalles.longitudDestino})_
+  - 📍 *Mapa (Recoleccion):*    _(https://www.google.com/maps?q=${detalles.latitudOrg},${detalles.longitudOrg})_
+  - 📍 *Mapa (Entrega):*   _(https://www.google.com/maps?q=${detalles.latitudDestino},${detalles.longitudDestino})_
 
   - 💰 *Tipo Entrega:* ${detalles.tipoEntrega}
 `;
@@ -371,10 +397,10 @@ export class CrearComponent implements OnInit {
       mensaje += `
       *Productos:*
       *Tipo:* ${producto.tipoProducto},
-      *Alto:* ${producto.alto},
-      *Ancho:* ${producto.ancho},
-      *Largo:* ${producto.largo},
-      *Peso:* ${producto.peso},
+      *Alto:* ${producto.alto} cm,
+      *Ancho:* ${producto.ancho} cm,
+      *Largo:* ${producto.largo} cm,
+      *Peso:* ${producto.peso} kg,
       *Fragil:* ${producto.fragil ? 'Sí' : 'No'}\n`;
     });
 
@@ -386,7 +412,15 @@ export class CrearComponent implements OnInit {
     const urlWhatsApp = `https://api.whatsapp.com/send?phone=${telefonoDestino}&text=${mensajeCodificado}`;
 
     // Abrir el enlace en una nueva ventana
-    window.open(urlWhatsApp, '_blank');
+    // window.open(urlWhatsApp, '_blank');
+    // ENVÍA EL MENSAJE AL SERVIDOR
+    this.http.post(environment.chatbot + '/enviar-grupo', {
+      grupoId: '120363399820920449@g.us', // ID real del grupo que viste en consola
+      mensaje: mensaje
+    }).subscribe({
+      next: () => console.log('✅ Mensaje enviado correctamente'),
+      error: (err) => console.error('❌ Error al enviar mensaje', err)
+    });
   }
 
 

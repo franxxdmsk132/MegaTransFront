@@ -76,7 +76,7 @@
         </div>
 
         <ng-template #seleccionarUnidad>
-          <button mat-button class="custom-button" (click)="abrirDialogo()">Seleccione una Unidad</button>
+          <button type="button" mat-button class="custom-button" (click)="abrirDialogo()">Seleccione una Unidad</button>
         </ng-template>
       </mat-form-field>
 
@@ -115,8 +115,8 @@
           <input matInput id="referenciaOrigen" formControlName="referencia" type="text">
         </mat-form-field>
 
-        <mat-form-field appearance="fill">
-          <mat-label>Teléfono:</mat-label>
+        <mat-form-field appearance="fill" class="full-width">
+          <mat-label>Celular:</mat-label>
           <input matInput id="telefonoOrigen" formControlName="telefono"
                  type="text" maxlength="10" pattern="^[0-9]{10}$" inputmode="numeric">
         </mat-form-field>

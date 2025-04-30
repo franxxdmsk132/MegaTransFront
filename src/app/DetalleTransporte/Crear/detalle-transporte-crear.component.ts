@@ -1,4 +1,4 @@
-import {Component, OnInit, ViewEncapsulation} from '@angular/core';
+import {Component, inject, OnInit, ViewEncapsulation} from '@angular/core';
 import {FormBuilder, FormGroup, ReactiveFormsModule, Validators} from '@angular/forms';
 import {Router} from '@angular/router';
 import {DetalleTransporteService} from '../../service/detalle-transporte.service';
@@ -16,6 +16,10 @@ import {MatSlideToggle} from '@angular/material/slide-toggle';
 import {MatChipListbox, MatChipOption} from '@angular/material/chips';
 import {MatDivider} from '@angular/material/divider';
 import {MatSnackBar} from '@angular/material/snack-bar';
+import {WebsocketService} from '../../service/websocket.service';
+import {WaitingForApprovalComponent} from '../../blocking-modal/waiting-for-approval.component';
+import {HttpClient} from '@angular/common/http';
+import {environment} from '../../../environments/environment';
 
 @Component({
   selector: 'app-Detalle-transporte-crear',
@@ -38,6 +42,7 @@ import {MatSnackBar} from '@angular/material/snack-bar';
   standalone: true
 })
 export class CrearDetalleTransporteComponent implements OnInit {
+  private readonly _wsSvc: WebsocketService = inject(WebsocketService);
   detalleForm: FormGroup;
   selectedOption: string | null = null;
   selectedOptionP: string | null = null;
@@ -54,7 +59,8 @@ export class CrearDetalleTransporteComponent implements OnInit {
     private router: Router,
     private dialog: MatDialog,
     private token: TokenService,
-    private snackbar: MatSnackBar
+    private snackbar: MatSnackBar,
+    private http: HttpClient,
   ) {
     this.detalleForm = this.fb.group({
       numOrden: [''],
@@ -241,24 +247,80 @@ export class CrearDetalleTransporteComponent implements OnInit {
       this.detalleTransporteService.crearDetalleTransporte(this.detalleForm.value).subscribe({
         next: (response) => {
           // Supongamos que la respuesta tiene los campos numGuia y fecha
-          const {numOrden, fecha} = response;
+          const {
+            id,
+            numOrden,
+            fecha,
+            latitudO,
+            longitudO,
+            latitudD,
+            longitudD,
+            tipoServicio,
+            tipo_unidad,
+            cantidad_estibaje
+          } = response;
 
           // Actualizar el formulario con los valores recibidos
           this.detalleForm.patchValue({
             numOrden: numOrden,
             fecha: fecha
           });
-
-          // Mostrar mensaje de éxito
-          this.snackbar.open('Detalle de transporte creado con éxito', 'Cerrar', {
-            duration: 3000, // Duración en milisegundos (3 segundos)
-            horizontalPosition: 'center',
-            verticalPosition: 'top',
+          // Enviar solicitud por WebSocket
+          this._wsSvc.sendTransporteRequest({
+            transporte: id,
+            cantidad_estibaje:cantidad_estibaje,
+            estado: false,
+            username: this.token.getFullName() || 'Usuario no disponible',
+            email: this.token.getUserName() || 'Email no disponible',
+            telf: this.token.getTelefono() || 'Teléfono no disponible',
+            pago: this.detalleForm.value.pago,
+            numOrden: numOrden,
+            latitudO: latitudO,
+            longitudO: longitudO,
+            latitudD: latitudD,
+            longitudD: longitudD,
+            tipoServicio: tipoServicio,
+            tipo_unidad: tipo_unidad,
+            fechaCreacion: fecha
+          });
+          // Abrir componente de espera
+          const dialogRef = this.dialog.open(WaitingForApprovalComponent, {
+            disableClose: true,
           });
 
+
+          // // Mostrar mensaje de éxito
+          // this.snackbar.open('Detalle de transporte creado con éxito', 'Cerrar', {
+          //   duration: 3000, // Duración en milisegundos (3 segundos)
+          //   horizontalPosition: 'center',
+          //   verticalPosition: 'top',
+          // });
+
           // Redirigir a la lista de detalles
-          this.router.navigate(['/listarDetalleTransporte']);
-          this.enviarAWhatsapp();
+        //   this.router.navigate(['/listarDetalleTransporte']);
+        //   this.enviarAWhatsapp();
+        // },
+
+          // Escuchar la respuesta del administrador
+          this._wsSvc.transporteAdminMessage$.subscribe((message) => {
+            dialogRef.close();
+            if (message.estado) {
+              this.snackbar.open('Solicitud de transporte aceptada', 'Cerrar', {
+                duration: 3000,
+                horizontalPosition: 'center',
+                verticalPosition: 'top',
+              });
+            } else {
+              this.snackbar.open('Solicitud de transporte denegada', 'Cerrar', {
+                duration: 3000,
+                horizontalPosition: 'center',
+                verticalPosition: 'top',
+              });
+            }
+
+            this.router.navigate(['/listarDetalleTransporte']);
+            this.enviarAWhatsapp();
+          });
         },
         error: (err) => {
           // Mostrar mensaje de error
@@ -338,7 +400,15 @@ export class CrearDetalleTransporteComponent implements OnInit {
     const url = `https://wa.me/${telefono}?text=${mensajeCodificado}`;
 
     // Abrir el enlace en WhatsApp
-    window.open(url, '_blank');
+    // window.open(url, '_blank');
+    this.http.post(environment.chatbot + '/enviar-grupo', {
+      // grupoId: '120363192557526270@g.us', // ID real del grupo que viste en consola YoPerro
+      grupoId: '120363399820920449@g.us', // Megatrans - (apps)
+      mensaje: mensaje
+    }).subscribe({
+      next: () => console.log('✅ Mensaje enviado correctamente'),
+      error: (err) => console.error('❌ Error al enviar mensaje', err)
+    });
   }
 
 

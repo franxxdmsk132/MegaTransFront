@@ -65,6 +65,8 @@ import { saveAs } from 'file-saver';
 export class DetalleTransporteListarComponent implements OnInit {
   isAdmin = false;
   isEmpl = false
+  isDesp = false
+
   isLogged = false;
   isLoading = true;
   errorMessage: string | undefined;
@@ -91,6 +93,8 @@ export class DetalleTransporteListarComponent implements OnInit {
     this.isLogged = !!this.tokenService.getToken();
     this.isAdmin = this.isLogged && this.tokenService.isAdmin();
     this.isEmpl = this.isLogged && this.tokenService.isEmpl();
+    this.isDesp= this.isLogged && this.tokenService.isDesp();
+
 
   }
 
@@ -151,6 +155,9 @@ export class DetalleTransporteListarComponent implements OnInit {
         break;
       case 3:
         this.dataFiltrada = this.dataSource.data.filter(detalle => detalle.estado === 'MOVIMIENTO');
+        break;
+      case 4:
+        this.dataFiltrada = this.dataSource.data.filter(detalle => detalle.estado === 'CANCELADO');
         break;
       default:
         this.dataFiltrada = this.dataSource.data;

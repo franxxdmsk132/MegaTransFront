@@ -14,10 +14,10 @@
       <a mat-list-item routerLink="/" (click)="sidenav.close()">
         <mat-icon class="red-icon">dashboard</mat-icon><b>  Inicio</b>
       </a>
-      <a mat-list-item *ngIf="isLogged" routerLink="/crearDetalleTransporte" (click)="sidenav.close()">
+      <a mat-list-item *ngIf=" isAdmin  || isEmpl || isUser" routerLink="/crearDetalleTransporte" (click)="sidenav.close()">
         <mat-icon class="red-icon">local_shipping</mat-icon> <b>  Transporte</b>
       </a>
-      <a mat-list-item *ngIf="isLogged" routerLink="/crearEncomienda" (click)="sidenav.close()">
+      <a mat-list-item *ngIf=" isAdmin  || isEmpl || isUser" routerLink="/crearEncomienda" (click)="sidenav.close()">
         <mat-icon class="red-icon">local_shipping</mat-icon> <b>  Encomiendas</b>
       </a>
 <!--      <a mat-list-item *ngIf="isLogged" routerLink="/listarDetalleTransporte" (click)="sidenav.close()">-->

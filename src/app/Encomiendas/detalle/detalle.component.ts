@@ -48,6 +48,8 @@ export class DetalleComponent implements OnInit {
   isLogged = false;
   isAdmin = false;
   isEmpl = false;
+  isDesp = false;
+
   detalleEncomienda: any = {};
   isLoading = true;
   errorMessage: string | undefined;
@@ -65,6 +67,8 @@ export class DetalleComponent implements OnInit {
     this.isLogged = !!this.tokenService.getToken();
     this.isAdmin = this.isLogged && this.tokenService.isAdmin();
     this.isEmpl = this.isLogged && this.tokenService.isEmpl();
+    this.isDesp = this.isLogged && this.tokenService.isDesp();
+
     const id = this.activatedRoute.snapshot.params['id'];
     console.log("ID recibido:", id);
 

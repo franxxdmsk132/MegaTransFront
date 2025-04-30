@@ -43,7 +43,7 @@
             <!-- Columna 1 -->
             <div class="column">
               <mat-form-field appearance="fill" class="full-width">
-                <mat-label>Nombre del destinatario</mat-label>
+                <mat-label>Nombres del destinatario</mat-label>
                 <input matInput formControlName="nombreD" required/>
                 <mat-error *ngIf="detalleEncomienda.get('nombreD')?.hasError('required')">
                   Nombre del destinatario es obligatorio.
@@ -51,7 +51,7 @@
               </mat-form-field>
 
               <mat-form-field appearance="fill" class="full-width">
-                <mat-label>Apellido del destinatario</mat-label>
+                <mat-label>Apellidos del destinatario</mat-label>
                 <input matInput formControlName="apellidoD" required/>
                 <mat-error *ngIf="detalleEncomienda.get('apellidoD')?.hasError('required')">
                   Apellido del destinatario es obligatorio.
@@ -60,7 +60,7 @@
 
               <mat-form-field appearance="fill" class="full-width">
                 <mat-label>Cedula del destinatario</mat-label>
-                <input matInput formControlName="identificacionD" required maxlength="13"/>
+                <input matInput formControlName="identificacionD" required inputmode="numeric"/>
                 <mat-error *ngIf="detalleEncomienda.get('identificacionD')?.hasError('required')">
                   Identificación es obligatoria.
                 </mat-error>
@@ -69,6 +69,9 @@
                 </mat-error>
                 <mat-error *ngIf="detalleEncomienda.get('identificacionD')?.hasError('maxlength')">
                   Máximo 13 dígitos permitidos.
+                </mat-error>
+                <mat-error *ngIf="detalleEncomienda.get('identificacionD')?.hasError('minlength')">
+                  Minimo 10 dígitos permitidos.
                 </mat-error>
               </mat-form-field>
 
@@ -90,10 +93,10 @@
             <!-- Columna 2 -->
             <div class="column">
               <mat-form-field appearance="fill" class="full-width">
-                <mat-label>Celular de una persona encargada</mat-label>
+                <mat-label>Celular Secundario</mat-label>
                 <input matInput formControlName="telfEncargado" required maxlength="10"/>
                 <mat-error *ngIf="detalleEncomienda.get('telfEncargado')?.hasError('required')">
-                  Teléfono del encargado es obligatorio.
+                  Teléfono secundario es obligatorio.
                 </mat-error>
                 <mat-error *ngIf="detalleEncomienda.get('telfEncargado')?.hasError('pattern')">
                   Solo se permiten números.
@@ -141,8 +144,10 @@
           <br>
           <br>
           <mat-chip-listbox formControlName="tipoEntrega" [(ngModel)]="selectedOption" style="align-items: center">
-            <mat-chip-option value="Oficina" class="mudanza-chip"><b style="color:#ffffff;" >Retiro Oficina</b></mat-chip-option>
-            <mat-chip-option value="Domicilio" class="desalojo-chip"><b style="color:#ffffff;">Entrega Domicilio</b></mat-chip-option>
+            <mat-chip-option value="Oficina" class="mudanza-chip"><b style="color:#ffffff;">Retiro Oficina</b>
+            </mat-chip-option>
+            <mat-chip-option value="Domicilio" class="desalojo-chip"><b style="color:#ffffff;">Entrega Domicilio</b>
+            </mat-chip-option>
             <mat-error *ngIf="detalleEncomienda.get('tipoEntrega')?.hasError('required')">
               Tipo de entrega es obligatorio.
             </mat-error>
@@ -178,7 +183,11 @@
             <mat-card-header>
               <mat-card-title>Agregar Productos</mat-card-title>
             </mat-card-header>
+            <br>
             <mat-card-content>
+              <span>peso y dimenciones aproximadas!</span>
+              <br>
+              <br>
               <div formArrayName="productosDto">
                 <div *ngFor="let producto of productos.controls; let i = index" [formGroupName]="i"
                      class="producto-form-group">
@@ -189,15 +198,21 @@
                   </div>
                   <div class="form-row">
                     <mat-form-field class="half-width">
-                      <input matInput placeholder="Alto" formControlName="alto" required/>
-                      <mat-error *ngIf="producto.get('alto')?.hasError('pattern')">
+                      <input matInput type="number"
+                             placeholder="Alto"
+                             formControlName="alto"
+                             required
+                             min="0" step="0.01"/>
+                      <span matSuffix style="align-content: end; padding-right:20px">CM</span>
+                      <mat-error *ngIf="producto.get('alto')?.invalid && producto.get('alto')?.touched">
                         Solo se permiten números.
                       </mat-error>
                     </mat-form-field>
 
                     <mat-form-field class="half-width">
-                      <input matInput placeholder="Ancho" formControlName="ancho" required/>
-                      <mat-error *ngIf="producto.get('ancho')?.hasError('pattern')">
+                      <input matInput type="number" placeholder="Ancho" formControlName="ancho" required/>
+                      <span matSuffix style="align-content: end; padding-right:20px">CM</span>
+                      <mat-error *ngIf="producto.get('ancho')?.invalid && producto.get('ancho')?.touched">
                         Solo se permiten números.
                       </mat-error>
                     </mat-form-field>
@@ -205,15 +220,17 @@
                   </div>
                   <div class="form-row">
                     <mat-form-field class="half-width">
-                      <input matInput placeholder="Largo" formControlName="largo" required/>
-                      <mat-error *ngIf="producto.get('largo')?.hasError('pattern')">
+                      <input matInput type="number" placeholder="Largo" formControlName="largo" required/>
+                      <span matSuffix style="align-content: end; padding-right:20px">CM</span>
+                      <mat-error *ngIf="producto.get('largo')?.invalid && producto.get('largo')?.touched">
                         Solo se permiten números.
                       </mat-error>
                     </mat-form-field>
 
                     <mat-form-field class="half-width">
-                      <input matInput placeholder="Peso" formControlName="peso" required/>
-                      <mat-error *ngIf="producto.get('peso')?.hasError('pattern')">
+                      <input matInput type="number" placeholder="Peso" formControlName="peso" required/>
+                      <span matSuffix style="align-content: end; padding-right:20px">Kg</span>
+                      <mat-error *ngIf="producto.get('peso')?.invalid && producto.get('peso')?.touched">
                         Solo se permiten números.
                       </mat-error>
                     </mat-form-field>
@@ -221,13 +238,16 @@
                   </div>
                   <mat-checkbox formControlName="fragil" class="fragil-checkbox">Frágil</mat-checkbox>
                   <div class="button-container">
-                    <button mat-raised-button class="custom-button2"  type="button" (click)="removeProducto(i)">Eliminar Producto</button>
+                    <button mat-raised-button class="custom-button2" type="button" (click)="removeProducto(i)">Eliminar
+                      Producto
+                    </button>
                   </div>
                   <br>
                 </div>
               </div>
               <div class="add-button-container">
-                <button mat-raised-button class="custom-button2" type="button" (click)="addProducto()">Añadir Producto</button>
+                <button mat-raised-button class="custom-button2" type="button" (click)="addProducto()">Añadir Producto
+                </button>
               </div>
             </mat-card-content>
           </mat-card>

@@ -71,6 +71,8 @@ export class ListaComponent implements OnInit{
   isLogged = false;
   isAdmin = false;
   isEmpl = false;
+  isUser = false;
+  isDesp =false;
   errorMessage: string | undefined;
   dataFiltrada: DetalleEncomienda[] = [];
   // Lista de estados disponibles
@@ -106,6 +108,10 @@ export class ListaComponent implements OnInit{
     this.isLogged = !!this.tokenService.getToken();
     this.isAdmin = this.isLogged && this.tokenService.isAdmin();
     this.isEmpl = this.isLogged && this.tokenService.isEmpl();
+    this.isUser = this.isLogged && this.tokenService.isUser();
+    this.isDesp = this.isLogged && this.tokenService.isDesp();
+
+
     this.obtenerDetallesEncomienda()
   }
   selectedTabIndex = 0;

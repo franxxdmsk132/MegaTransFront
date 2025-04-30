@@ -11,12 +11,24 @@
               <b>Pendiente</b>
             </ng-template>
           </mat-tab>
+<!--          <mat-tab>-->
+<!--            <ng-template mat-tab-label>-->
+<!--              <mat-icon>local_shipping</mat-icon>-->
+<!--              <b>Procesando</b>-->
+<!--            </ng-template>-->
+<!--          </mat-tab>-->
           <mat-tab>
             <ng-template mat-tab-label>
-              <mat-icon>local_shipping</mat-icon>
+              <mat-icon>watch_later</mat-icon>
               <b>Procesando</b>
             </ng-template>
           </mat-tab>
+<!--          <mat-tab>-->
+<!--            <ng-template mat-tab-label>-->
+<!--              <mat-icon>check_circle</mat-icon>-->
+<!--              <b>Finalizado</b>-->
+<!--            </ng-template>-->
+<!--          </mat-tab>-->
           <mat-tab>
             <ng-template mat-tab-label>
               <mat-icon>check_circle</mat-icon>
@@ -24,6 +36,7 @@
             </ng-template>
           </mat-tab>
         </mat-tab-group>
+
 
         <mat-card *ngFor="let element of dataFiltrada" class="detalle-card"  >
           <mat-card-header>
@@ -49,7 +62,7 @@
 
           <mat-card-actions class="center-buttons">
             <button mat-flat-button color="primary" (click)="visualizarDetalle(element)" class="custom-button">Ver más</button>
-            <button mat-flat-button color="primary" *ngIf="isAdmin || isEmpl" (click)="abrirDialogoEstado(element)" class="custom-button">Estado</button>
+            <button mat-flat-button color="primary" *ngIf="isAdmin || isEmpl || isDesp" (click)="abrirDialogoEstado(element)" class="custom-button">Estado</button>
           </mat-card-actions>
         </mat-card>
       </div>

@@ -89,7 +89,7 @@
 
     <mat-card-actions style="justify-content: center">
       <button mat-button color="primary" (click)="volver()">Volver</button>
-      <button mat-flat-button class="transporte-label1" *ngIf="isAdmin || isEmpl"  (click)="abrirDialogoEstado(detalleEncomienda)">Cambiar Estado</button>
+      <button mat-flat-button class="transporte-label1" *ngIf="isAdmin || isEmpl || isDesp"  (click)="abrirDialogoEstado(detalleEncomienda)">Cambiar Estado</button>
 
     </mat-card-actions>
   </mat-card>

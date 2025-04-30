@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "916460786271",
+    "project_id": "notificaciones-b17fe",
+    "storage_bucket": "notificaciones-b17fe.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:916460786271:android:8a97b59ef9c5bb4ea481ea",
+        "android_client_info": {
+          "package_name": "com.megatrans.app"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCpybiZrcUHnjG9hlICvRyQ7zkE5VAF1zA"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

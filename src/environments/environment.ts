@@ -4,7 +4,9 @@
 
 export const environment = {
   production: false,
-  apiUrl: 'https://3f5d-45-236-151-3.ngrok-free.app',
+  apiUrl: 'https://e494-45-236-151-3.ngrok-free.app',
+  wsUrl: 'wss://e494-45-236-151-3.ngrok-free.app/ws',
+  chatbot: 'https://e7fb-45-236-151-3.ngrok-free.app'
 
   //apiUrl: 'http://104.196.61.204:8080',
 };
