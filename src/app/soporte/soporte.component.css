@@ -1,16 +1,63 @@
 .container {
+  max-width: 700px;
+  margin: auto;
+  padding: 20px;
   display: flex;
-  justify-content: center;
-  align-items: start;
-  height: 100vh;
-  padding: 16px;
+  flex-direction: column;
+  gap: 25px;
 }
 
-.soporte-card {
-  width: 100%;
-  max-width: 400px;
+.soporte-card, .info-dev-card {
+  padding: 16px;
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+}
+
+.titulo-seccion {
+  font-size: 1.5rem;
+  font-weight: 600;
+  margin-bottom: 16px;
+  color: #333;
 }
 
 .full-width {
   width: 100%;
+}
+
+.btn-enviar {
+  color: white;
+  background-color: black;
+  border: 2px solid red;
+  font-weight: bold;
+  transition: background-color 0.3s, transform 0.2s;
+}
+
+.btn-enviar:hover {
+  background-color: #222;
+  transform: scale(1.02);
+}
+::ng-deep .btn-enviar.mat-raised-button {
+  color: white !important;
+  background-color: black !important;
+  border: 2px solid red !important;
+  font-weight: bold;
+  box-shadow: none;
+  transition: background-color 0.3s, transform 0.2s;
+}
+
+::ng-deep .btn-enviar.mat-raised-button:hover {
+  background-color: #222 !important;
+  transform: scale(1.02);
+}
+::ng-deep .btn-enviar.mat-raised-button {
+  color: white !important;
+  background-color: black !important;
+  border: 2px solid red !important;
+  font-weight: bold;
+  box-shadow: none !important;
+}
+
+::ng-deep .btn-enviar.mat-raised-button:hover {
+  background-color: #222 !important;
+  transform: scale(1.02);
 }
