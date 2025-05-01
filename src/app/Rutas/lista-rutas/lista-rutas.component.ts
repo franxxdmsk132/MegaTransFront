@@ -1,13 +1,14 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {Rutas} from '../rutas';
 import {RutaService} from '../../service/ruta-service';
 import {MenuComponent} from '../../menu/menu.component';
-import {NgForOf} from '@angular/common';
+import {NgForOf, NgIf} from '@angular/common';
 import {MatDialog} from '@angular/material/dialog';
 import {EliminarDialogRutasComponent} from './eliminar-dialog-rutas/eliminar-dialog-rutas.component';
 import {Router} from '@angular/router';
 import {MatFabButton} from '@angular/material/button';
 import {MatIcon} from '@angular/material/icon';
+import {MatProgressSpinner} from '@angular/material/progress-spinner';
 
 @Component({
   selector: 'app-lista-rutas',
@@ -17,18 +18,23 @@ import {MatIcon} from '@angular/material/icon';
     MenuComponent,
     NgForOf,
     MatFabButton,
-    MatIcon
+    MatIcon,
+    MatProgressSpinner,
+    NgIf
   ],
   styleUrls: ['./lista-rutas.component.css']
 })
 export class ListaRutasComponent implements OnInit {
   rutas: Rutas[] = [];  // Esta variable contendrá las rutas obtenidas
+  isLoading: boolean = true
+  errorMessage: string | undefined;
 
   constructor(
     private rutaService: RutaService,
-    private dialog: MatDialog ,
+    private dialog: MatDialog,
     private router: Router
-  ) {}
+  ) {
+  }
 
   ngOnInit(): void {
     this.getRutas();  // Llamamos a la función para obtener las rutas al iniciar el componente
@@ -40,6 +46,8 @@ export class ListaRutasComponent implements OnInit {
       next: (data: Rutas[]) => {
         this.rutas = data;  // Asignamos las rutas obtenidas a la variable rutas
         // this.rutaService.showSnackbar('Rutas cargadas correctamente', 'Cerrar');  // Muestra Snackbar de éxito
+        this.isLoading = false; // Desactivar spinner
+
       },
       error: (error: any) => {
         // Verifica si hay un mensaje de error
@@ -57,6 +65,7 @@ export class ListaRutasComponent implements OnInit {
     console.log('Editar ruta:', ruta);
     this.router.navigate(['/actualizar-ruta', ruta.id]);
   }
+
   // Función para Crear una ruta
   crearRuta(): void {
     this.router.navigate(['/crear-ruta']);

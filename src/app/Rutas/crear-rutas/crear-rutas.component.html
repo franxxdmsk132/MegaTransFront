@@ -1,14 +1,17 @@
 <app-menu>
-  <form (ngSubmit)="crearRuta()">
-    <div>
-      <label for="origen">Origen</label>
-      <input id="origen" [(ngModel)]="ruta.origen" name="origen" required />
-    </div>
-    <div>
-      <label for="destino">Destino</label>
-      <input id="destino" [(ngModel)]="ruta.destino" name="destino" required />
-    </div>
-    <button type="submit">Crear Ruta</button>
-  </form>
+  <form (ngSubmit)="crearRuta()" class="ruta-form">
+    <h2>Crear nueva ruta</h2>
 
+    <div class="form-group">
+      <label for="origen">🧭 Origen</label>
+      <input id="origen" [(ngModel)]="ruta.origen" name="origen" required placeholder="Ciudad de origen" />
+    </div>
+
+    <div class="form-group">
+      <label for="destino">📍 Destino</label>
+      <input id="destino" [(ngModel)]="ruta.destino" name="destino" required placeholder="Ciudad de destino" />
+    </div>
+
+    <button type="submit" class="btn-custom">Crear Ruta</button>
+  </form>
 </app-menu>

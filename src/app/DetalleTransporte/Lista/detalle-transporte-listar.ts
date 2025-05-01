@@ -58,6 +58,7 @@ import { saveAs } from 'file-saver';
     ReactiveFormsModule,
     MatTabLabel,
     MatFabButton,
+    MatProgressSpinner,
 
   ],
   styleUrls: ['./detalle-transporte-listar.css']

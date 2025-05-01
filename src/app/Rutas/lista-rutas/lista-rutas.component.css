@@ -86,3 +86,9 @@ li {
   right: 20px;  /* Distancia desde el borde derecho */
   z-index: 1000; /* Asegura que el botón esté encima del contenido */
 }
+.loading-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+}

@@ -1,7 +1,13 @@
   <app-menu class="sticky-menu">
     <div class="card-container" (window:scroll)="onScroll($event)" >
       <div *ngIf="isLoading" class="loading-container">
+        <mat-progress-spinner
+          color="primary"
+          mode="indeterminate"
+          diameter="50"
+        ></mat-progress-spinner>
       </div>
+
 
       <div *ngIf="!isLoading && dataSource"  >
         <mat-tab-group [(selectedIndex)]="selectedTabIndex" (selectedTabChange)="filtrarPorEstado()" class="sticky-tabs" >
@@ -72,11 +78,7 @@
       <button mat-fab color="primary" class="add-btn2 transporte-label2 " *ngIf="isAdmin  || isEmpl "  (click)="obtenerExcel()">
         <mat-icon class="mat-icon1">description</mat-icon>
       </button>
-      <mat-card *ngIf="!isLoading && dataFiltrada.length === 0" class="error-card">
-        <mat-card-content>
-          <p>No se encontraron detalles de Transporte.</p>
-        </mat-card-content>
-      </mat-card>
+
 
       <mat-card *ngIf="!isLoading && errorMessage" class="error-card">
         <mat-card-content class="loading-content">
@@ -84,4 +86,9 @@
         </mat-card-content>
       </mat-card>
     </div>
+    <mat-card *ngIf="!isLoading && dataFiltrada.length === 0" class="error-card">
+      <mat-card-content>
+        <p>No se encontraron detalles de Transporte.</p>
+      </mat-card-content>
+    </mat-card>
   </app-menu>

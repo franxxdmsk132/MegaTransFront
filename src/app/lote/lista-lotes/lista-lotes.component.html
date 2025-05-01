@@ -33,6 +33,22 @@
         <mat-icon class="mat-icon1">description</mat-icon>
       </button>
     </div>
+    <!-- Spinner mientras se cargan los datos -->
+    <div *ngIf="isLoading" class="spinner-container">
+      <mat-progress-spinner
+        color="accent"
+        mode="indeterminate"
+        diameter="50"
+      ></mat-progress-spinner>
+    </div>
+
+    <!-- Mensaje si no hay datos después de cargar -->
+    <mat-card *ngIf="!isLoading && dataSource.data.length === 0" class="error-card">
+      <mat-card-content>
+        <p>No se encontraron detalles de Lote.</p>
+      </mat-card-content>
+    </mat-card>
+
 
   </div>
 </app-menu>

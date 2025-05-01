@@ -29,6 +29,7 @@ import {TokenService} from '../../service/token.service';
 import {MatIcon} from "@angular/material/icon";
 import {saveAs} from 'file-saver';
 import { Filesystem, Directory, Encoding } from '@capacitor/filesystem';
+import {MatProgressSpinner} from '@angular/material/progress-spinner';
 
 @Component({
   selector: 'app-lista-lotes',
@@ -46,7 +47,8 @@ import { Filesystem, Directory, Encoding } from '@capacitor/filesystem';
     NgForOf,
     MatFabButton,
     MatIcon,
-    NgIf
+    NgIf,
+    MatProgressSpinner
   ],
   styleUrls: ['./lista-lotes.component.css']
 })
@@ -79,16 +81,19 @@ export class ListarLotesComponent implements OnInit {
   selectedTabIndex = 0;
 
   cargarLotes(): void {
+    this.isLoading = true;
     this.loteService.listarLotes().subscribe(
       (lotes) => {
-        console.log(lotes)
         this.dataSource.data = lotes;
+        this.isLoading = false;
       },
       (error) => {
         console.error('Error al cargar lotes:', error);
+        this.isLoading = false;
       }
     );
   }
+
 
   verDetalles(lote: Lote) {
     console.log("Detalles Lote", lote);

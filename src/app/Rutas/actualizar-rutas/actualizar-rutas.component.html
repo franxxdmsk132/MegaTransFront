@@ -1,16 +1,19 @@
 <app-menu>
-  <form (ngSubmit)="actualizarRuta()" #rutaForm="ngForm">
-    <div>
-      <label for="origen">Origen:</label>
-      <input id="origen" [(ngModel)]="ruta.origen" name="origen" required />
+  <form (ngSubmit)="actualizarRuta()" #rutaForm="ngForm" class="ruta-form">
+    <h2>Actualizar Ruta</h2>
+
+    <div class="form-group">
+      <label for="origen">🧭 Origen</label>
+      <input id="origen" [(ngModel)]="ruta.origen" name="origen" required placeholder="Ciudad de origen" />
     </div>
 
-    <div>
-      <label for="destino">Destino:</label>
-      <input id="destino" [(ngModel)]="ruta.destino" name="destino" required />
+    <div class="form-group">
+      <label for="destino">📍 Destino</label>
+      <input id="destino" [(ngModel)]="ruta.destino" name="destino" required placeholder="Ciudad de destino" />
     </div>
 
-    <button type="submit" [disabled]="!rutaForm.form.valid">Actualizar Ruta</button>
+    <button type="submit" [disabled]="!rutaForm.form.valid" class="btn-custom">
+      Actualizar Ruta
+    </button>
   </form>
-
 </app-menu>

@@ -6,7 +6,7 @@ const config: CapacitorConfig = {
   webDir: 'dist/mega-trans-front',
   server: {
     cleartext: true,
-    allowNavigation: ['e494-45-236-151-3.ngrok-free.app'],
+    allowNavigation: ['643d-45-236-151-3.ngrok-free.app'],
     androidScheme: 'http'
   },
   plugins:{

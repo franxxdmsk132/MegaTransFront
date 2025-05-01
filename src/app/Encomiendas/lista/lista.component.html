@@ -106,12 +106,7 @@
     </div>
 
 
-    <!-- Mensaje de error si no hay datos o ocurrió un problema -->
-    <mat-card *ngIf="!isLoading && dataFiltrada.length === 0" class="error-card">
-      <mat-card-content>
-        <p>No se encontraron detalles de Encomienda.</p>
-      </mat-card-content>
-    </mat-card>
+
     <!-- Indicador de carga -->
     <mat-card *ngIf="!isLoading && errorMessage" class="error-card">
       <mat-card-content>
@@ -119,4 +114,10 @@
       </mat-card-content>
     </mat-card>
   </div>
+  <!-- Mensaje de error si no hay datos o ocurrió un problema -->
+  <mat-card *ngIf="!isLoading && dataFiltrada.length === 0" class="error-card">
+    <mat-card-content>
+      <p>No se encontraron detalles de Encomienda.</p>
+    </mat-card-content>
+  </mat-card>
 </app-menu>
