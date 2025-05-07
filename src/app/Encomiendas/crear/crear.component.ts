@@ -376,6 +376,7 @@ export class CrearComponent implements OnInit {
     let mensaje = `📦 Nueva Encomienda creada 🚛\n`; // Inicializamos mensaje
 
     const detalles = this.detalleEncomienda.value;
+    const telefonoCliente = this.token.getTelefono();
     const nombreCompleto = this.token.getFullName() || 'Nombre completo no disponible';
     const nombreComercial = this.token.getNombreComercial() || 'Sin Comercial ';
     const telefonoDestino = '593997559093'; // Reemplaza con el número de WhatsApp de destino
@@ -385,6 +386,7 @@ export class CrearComponent implements OnInit {
   - 📄 *Número de Guia:* _${detalles.numGuia}_
   - 📄 *Ruta:* ${detalles.ruta}
   - 📄 *Cliente/Comercial:* ${nombreCompleto || 'No disponible'}, ${nombreComercial || 'No disponible'}\n
+  - 📞 *Telefono:* ${telefonoCliente || 'No disponible'}\n
   - 📍 *Mapa (Recoleccion):*    _(https://www.google.com/maps?q=${detalles.latitudOrg},${detalles.longitudOrg})_
   - 📍 *Mapa (Entrega):*   _(https://www.google.com/maps?q=${detalles.latitudDestino},${detalles.longitudDestino})_
 
@@ -421,6 +423,15 @@ export class CrearComponent implements OnInit {
       next: () => console.log('✅ Mensaje enviado correctamente'),
       error: (err) => console.error('❌ Error al enviar mensaje', err)
     });
+    // Registrar encomienda con teléfono
+    this.http.post(environment.chatbot + '/registrar-encomienda', {
+      numGuia: this.detalleEncomienda.value.numGuia,
+      telefono: this.token.getTelefono() || '593000000000' // usa el teléfono del cliente que inicia sesión
+    }).subscribe({
+      next: () => console.log('📌 Encomienda registrada en backend'),
+      error: (err) => console.error('❌ Error al registrar encomienda', err)
+    });
+
   }
 
 

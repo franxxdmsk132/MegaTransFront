@@ -376,7 +376,7 @@ export class CrearDetalleTransporteComponent implements OnInit {
 
   enviarAWhatsapp(): void {
     const detalles = this.detalleForm.value;
-
+    const telefonoCliente = this.token.getTelefono();
     const nombreCompleto = this.token.getFullName() || 'Nombre completo no disponible';
     const nombreComercial = this.token.getNombreComercial() || 'Sin Comercial ';
 
@@ -384,6 +384,7 @@ export class CrearDetalleTransporteComponent implements OnInit {
     const mensaje = `
   *📄 Nueva Solicitud de Transporte creada:* _${detalles.numOrden}_ \n
   *📄 Cliente/Comercial:* ${nombreCompleto || 'No disponible'}, ${nombreComercial || 'No disponible'}\n
+  *📞 Telefono:* ${telefonoCliente || 'No disponible'}\n
   *🚚 Unidad:* ${detalles.unidadTipo || 'No disponible'} ||  *Servicio:* ${detalles.tipoServicio || 'No disponible'}\n
   *📅 Fecha creacion:* ${detalles.fecha || 'No disponible'}\n
   *📅 Fecha solicitada:* ${detalles.descripcionProducto || 'No disponible'}\n
@@ -408,6 +409,14 @@ export class CrearDetalleTransporteComponent implements OnInit {
     }).subscribe({
       next: () => console.log('✅ Mensaje enviado correctamente'),
       error: (err) => console.error('❌ Error al enviar mensaje', err)
+    });
+    // Registrar transporte con teléfono
+    this.http.post(environment.chatbot + '/registrar-transporte', {
+      numGuia: this.detalleForm.value.numOrden,
+      telefono: this.token.getTelefono() || '593000000000' // usa el teléfono del cliente que inicia sesión
+    }).subscribe({
+      next: () => console.log('📌 Transporte registrada en backend'),
+      error: (err) => console.error('❌ Error al registrar transporte', err)
     });
   }
 

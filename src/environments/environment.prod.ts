@@ -3,6 +3,9 @@ export const environment = {
 
   apiUrl: 'https://63b6-45-236-151-3.ngrok-free.app',
   wsUrl: 'wss://63b6-45-236-151-3.ngrok-free.app/ws',
-  chatbot: 'https://7d90-45-236-151-3.ngrok-free.app'
+  // chatbot: 'https://7d90-45-236-151-3.ngrok-free.app'
+  chatbot: 'http://localhost:3000'
+
+
 
 };
